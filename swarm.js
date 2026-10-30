@@ -252,24 +252,57 @@
       opacity: 0 !important;
       visibility: hidden !important;
       pointer-events: none !important;
+      transform: translateY(12px) scale(0.96) !important;
+      filter: blur(6px) !important;
       transition: none !important;
     }
 
-    /* Stage 1: Empty Dashed Blueprint Wireframe Shell */
+    /* Stage 1: Empty Dashed Blueprint Wireframe Shell (Smooth Motion Design Spring Entrance) */
     .swarm-wireframe-shell,
     .swarm-wireframe-shell > .card-flip-inner > .card-front {
       opacity: 1 !important;
       visibility: visible !important;
-      background: rgba(16, 185, 129, 0.035) !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
+      background: rgba(16, 185, 129, 0.045) !important;
+      backdrop-filter: blur(4px) !important;
+      -webkit-backdrop-filter: blur(4px) !important;
       border: 1.5px dashed var(--swarm-shell-color, #10b981) !important;
-      box-shadow: inset 0 0 24px rgba(16, 185, 129, 0.07) !important;
-      transition: none !important;
+      box-shadow:
+        inset 0 0 26px color-mix(in srgb, var(--swarm-shell-color, #10b981) 12%, transparent),
+        0 10px 28px -8px color-mix(in srgb, var(--swarm-shell-color, #10b981) 20%, transparent) !important;
+      transform: translateY(0) scale(1) !important;
+      filter: blur(0px) !important;
+      animation: swarmMotionWireIn 0.44s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+      transition:
+        width 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+        height 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.38s cubic-bezier(0.22, 1, 0.36, 1) !important;
     }
     .swarm-wireframe-shell > .card-flip-inner {
       opacity: 1 !important;
       visibility: visible !important;
+      transform: none !important;
+      filter: none !important;
+    }
+
+    @keyframes swarmMotionWireIn {
+      0% {
+        opacity: 0;
+        transform: translateY(14px) scale(0.945);
+        filter: blur(6px);
+      }
+      65% {
+        opacity: 1;
+        transform: translateY(-1.5px) scale(1.008);
+        filter: blur(0px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+      }
     }
 
     /* Stage 2: Glassmorphism Shader Fill Transition */
@@ -278,19 +311,80 @@
     .swarm-glass-filling > .card-flip-inner > .card-front {
       opacity: 1 !important;
       visibility: visible !important;
-      transition: background 0.36s ease, border-color 0.36s ease, box-shadow 0.36s ease, backdrop-filter 0.36s ease !important;
+      transform: translateY(0) scale(1) !important;
+      filter: blur(0px) !important;
+      transition:
+        background 0.46s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.46s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.46s cubic-bezier(0.22, 1, 0.36, 1),
+        backdrop-filter 0.46s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.46s cubic-bezier(0.22, 1, 0.36, 1) !important;
     }
 
-    /* Polygon Scanline Reveal Effect */
+    /* Polygon Scanline Reveal Effect (Smooth De-blur & Scale Settle) */
     .swarm-scan-reveal {
       opacity: 1 !important;
       visibility: visible !important;
       clip-path: var(--swarm-clip, inset(0 0 100% 0)) !important;
+      transform: scale(var(--swarm-scan-scale, 1)) !important;
+      filter: blur(var(--swarm-scan-blur, 0px)) !important;
       transition: none !important;
     }
 
+    /* Final Materialize Spring Settle (Motion Design Pop & Shimmer) */
     .swarm-releasing {
-      transition: opacity 0.32s ease, transform 0.32s ease, filter 0.32s ease !important;
+      animation: swarmMotionMaterialize 0.52s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+      transition:
+        opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    }
+
+    @keyframes swarmMotionMaterialize {
+      0% {
+        transform: translateY(3px) scale(0.978);
+        filter: brightness(1.07);
+      }
+      55% {
+        transform: translateY(-1.5px) scale(1.01);
+        filter: brightness(1.02);
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        filter: brightness(1);
+      }
+    }
+
+    /* SVG Polygon Mesh Motion Design Keyframes */
+    .swarm-svg-edge {
+      stroke-dasharray: 280;
+      stroke-dashoffset: 280;
+      animation: swarmDrawSvgEdge 0.36s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes swarmDrawSvgEdge {
+      to { stroke-dashoffset: 0; }
+    }
+    .swarm-svg-poly {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: swarmBloomSvgPoly 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes swarmBloomSvgPoly {
+      0% { opacity: 0; transform: scale(0.84); }
+      65% { opacity: 1; transform: scale(1.02); }
+      100% { opacity: 0.92; transform: scale(1); }
+    }
+    .swarm-svg-vertex {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: swarmPopSvgVertex 0.34s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes swarmPopSvgVertex {
+      0% { opacity: 0; transform: scale(0.2); }
+      100% { opacity: 1; transform: scale(1); }
     }
 
     /* Live Blinking Caret inside DOM Text Nodes */
@@ -301,24 +395,36 @@
       vertical-align: -0.15em;
       margin-left: 1.5px;
       background: var(--caret-color, #8b5cf6);
-      box-shadow: 0 0 8px var(--caret-color, #8b5cf6);
+      box-shadow: 0 0 10px var(--caret-color, #8b5cf6);
+      border-radius: 2px;
       animation: swarmCaretBlink 0.45s infinite alternate;
     }
     @keyframes swarmCaretBlink {
-      0% { opacity: 1; }
-      100% { opacity: 0.2; }
+      0% { opacity: 1; transform: scaleY(1); }
+      100% { opacity: 0.25; transform: scaleY(0.88); }
     }
 
-    /* Figma Selection Frame */
+    /* Figma Selection Frame (Silky-Smooth Motion Interpolation) */
     .swarm-selection-frame {
       position: fixed;
       pointer-events: none;
       border: 1.5px solid var(--agent-color, #10b981);
       background: color-mix(in srgb, var(--agent-color, #10b981) 5%, transparent);
-      border-radius: 5px;
+      border-radius: 6px;
       z-index: 2147483644;
       box-sizing: border-box;
-      transition: opacity 0.2s ease;
+      animation: swarmFrameEnter 0.26s cubic-bezier(0.22, 1, 0.36, 1) both;
+      transition:
+        left 0.14s cubic-bezier(0.22, 1, 0.36, 1),
+        top 0.14s cubic-bezier(0.22, 1, 0.36, 1),
+        width 0.14s cubic-bezier(0.22, 1, 0.36, 1),
+        height 0.14s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @keyframes swarmFrameEnter {
+      0% { opacity: 0; transform: scale(0.93); }
+      100% { opacity: 1; transform: scale(1); }
     }
     .swarm-selection-frame.is-dashed {
       border-style: dashed;
@@ -331,7 +437,8 @@
       );
     }
     .swarm-selection-frame.is-done {
-      opacity: 0;
+      opacity: 0 !important;
+      transform: scale(1.035) !important;
     }
 
     .swarm-handle {
@@ -1382,11 +1489,13 @@
       if (!el) return;
       el.classList.remove("swarm-hidden", "swarm-wireframe-shell", "swarm-glass-filling", "swarm-scan-reveal");
       el.style.removeProperty("--swarm-clip");
+      el.style.removeProperty("--swarm-scan-scale");
+      el.style.removeProperty("--swarm-scan-blur");
       el.style.removeProperty("--swarm-shell-color");
       el.classList.add("swarm-releasing");
       setTimeout(() => {
         el.classList.remove("swarm-releasing");
-      }, 360);
+      }, 540);
     }
 
     // PRIMITIVE A: Draw Low-Poly Triangulated Mesh on Blank Canvas -> Scanline Shader Reveal
@@ -1465,28 +1574,29 @@
         activeC.el.classList.add("is-clicking");
         this.sound.playVertex(i);
 
-        // Draw connecting construction line from previous vertex
+        // Draw connecting construction line from previous vertex (Smooth Motion Stroke Draw)
         if (i > 0) {
           const [prevX, prevY] = pts[i - 1];
           const edge = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          edge.setAttribute("class", "swarm-svg-edge");
           edge.setAttribute("x1", prevX.toFixed(1));
           edge.setAttribute("y1", prevY.toFixed(1));
           edge.setAttribute("x2", px.toFixed(1));
           edge.setAttribute("y2", py.toFixed(1));
           edge.setAttribute("stroke", color2);
-          edge.setAttribute("stroke-width", "1.4");
-          edge.setAttribute("stroke-dasharray", "4 3");
-          edge.setAttribute("opacity", "0.75");
+          edge.setAttribute("stroke-width", "1.5");
+          edge.setAttribute("opacity", "0.82");
           g.appendChild(edge);
         }
 
-        // Draw vertex anchor handle (`□`) + coordinate label on key vertices
+        // Draw vertex anchor handle (`□`) + coordinate label on key vertices (Spring Pop)
         const vNode = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        vNode.setAttribute("class", "swarm-svg-vertex");
         vNode.setAttribute("x", (px - 4).toFixed(1));
         vNode.setAttribute("y", (py - 4).toFixed(1));
         vNode.setAttribute("width", "8");
         vNode.setAttribute("height", "8");
-        vNode.setAttribute("rx", "1.5");
+        vNode.setAttribute("rx", "2");
         vNode.setAttribute("fill", "#ffffff");
         vNode.setAttribute("stroke", activeC.agent.color);
         vNode.setAttribute("stroke-width", "2");
@@ -1506,7 +1616,7 @@
 
         drawnVertices.push(i);
 
-        // Draw completed low-poly triangles
+        // Draw completed low-poly triangles (Smooth Motion Bloom)
         for (const [a, b, c] of tris) {
           if (
             drawnVertices.includes(a) &&
@@ -1515,9 +1625,10 @@
             (a === i || b === i || c === i)
           ) {
             const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+            poly.setAttribute("class", "swarm-svg-poly");
             const pStr = `${pts[a][0].toFixed(1)},${pts[a][1].toFixed(1)} ${pts[b][0].toFixed(1)},${pts[b][1].toFixed(1)} ${pts[c][0].toFixed(1)},${pts[c][1].toFixed(1)}`;
             poly.setAttribute("points", pStr);
-            poly.setAttribute("fill", (a + b + c) % 2 === 0 ? `${color1}24` : `${color2}22`);
+            poly.setAttribute("fill", (a + b + c) % 2 === 0 ? `${color1}26` : `${color2}24`);
             poly.setAttribute("stroke", (a + b) % 2 === 0 ? color1 : color2);
             poly.setAttribute("stroke-width", "1.4");
             g.insertBefore(poly, g.firstChild);
@@ -1535,6 +1646,8 @@
         this.setCursorMode(primaryCursor, "pointer", "SHADER", `${primaryCursor.agent.name} · Render Shader`);
         this.revealAncestorsForTyping(el, document.body);
         el.style.setProperty("--swarm-clip", "inset(0 0 100% 0)");
+        el.style.setProperty("--swarm-scan-scale", "1.024");
+        el.style.setProperty("--swarm-scan-blur", "4px");
         el.classList.remove("swarm-hidden");
         el.classList.add("swarm-scan-reveal");
 
@@ -1543,22 +1656,34 @@
         scanLine.setAttribute("x2", rect.right.toFixed(1));
         scanLine.setAttribute("stroke", "#10b981");
         scanLine.setAttribute("stroke-width", "3");
+        scanLine.style.filter = "drop-shadow(0 0 8px #10b981)";
         g.appendChild(scanLine);
 
-        const sweepDuration = (isCharacter ? 920 : 420) / this.speed;
-        const t0 = performance.now();
+        const sweepDuration = (isCharacter ? 940 : 460) / this.speed;
+        let t0 = performance.now();
+        let lastNow = t0;
         await new Promise((resolve) => {
           const step = (now) => {
             if (!this.running || this.aborted) return resolve();
+            if (this.paused) {
+              t0 += now - lastNow;
+              lastNow = now;
+              return requestAnimationFrame(step);
+            }
+            lastNow = now;
             const p = Math.min(1, (now - t0) / sweepDuration);
-            const ease = 1 - Math.pow(1 - p, 2.2);
+            const ease = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
             const bottomInset = ((1 - ease) * 100).toFixed(1);
+            const curScale = (1 + (1 - ease) * 0.024).toFixed(4);
+            const curBlur = ((1 - ease) * 4).toFixed(2);
             el.style.setProperty("--swarm-clip", `inset(0 0 ${bottomInset}% 0)`);
+            el.style.setProperty("--swarm-scan-scale", curScale);
+            el.style.setProperty("--swarm-scan-blur", `${curBlur}px`);
 
             const scanY = rect.top + rect.height * ease;
             scanLine.setAttribute("y1", scanY.toFixed(1));
             scanLine.setAttribute("y2", scanY.toFixed(1));
-            g.style.opacity = (1 - ease * 0.65).toFixed(2);
+            g.style.opacity = (1 - ease * 0.72).toFixed(2);
 
             pool.forEach((c, idx) => {
               const ratio = pool.length === 1 ? 0.5 : 0.2 + (idx / (pool.length - 1)) * 0.6;
@@ -2010,13 +2135,22 @@
       const tr = track.getBoundingClientRect();
       cursor.busy = true;
       this.setCursorMode(cursor, "pointer", "DATA", `${cursor.agent.name} · Bar ${targetPct}%`);
-      const dur = 240 / this.speed;
-      const t0 = performance.now();
+      this.logTerminal(cursor.agent, "DATA", `gsap.to(skillBar, { width: "${targetPct}%", ease: "expo.out" })`);
+      const dur = 340 / this.speed;
+      let t0 = performance.now();
+      let lastNow = t0;
       await new Promise((resolve) => {
         const step = (now) => {
           if (!this.running || this.aborted) return resolve();
+          if (this.paused) {
+            t0 += now - lastNow;
+            lastNow = now;
+            return requestAnimationFrame(step);
+          }
+          lastNow = now;
           const p = Math.min(1, (now - t0) / dur);
-          const curPct = targetPct * p;
+          const ease = 1 - Math.pow(1 - p, 3.2);
+          const curPct = targetPct * ease;
           bar.style.transition = "none";
           bar.style.width = `${curPct.toFixed(1)}%`;
           cursor.tx = tr.left + (tr.width * curPct) / 100;
