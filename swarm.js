@@ -526,6 +526,175 @@
       color: #f87171;
       border-color: rgba(248, 113, 113, 0.4);
     }
+    .swarm-hud-btn.is-recording {
+      background: rgba(239, 68, 68, 0.25) !important;
+      border-color: #ef4444 !important;
+      color: #fca5a5 !important;
+      animation: swarmRecPulse 1s infinite alternate;
+    }
+    @keyframes swarmRecPulse {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.45); }
+      100% { box-shadow: 0 0 12px 3px rgba(239, 68, 68, 0.65); }
+    }
+
+    /* Feature 1: Ghost Self-Building Mode (Hide Cursors & Agent Name Pills) */
+    #swarm-studio-overlay.is-ghost-mode #swarm-cursors-layer,
+    #swarm-studio-overlay.is-ghost-mode .swarm-frame-tag {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      transition: opacity 0.25s ease;
+    }
+
+    /* Feature 2: Visual Blueprint Theme Presets (Figma / Architect CAD / Cyberpunk Neon) */
+    #swarm-studio-overlay[data-theme="architect"] #swarm-studio-grid {
+      background-color: rgba(12, 34, 68, 0.14);
+      background-image:
+        linear-gradient(to right, rgba(56, 189, 248, 0.22) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(56, 189, 248, 0.22) 1px, transparent 1px),
+        linear-gradient(to right, rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+      background-size: 96px 96px, 96px 96px, 16px 16px, 16px 16px;
+    }
+    #swarm-studio-overlay[data-theme="architect"] .swarm-selection-frame {
+      border-color: #38bdf8 !important;
+      background: rgba(56, 189, 248, 0.08) !important;
+    }
+
+    #swarm-studio-overlay[data-theme="cyberpunk"] #swarm-studio-grid {
+      background-color: rgba(10, 10, 26, 0.2);
+      background-image:
+        linear-gradient(to right, rgba(236, 72, 153, 0.16) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(6, 182, 212, 0.16) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    #swarm-studio-overlay[data-theme="cyberpunk"] .swarm-selection-frame {
+      box-shadow: 0 0 14px rgba(236, 72, 153, 0.35), inset 0 0 10px rgba(6, 182, 212, 0.2) !important;
+    }
+
+    /* Feature 3: Mini Floating Live Code & AI Prompt Streamer */
+    #swarm-mini-terminal {
+      position: fixed;
+      bottom: 70px;
+      left: 20px;
+      width: 356px;
+      z-index: 2147483646;
+      pointer-events: none;
+      background: rgba(10, 15, 29, 0.86);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(16, 185, 129, 0.2);
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      font-size: 10.5px;
+      color: #e2e8f0;
+      overflow: hidden;
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+    #swarm-mini-terminal.is-hidden {
+      opacity: 0 !important;
+      transform: translateY(14px) scale(0.96) !important;
+      pointer-events: none !important;
+    }
+    .swarm-term-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 11px;
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .swarm-term-dots {
+      display: flex;
+      gap: 5px;
+    }
+    .swarm-term-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .swarm-term-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: 0.02em;
+    }
+    .swarm-term-live {
+      font-size: 9px;
+      font-weight: 700;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.15);
+      padding: 1px 6px;
+      border-radius: 999px;
+    }
+    .swarm-term-body {
+      padding: 8px 11px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 115px;
+      overflow: hidden;
+    }
+    .swarm-term-line {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.4;
+      color: #cbd5e1;
+      opacity: 0.88;
+    }
+    .swarm-term-line .t-badge {
+      display: inline-block;
+      padding: 0 4px;
+      border-radius: 3px;
+      font-size: 9px;
+      font-weight: 700;
+      color: #fff;
+      margin-right: 5px;
+    }
+    .swarm-term-line .t-code {
+      color: #38bdf8;
+    }
+    .swarm-term-active {
+      margin-top: 2px;
+      padding-top: 5px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+      color: #6ee7b7;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Feature 5: Interactive Click-to-Rebuild Section Picker */
+    #swarm-picker-highlight {
+      position: fixed;
+      pointer-events: none;
+      z-index: 2147483646;
+      border: 2px solid #10b981;
+      background: rgba(16, 185, 129, 0.12);
+      border-radius: 8px;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2), 0 12px 30px rgba(0, 0, 0, 0.3);
+      transition: all 0.08s ease-out;
+      display: none;
+    }
+    #swarm-picker-highlight.is-active {
+      display: block;
+    }
+    #swarm-picker-tag {
+      position: absolute;
+      top: -26px;
+      left: 0;
+      background: #10b981;
+      color: #06281e;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
   `;
 
   function getCursorSvg(mode, color) {
@@ -554,13 +723,22 @@
   }
 
   // ---------------------------------------------------------------------------
-  // 5. MAIN SWARM STUDIO v3.2 CONTROLLER
+  // 5. MAIN SWARM STUDIO v3.5 CONTROLLER
   // ---------------------------------------------------------------------------
   class SwarmStudio {
     constructor() {
       this.sound = new SoundEngine();
       this.running = false;
       this.aborted = false;
+      this.paused = false;
+      this.ghostMode = false;
+      this.terminalVisible = true;
+      this.theme = "figma";
+      this.pickerActive = false;
+      this.hoveredPickEl = null;
+      this.mediaRecorder = null;
+      this.mediaStream = null;
+      this.recordedChunks = [];
       this.autoTour = true;
       this.speed = 1;
       this.hudHidden = false;
@@ -573,12 +751,15 @@
       this.cursors = [];
       this.rafId = null;
       this.onKeyDown = this.onKeyDown.bind(this);
+      this.onPickerMove = this.onPickerMove.bind(this);
+      this.onPickerClick = this.onPickerClick.bind(this);
     }
 
     start() {
       if (this.running) return;
       this.running = true;
       this.aborted = false;
+      this.paused = false;
 
       this.preparePortfolioStage();
       this.mountOverlay();
@@ -589,12 +770,19 @@
         if (!this.running) return;
         const dt = Math.min(0.05, (now - this.lastFrameTime) / 1000);
         this.lastFrameTime = now;
-        this.updateCursors(dt, now);
+        if (!this.paused) {
+          this.updateCursors(dt, now);
+        }
         this.rafId = requestAnimationFrame(tick);
       };
       this.rafId = requestAnimationFrame(tick);
 
-      this.runShowcaseFlow();
+      if (window.__swarmStartInPickerMode) {
+        delete window.__swarmStartInPickerMode;
+        this.enableSectionPicker();
+      } else {
+        this.runShowcaseFlow();
+      }
     }
 
     preparePortfolioStage() {
@@ -618,6 +806,7 @@
       this.overlay = document.createElement("div");
       this.overlay.id = "swarm-studio-overlay";
       this.overlay.className = "is-building";
+      this.overlay.dataset.theme = this.theme;
 
       const grid = document.createElement("div");
       grid.id = "swarm-studio-grid";
@@ -634,6 +823,35 @@
       this.cursorsLayer = document.createElement("div");
       this.cursorsLayer.id = "swarm-cursors-layer";
       this.overlay.appendChild(this.cursorsLayer);
+
+      // Section Picker Highlight Frame
+      this.pickerBox = document.createElement("div");
+      this.pickerBox.id = "swarm-picker-highlight";
+      this.pickerBox.innerHTML = `<div id="swarm-picker-tag">🎯 Klik elemen ini untuk merakit ulang (Esc: Batal)</div>`;
+      this.overlay.appendChild(this.pickerBox);
+
+      // Mini Floating Live Code & AI Prompt Terminal
+      this.terminalEl = document.createElement("div");
+      this.terminalEl.id = "swarm-mini-terminal";
+      this.terminalEl.innerHTML = `
+        <div class="swarm-term-head">
+          <div class="swarm-term-dots">
+            <span style="background:#ef4444"></span>
+            <span style="background:#f59e0b"></span>
+            <span style="background:#10b981"></span>
+          </div>
+          <span class="swarm-term-title">rebuildr-ai · live-dom-stream</span>
+          <span class="swarm-term-live" id="swarm-term-mode-pill">8 AGENTS</span>
+        </div>
+        <div class="swarm-term-body">
+          <div id="swarm-term-lines"></div>
+          <div class="swarm-term-active" id="swarm-term-cmd">&gt; Initializing live DOM deconstruction...</div>
+        </div>
+      `;
+      this.overlay.appendChild(this.terminalEl);
+      this.termLinesEl = this.terminalEl.querySelector("#swarm-term-lines");
+      this.termCmdEl = this.terminalEl.querySelector("#swarm-term-cmd");
+      this.termModePill = this.terminalEl.querySelector("#swarm-term-mode-pill");
 
       document.body.appendChild(this.overlay);
 
@@ -685,13 +903,18 @@
 
       this.hud.innerHTML = `
         <div class="swarm-hud-avatars">${avatarsHtml}</div>
-        <div class="swarm-hud-status" id="swarm-hud-status"><strong>Swarm v3.1</strong> · Merakit Poligon & Teks...</div>
+        <div class="swarm-hud-status" id="swarm-hud-status"><strong>Rebuildr v3.5</strong> · Merakit Poligon & Teks...</div>
         <div class="swarm-hud-progress"><div class="swarm-hud-progress-bar" id="swarm-hud-bar"></div></div>
-        <button class="swarm-hud-btn is-active" id="swarm-btn-tour" title="Otomatis pindah bab & bangun dari nol">🎬 Auto-Tour</button>
-        <button class="swarm-hud-btn" id="swarm-btn-speed" title="Kecepatan animasi">${this.speed}×</button>
-        <button class="swarm-hud-btn" id="swarm-btn-mute" title="Suara efek ketikan & poligon">🔊</button>
-        <button class="swarm-hud-btn" id="swarm-btn-hide" title="Sembunyikan bar bawah untuk rekam layar bersih (Tekan H)">👁️ Rekam (H)</button>
-        <button class="swarm-hud-btn" id="swarm-btn-replay" title="Ulangi dari Bab 1">↻ Ulang</button>
+        <button class="swarm-hud-btn" id="swarm-btn-pause" title="Jeda / Lanjutkan animasi (Tekan Spasi)">⏸️</button>
+        <button class="swarm-hud-btn" id="swarm-btn-ghost" title="Sembunyikan/Tampilkan Kursor - Mode Website Merakit Sendiri (Tekan C)">👻 Ghost (C)</button>
+        <button class="swarm-hud-btn is-active" id="swarm-btn-term" title="Tampilkan/Sembunyikan Mini Terminal Kode Live (Tekan T)">💻 Kode (T)</button>
+        <button class="swarm-hud-btn" id="swarm-btn-theme" title="Ganti Tema Blueprint: Figma / Architect / Cyberpunk (Tekan B)">🎨 Figma</button>
+        <button class="swarm-hud-btn" id="swarm-btn-pick" title="Klik bagian tertentu di halaman untuk dirakit ulang (Tekan S)">🎯 Pilih (S)</button>
+        <button class="swarm-hud-btn" id="swarm-btn-record" title="Rekam layar otomatis ke file video WebM 60FPS (Tekan V)">🔴 Video (V)</button>
+        <button class="swarm-hud-btn" id="swarm-btn-speed" title="Kecepatan animasi (Tekan 1, 2, atau 3)">${this.speed}×</button>
+        <button class="swarm-hud-btn" id="swarm-btn-mute" title="Suara efek ketikan & poligon (Tekan M)">🔊</button>
+        <button class="swarm-hud-btn" id="swarm-btn-hide" title="Sembunyikan panel bawah untuk rekam layar bersih (Tekan H)">👁️ (H)</button>
+        <button class="swarm-hud-btn" id="swarm-btn-replay" title="Ulangi dari awal (Tekan R)">↻</button>
         <button class="swarm-hud-btn close-btn" id="swarm-btn-close" title="Keluar (Esc)">✕</button>
       `;
       document.body.appendChild(this.hud);
@@ -699,9 +922,24 @@
       this.statusEl = this.hud.querySelector("#swarm-hud-status");
       this.barEl = this.hud.querySelector("#swarm-hud-bar");
 
-      this.hud.querySelector("#swarm-btn-tour").addEventListener("click", (e) => {
-        this.autoTour = !this.autoTour;
-        e.currentTarget.classList.toggle("is-active", this.autoTour);
+      this.hud.querySelector("#swarm-btn-pause").addEventListener("click", () => {
+        this.togglePause();
+      });
+      this.hud.querySelector("#swarm-btn-ghost").addEventListener("click", () => {
+        this.toggleGhostMode();
+      });
+      this.hud.querySelector("#swarm-btn-term").addEventListener("click", () => {
+        this.toggleTerminal();
+      });
+      this.hud.querySelector("#swarm-btn-theme").addEventListener("click", () => {
+        this.cycleTheme();
+      });
+      this.hud.querySelector("#swarm-btn-pick").addEventListener("click", () => {
+        if (this.pickerActive) this.disableSectionPicker();
+        else this.enableSectionPicker();
+      });
+      this.hud.querySelector("#swarm-btn-record").addEventListener("click", () => {
+        this.toggleVideoRecording();
       });
       this.hud.querySelector("#swarm-btn-speed").addEventListener("click", (e) => {
         const speeds = [1, 1.5, 2, 3];
@@ -738,6 +976,299 @@
       if (this.hud) this.hud.classList.toggle("is-hidden", this.hudHidden);
     }
 
+    toggleGhostMode() {
+      this.ghostMode = !this.ghostMode;
+      if (this.overlay) {
+        this.overlay.classList.toggle("is-ghost-mode", this.ghostMode);
+      }
+      const btn = this.hud?.querySelector("#swarm-btn-ghost");
+      if (btn) {
+        btn.classList.toggle("is-active", this.ghostMode);
+        btn.textContent = this.ghostMode ? "👻 Ghost: ON" : "👻 Ghost (C)";
+      }
+      if (this.termModePill) {
+        this.termModePill.textContent = this.ghostMode ? "GHOST AUTO" : "8 AGENTS";
+      }
+      this.logTerminal(
+        AGENTS[0],
+        "MODE",
+        this.ghostMode
+          ? "cursorLayer.hide() -> Autonomous Self-Assembly Mode ON"
+          : "cursorLayer.show() -> 8 Multiplayer AI Cursors ON"
+      );
+    }
+
+    togglePause() {
+      this.paused = !this.paused;
+      const btn = this.hud?.querySelector("#swarm-btn-pause");
+      if (btn) {
+        btn.classList.toggle("is-active", this.paused);
+        btn.textContent = this.paused ? "▶️" : "⏸️";
+      }
+      this.logTerminal(
+        AGENTS[0],
+        this.paused ? "PAUSE" : "RESUME",
+        this.paused ? "Timeline paused (Press Space to resume)" : "Timeline resumed"
+      );
+    }
+
+    toggleTerminal() {
+      this.terminalVisible = !this.terminalVisible;
+      if (this.terminalEl) {
+        this.terminalEl.classList.toggle("is-hidden", !this.terminalVisible);
+      }
+      const btn = this.hud?.querySelector("#swarm-btn-term");
+      if (btn) {
+        btn.classList.toggle("is-active", this.terminalVisible);
+      }
+    }
+
+    logTerminal(agent, badge, codeText) {
+      if (!this.termLinesEl || !this.termCmdEl) return;
+      const color = (agent && agent.color) || "#10b981";
+      const line = document.createElement("div");
+      line.className = "swarm-term-line";
+      const safeCode = String(codeText || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+      line.innerHTML = `<span class="t-badge" style="background:${color}">${badge}</span><span class="t-code">${safeCode}</span>`;
+      this.termLinesEl.appendChild(line);
+      while (this.termLinesEl.children.length > 4) {
+        this.termLinesEl.firstChild.remove();
+      }
+      this.termCmdEl.textContent = `> ${agent ? agent.name : "Agent"}: ${codeText}`;
+    }
+
+    cycleTheme() {
+      const themes = [
+        { id: "figma", label: "🎨 Figma" },
+        { id: "architect", label: "📐 Blueprint" },
+        { id: "cyberpunk", label: "⚡ Cyber" },
+      ];
+      const curIdx = themes.findIndex((t) => t.id === this.theme);
+      const next = themes[(curIdx + 1) % themes.length];
+      this.theme = next.id;
+      if (this.overlay) {
+        this.overlay.dataset.theme = this.theme;
+      }
+      const btn = this.hud?.querySelector("#swarm-btn-theme");
+      if (btn) {
+        btn.textContent = next.label;
+        btn.classList.toggle("is-active", this.theme !== "figma");
+      }
+      this.logTerminal(AGENTS[2], "THEME", `stage.setBlueprintTheme("${this.theme}")`);
+    }
+
+    enableSectionPicker() {
+      if (this.pickerActive) return;
+      this.pickerActive = true;
+      this.paused = true;
+      const btn = this.hud?.querySelector("#swarm-btn-pick");
+      if (btn) btn.classList.add("is-active");
+      this.updateHudStatus(
+        `<strong>🎯 Mode Pilih Bagian</strong> · Klik kartu atau seksi mana pun untuk dirakit ulang!`,
+        100
+      );
+      this.logTerminal(AGENTS[0], "PICK", "Hover & click any DOM container to rebuild it from scratch");
+      window.addEventListener("mousemove", this.onPickerMove, true);
+      window.addEventListener("click", this.onPickerClick, true);
+    }
+
+    disableSectionPicker() {
+      if (!this.pickerActive) return;
+      this.pickerActive = false;
+      this.hoveredPickEl = null;
+      if (this.pickerBox) this.pickerBox.classList.remove("is-active");
+      const btn = this.hud?.querySelector("#swarm-btn-pick");
+      if (btn) btn.classList.remove("is-active");
+      window.removeEventListener("mousemove", this.onPickerMove, true);
+      window.removeEventListener("click", this.onPickerClick, true);
+    }
+
+    onPickerMove(e) {
+      if (!this.pickerActive) return;
+      const target = e.target;
+      if (!target || this.isIgnoredSubtree(target)) {
+        if (this.pickerBox) this.pickerBox.classList.remove("is-active");
+        return;
+      }
+      const pickSel =
+        ".mission-card-3d, .skill-card, .rpg-status-card, .vn-card, .vn-dialog-bubble, .timeline-node, .contact-letter-card, .ofuda-wall-panel, .epilog-box, #vibe-pass-card, .story-scene, section, article, form, header, [class*='card'], [class*='box'], [class*='panel']";
+      const cand = target.closest(pickSel) || target;
+      if (cand && cand !== document.body && cand !== document.documentElement) {
+        this.hoveredPickEl = cand;
+        const r = cand.getBoundingClientRect();
+        this.pickerBox.classList.add("is-active");
+        this.pickerBox.style.left = `${r.left.toFixed(1)}px`;
+        this.pickerBox.style.top = `${r.top.toFixed(1)}px`;
+        this.pickerBox.style.width = `${r.width.toFixed(1)}px`;
+        this.pickerBox.style.height = `${r.height.toFixed(1)}px`;
+        const tag = this.pickerBox.querySelector("#swarm-picker-tag");
+        if (tag) {
+          const name = cand.id
+            ? `#${cand.id}`
+            : cand.className && typeof cand.className === "string"
+            ? `.${cand.className.trim().split(/\s+/)[0]}`
+            : cand.tagName.toLowerCase();
+          tag.textContent = `🎯 Rakit Ulang: ${name} (${Math.round(r.width)}×${Math.round(r.height)})`;
+        }
+      }
+    }
+
+    async onPickerClick(e) {
+      if (!this.pickerActive) return;
+      if (this.hud && this.hud.contains(e.target)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const targetEl = this.hoveredPickEl || e.target;
+      this.disableSectionPicker();
+      if (targetEl && targetEl !== document.body) {
+        await this.rebuildSpecificElement(targetEl);
+      }
+    }
+
+    async rebuildSpecificElement(targetEl) {
+      this.aborted = true;
+      this.paused = false;
+      await new Promise((r) => setTimeout(r, 80));
+      this.restoreAllModifiedElements();
+      this.clearActiveArtifacts();
+
+      this.aborted = false;
+      this.overlay.classList.add("is-building");
+
+      if (targetEl.matches && targetEl.matches(".story-scene[id]")) {
+        const scenes = this.getOrderedScenes();
+        const idx = Math.max(0, scenes.indexOf(targetEl));
+        await this.buildSceneGranular(targetEl, idx === 0, idx, Math.max(1, scenes.length));
+      } else {
+        this.prepareScopeForScratchBuild(targetEl);
+        const mediaEls = Array.from(targetEl.querySelectorAll("img, video, canvas, svg")).filter(
+          (m) => m.getBoundingClientRect().width >= 28
+        );
+        const subCards = Array.from(
+          targetEl.querySelectorAll(".skill-card, .mission-card-3d, .timeline-node")
+        );
+        const containers = subCards.length > 0 ? subCards : [targetEl];
+        containers.forEach((c) => this.hideElementForBuild(c));
+        mediaEls.forEach((m) => this.hideElementForBuild(m));
+
+        this.updateHudStatus(`<strong>🎯 Rakit Bagian</strong> · Merakit Komponen Terpilih...`, 50);
+        await this.ensureElementsInView(targetEl, 110, 0.22);
+        await this.buildWaveWithAllCursors({
+          sceneEl: targetEl,
+          containers,
+          mediaEls: mediaEls.slice(0, 4),
+          scopes: [targetEl],
+          label: "Picked Component",
+        });
+        this.releaseSceneElements(targetEl);
+      }
+
+      if (this.running && !this.aborted) {
+        this.sound.playSceneChime();
+        this.overlay.classList.remove("is-building");
+        this.updateHudStatus(`<strong>✓ Selesai</strong> · Bagian Terpilih Terbangun`, 100);
+        if (this.mediaRecorder && this.mediaRecorder.state === "recording") {
+          setTimeout(() => this.stopVideoRecordingAndSave(), 600);
+        }
+      }
+    }
+
+    async toggleVideoRecording() {
+      if (this.mediaRecorder && this.mediaRecorder.state === "recording") {
+        this.stopVideoRecordingAndSave();
+        return;
+      }
+      try {
+        const stream = await navigator.mediaDevices.getDisplayMedia({
+          video: {
+            frameRate: { ideal: 60, max: 60 },
+            displaySurface: "browser",
+          },
+          audio: true,
+          preferCurrentTab: true,
+        });
+        this.mediaStream = stream;
+        this.recordedChunks = [];
+        const mimeTypes = [
+          "video/webm;codecs=vp9,opus",
+          "video/webm;codecs=vp8,opus",
+          "video/webm",
+        ];
+        const mimeType = mimeTypes.find((m) => MediaRecorder.isTypeSupported(m)) || "";
+        this.mediaRecorder = new MediaRecorder(stream, {
+          ...(mimeType ? { mimeType } : {}),
+          videoBitsPerSecond: 12000000,
+        });
+        this.mediaRecorder.ondataavailable = (ev) => {
+          if (ev.data && ev.data.size > 0) {
+            this.recordedChunks.push(ev.data);
+          }
+        };
+        this.mediaRecorder.onstop = () => {
+          this.saveRecordedBlob();
+        };
+        stream.getVideoTracks()[0].addEventListener("ended", () => {
+          if (this.mediaRecorder && this.mediaRecorder.state !== "inactive") {
+            this.mediaRecorder.stop();
+          }
+        });
+
+        this.mediaRecorder.start(200);
+        const btn = this.hud?.querySelector("#swarm-btn-record");
+        if (btn) {
+          btn.classList.add("is-recording");
+          btn.textContent = "⏹ Stop (V)";
+        }
+        this.logTerminal(AGENTS[0], "REC", "Recording 60FPS WebM stream -> Auto-saving on finish");
+        // Hide bottom HUD bar for a clean video and restart from Prolog
+        if (!this.hudHidden) {
+          this.toggleHudVisibility();
+        }
+        await this.restartFromProlog();
+      } catch (err) {
+        this.logTerminal(AGENTS[0], "REC", "Screen capture cancelled or unavailable");
+      }
+    }
+
+    stopVideoRecordingAndSave() {
+      if (this.mediaRecorder && this.mediaRecorder.state !== "inactive") {
+        this.mediaRecorder.stop();
+      }
+      if (this.mediaStream) {
+        this.mediaStream.getTracks().forEach((t) => t.stop());
+        this.mediaStream = null;
+      }
+      const btn = this.hud?.querySelector("#swarm-btn-record");
+      if (btn) {
+        btn.classList.remove("is-recording");
+        btn.textContent = "🔴 Video (V)";
+      }
+      if (this.hudHidden && this.hud) {
+        this.toggleHudVisibility();
+      }
+    }
+
+    saveRecordedBlob() {
+      if (!this.recordedChunks || this.recordedChunks.length === 0) return;
+      const blob = new Blob(this.recordedChunks, { type: "video/webm" });
+      this.recordedChunks = [];
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = `rebuildr-showcase-${Date.now()}.webm`;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+        a.remove();
+      }, 2000);
+      this.logTerminal(AGENTS[0], "SAVED", "Video exported to Downloads!");
+    }
+
     onKeyDown(e) {
       if (document.activeElement && ["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) {
         if (e.key === "Escape") {
@@ -748,7 +1279,33 @@
       }
       if (e.key === "Escape") {
         e.preventDefault();
-        this.stop();
+        if (this.pickerActive) {
+          this.disableSectionPicker();
+          this.paused = false;
+        } else {
+          this.stop();
+        }
+      } else if (e.key === " " || e.code === "Space") {
+        e.preventDefault();
+        this.togglePause();
+      } else if (e.key === "c" || e.key === "C") {
+        e.preventDefault();
+        this.toggleGhostMode();
+      } else if (e.key === "t" || e.key === "T") {
+        e.preventDefault();
+        this.toggleTerminal();
+      } else if (e.key === "b" || e.key === "B") {
+        e.preventDefault();
+        this.cycleTheme();
+      } else if (e.key === "s" || e.key === "S") {
+        if (e.altKey || e.ctrlKey || e.metaKey) return;
+        e.preventDefault();
+        if (this.pickerActive) this.disableSectionPicker();
+        else this.enableSectionPicker();
+      } else if (e.key === "v" || e.key === "V") {
+        if (e.ctrlKey || e.metaKey) return;
+        e.preventDefault();
+        this.toggleVideoRecording();
       } else if (e.key === "h" || e.key === "H") {
         e.preventDefault();
         this.toggleHudVisibility();
@@ -790,8 +1347,16 @@
       }
     }
 
-    sleep(ms) {
-      return new Promise((resolve) => setTimeout(resolve, ms / this.speed));
+    async sleep(ms) {
+      const scaled = Math.max(6, ms / this.speed);
+      let elapsed = 0;
+      const step = 16;
+      while (elapsed < scaled && this.running && !this.aborted) {
+        if (!this.paused) {
+          elapsed += step;
+        }
+        await new Promise((r) => setTimeout(r, Math.min(step, Math.max(4, scaled - elapsed + 4))));
+      }
     }
 
     updateHudStatus(stageLabel, pct) {
@@ -868,6 +1433,11 @@
       });
 
       const frame = this.createSelectionFrame(rect, color1, label, true);
+      this.logTerminal(
+        primaryCursor.agent,
+        "MESH",
+        `<svg mesh="${label}" vertices="${pts.length}" triangles="${tris.length}" />`
+      );
 
       // Step 1: Click vertices one-by-one & triangulate low-poly wireframe mesh on blank stage
       const drawnVertices = [];
@@ -1039,6 +1609,11 @@
       const dimEl = frame.querySelector(".swarm-frame-dim");
       cursor.el.classList.add("is-clicking");
       this.sound.playSnap(0.92);
+      this.logTerminal(
+        cursor.agent,
+        "WIRE",
+        `layout.box("<${el.tagName.toLowerCase()}>", "${Math.round(rect.width)}×${Math.round(rect.height)}px")`
+      );
 
       const dragMs = 280 / this.speed;
       const t0 = performance.now();
@@ -1307,6 +1882,11 @@
       }
 
       this.setCursorMode(cursor, "ibeam", "TYPE", `${cursor.agent.name} · "${shortDesc}"`);
+      this.logTerminal(
+        cursor.agent,
+        unit.isPill ? "UI·BOX" : "TYPE",
+        `dom.type("${shortDesc.replace(/"/g, "'")}")`
+      );
 
       // Case A: Form <input> / <textarea> placeholder typing
       if (unit.placeholderText) {
@@ -1740,6 +2320,10 @@
         });
         this.overlay.classList.remove("is-building");
         this.updateHudStatus(`<strong>✓ Selesai</strong> · Semua Bab Terbangun`, 100);
+        this.logTerminal(AGENTS[0], "DONE", "All scenes reconstructed (100%)");
+        if (this.mediaRecorder && this.mediaRecorder.state === "recording") {
+          setTimeout(() => this.stopVideoRecordingAndSave(), 800);
+        }
       }
     }
 
@@ -1849,6 +2433,10 @@
         this.sound.playSceneChime();
         this.overlay.classList.remove("is-building");
         this.updateHudStatus(`<strong>✓ Selesai</strong> · Seluruh Halaman Terbangun`, 100);
+        this.logTerminal(AGENTS[0], "DONE", "Full webpage reconstructed (100%)");
+        if (this.mediaRecorder && this.mediaRecorder.state === "recording") {
+          setTimeout(() => this.stopVideoRecordingAndSave(), 800);
+        }
       }
     }
 
@@ -2431,6 +3019,10 @@
     stop() {
       this.running = false;
       this.aborted = true;
+      this.disableSectionPicker();
+      if (this.mediaRecorder && this.mediaRecorder.state !== "inactive") {
+        this.stopVideoRecordingAndSave();
+      }
       if (this.rafId) cancelAnimationFrame(this.rafId);
       window.removeEventListener("keydown", this.onKeyDown, true);
 

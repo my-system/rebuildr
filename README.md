@@ -1,6 +1,6 @@
-# Rebuildr ⚡ (Swarm Rebuild Studio)
+# Rebuildr ⚡ (Swarm Rebuild Studio v3.5)
 
-> **Live DOM Multiplayer Cursor Rebuilder** — Deconstructs any live website and rebuilds it from scratch using 8 synchronized AI & design agents for promotional videos, product launches, and portfolio showcases.
+> **Live DOM Multiplayer Cursor & Autonomous Website Rebuilder** — Deconstructs any live website and rebuilds it from scratch using 8 synchronized AI & design agents (or **Ghost Self-Building Mode**) for promotional videos, product launches, and portfolio showcases.
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Manifest: v3](https://img.shields.io/badge/Manifest-v3-green.svg)
@@ -8,15 +8,17 @@
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-- **8-Agent Multiplayer Swarm:** 8 specialized cursors (`Lead Dev`, `Copywriter`, `Figma Vector`, `WebGL Polygon`, `GSAP Motion`, `Data Analytics`, `Shader FX`, and `Audio/Layout`) powered by spring physics (`stiffness` & `damping`).
-- **SVG Polygon Triangulation & Laser Scanline:** Triangulates images and hero illustrations into low-poly meshes vertex-by-vertex before revealing full-color media with a sweep shader.
-- **Dynamic Wireframe-First Boxes:** Renders buttons, badges, pills, and cards as empty dashed blueprint shells with real-time `W × H` bounding dimensions that expand as text is typed.
-- **Real-Time Caret Typing:** Walks 100% of the live DOM text nodes & input placeholders, typing titles character-by-character and paragraphs word-by-word with zero text pop-in.
-- **Auto-Scroll Camera:** Automatically follows construction down the page row-by-row or section-by-section.
-- **Procedural Web Audio Synth:** Built-in mechanical keyboard clicks, vertex plucks, and glass snaps without external audio assets.
-- **Universal Mode:** Works seamlessly on any website by partitioning vertical viewport bands.
+- **8-Agent Multiplayer Swarm (`Mouse Mode`):** 8 specialized cursors (`Lead Dev`, `Copywriter`, `Figma Vector`, `WebGL Polygon`, `GSAP Motion`, `Data Analytics`, `Shader FX`, and `Audio/Layout`) powered by spring physics (`stiffness` & `damping`).
+- **👻 Ghost Self-Building Mode (`C` Key):** Hide the cursors and agent pills at any time so the website **magically assembles itself from scratch** (wireframes draw themselves, polygons triangulate, and text types autonomously).
+- **💻 Live Floating Code & AI Prompt Terminal (`T` Key):** A sleek glassmorphic mini-terminal in the bottom-left corner streaming real-time DOM, SVG mesh, and layout commands synchronized with the active build.
+- **🎨 3 Visual Blueprint Themes (`B` Key):** Switch instantly between **Figma Emerald Grid**, **Architect CAD Blueprint**, and **Cyberpunk Neon Matrix**.
+- **🎯 Interactive Section Picker (`S` Key & Right-Click Menu):** Hover and click any specific card, form, or section on the page to deconstruct and rebuild *only that component* for quick 5–10s social media clips.
+- **🔴 Built-in 60FPS Video Recorder (`V` Key):** Record the browser tab directly to a crisp `.webm` video file using the native `MediaRecorder API`—automatically hides the HUD bar and downloads the video as soon as the build completes.
+- **⏸️ Timeline Pause / Resume (`Space` Key):** Pause and resume the rebuild animation at any moment while recording voiceovers.
+- **📐 SVG Polygon Triangulation & Laser Scanline:** Triangulates images and hero illustrations into low-poly meshes vertex-by-vertex before revealing full-color media with a sweep shader.
+- **📦 Dynamic Wireframe-First Boxes:** Renders buttons, badges, pills, and cards as empty dashed blueprint shells with real-time `W × H` bounding dimensions that expand as text is typed.
 
 ---
 
@@ -24,12 +26,18 @@
 
 | Shortcut | Action |
 | :--- | :--- |
-| **`Alt` + `Shift` + `S`** | **Start / Toggle Rebuildr** on the current page |
-| **`H`** | **Toggle HUD Visibility** (clean 100% borderless screen recording) |
+| **`Alt` + `Shift` + `S`** | **Start / Toggle Rebuildr** on the current webpage |
+| **`C`** | **Toggle Ghost Mode** (Hide/show cursors for autonomous self-building effect) |
+| **`Space`** | **Pause / Resume** the rebuild animation |
+| **`T`** | **Toggle Mini Code Terminal** (Show/hide live code & prompt streamer) |
+| **`B`** | **Cycle Blueprint Theme** (`Figma` → `Architect CAD` → `Cyberpunk Neon`) |
+| **`S`** | **Section Picker Mode** (Click any element on the page to rebuild just that part) |
+| **`V`** | **Start / Stop Built-in Video Recording** (Auto-exports `.webm` at 60 FPS) |
+| **`H`** | **Toggle Bottom HUD Bar** (Clean 100% borderless screen recording) |
 | **`R`** | **Replay / Restart** from the top of the page |
 | **`1` / `2` / `3`** | Switch animation speed instantly (`1×`, `2×`, or `3×`) |
-| **`M`** | **Mute / Unmute** procedural synthesizer sound effects |
-| **`Esc`** | **Stop / Exit** and restore the page to its normal state |
+| **`M`** | **Mute / Unmute** procedural Web Audio synthesizer sound effects |
+| **`Esc`** | **Stop / Exit** (or cancel Section Picker) and restore the page |
 
 ---
 
@@ -46,15 +54,6 @@
 3. Enable **Developer mode** (toggle in the top-right corner).
 4. Click **Load unpacked** and select the folder containing `manifest.json`.
 5. *(Optional)* Go to `chrome://extensions/shortcuts` to customize or verify the **`Alt + Shift + S`** shortcut.
-
----
-
-## 🎥 Recording Workflow
-
-1. Open your target website and press **`F11`** (Full Screen).
-2. Start your screen recorder (e.g. OBS, Windows Game Bar `Win + Alt + R`).
-3. Press **`Alt + Shift + S`** to activate the swarm rebuild animation.
-4. Press **`H`** immediately to hide the bottom HUD control bar for a clean recording.
 
 ---
 

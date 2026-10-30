@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "Swarm Rebuild Studio v2.0",
-  "version": "2.0.0",
-  "description": "Live DOM Scene-Aware multiplayer cursor builder for website showcase & promo videos.",
+  "name": "Rebuildr — Swarm Rebuild Studio v3.5",
+  "version": "3.5.0",
+  "description": "Deconstructs any live website and rebuilds it from scratch using 8 multiplayer AI cursors (or Ghost Self-Building Mode).",
   "action": {
-    "default_title": "Swarm Rebuild Studio (Alt+Shift+S)",
+    "default_title": "Rebuildr Studio (Alt+Shift+S)",
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png",
@@ -19,11 +19,11 @@
     "128": "icons/icon128.png"
   },
   "background": { "service_worker": "background.js" },
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "contextMenus"],
   "commands": {
     "_execute_action": {
       "suggested_key": { "default": "Alt+Shift+S", "mac": "Alt+Shift+S" },
-      "description": "Rebuild this page with Swarm Studio"
+      "description": "Rebuild this page with Rebuildr Studio"
     }
   }
 }
