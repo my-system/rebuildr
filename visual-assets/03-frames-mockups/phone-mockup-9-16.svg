@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920" fill="none">
+  <defs>
+    <linearGradient id="phoneBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="rimGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(16, 185, 129, 0.6)" />
+      <stop offset="50%" stop-color="rgba(56, 189, 248, 0.4)" />
+      <stop offset="100%" stop-color="rgba(168, 85, 247, 0.6)" />
+    </linearGradient>
+    <filter id="phoneShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="25" stdDeviation="40" flood-color="#000000" flood-opacity="0.8" />
+    </filter>
+  </defs>
+
+  <!-- Dark Canvas Backdrop -->
+  <rect width="1080" height="1920" fill="#070a13" />
+
+  <!-- Outer Ambient Glow -->
+  <circle cx="540" cy="960" r="460" fill="rgba(16, 185, 129, 0.08)" filter="blur(60px)" />
+  <circle cx="540" cy="500" r="380" fill="rgba(56, 189, 248, 0.06)" filter="blur(60px)" />
+
+  <!-- Smartphone Outer Bezel (Titanium Rim) -->
+  <g filter="url(#phoneShadow)">
+    <rect x="80" y="60" width="920" height="1800" rx="84" fill="url(#phoneBody)" stroke="url(#rimGlow)" stroke-width="3.5" />
+    <rect x="86" y="66" width="908" height="1788" rx="78" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" fill="none" />
+  </g>
+
+  <!-- Screen Viewport Inner Area -->
+  <rect x="104" y="84" width="872" height="1752" rx="66" fill="#0a0f1d" />
+
+  <!-- Dynamic Island Pill Cutout -->
+  <rect x="420" y="106" width="240" height="48" rx="24" fill="#000000" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" />
+  <!-- Sensor Lens -->
+  <circle cx="616" cy="130" r="7.5" fill="#1e293b" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1" />
+  <circle cx="452" cy="130" r="4.5" fill="#0f172a" />
+
+  <!-- Speaker Ear-Piece Slit -->
+  <line x1="500" y1="94" x2="580" y2="94" stroke="rgba(255, 255, 255, 0.15)" stroke-width="3" stroke-linecap="round" />
+
+  <!-- Home Indicator Bar -->
+  <rect x="390" y="1804" width="300" height="6" rx="3" fill="rgba(255, 255, 255, 0.45)" />
+
+  <!-- Watermark Tag -->
+  <text x="540" y="960" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="28" fill="rgba(255, 255, 255, 0.1)" text-anchor="middle" letter-spacing="4">
+    REBUILDR 9:16 VERTICAL STAGE
+  </text>
+</svg>

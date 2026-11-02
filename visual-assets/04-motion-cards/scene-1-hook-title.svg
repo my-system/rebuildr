@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" width="960" height="480" fill="none">
+  <defs>
+    <filter id="hookGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="24" flood-color="#ef4444" flood-opacity="0.3" />
+    </filter>
+    <linearGradient id="hookTitleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#cbd5e1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Dark Slate Background Box -->
+  <rect width="960" height="480" fill="#080c16" rx="28" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1.5" />
+
+  <!-- Background Subtle Grid -->
+  <path d="M 0 120 L 960 120 M 0 240 L 960 240 M 0 360 L 960 360 M 240 0 L 240 480 M 480 0 L 480 480 M 720 0 L 720 480" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1" />
+
+  <!-- Kicker Tag -->
+  <rect x="360" y="50" width="240" height="32" rx="16" fill="rgba(239, 68, 68, 0.12)" stroke="#ef4444" stroke-width="1.2" />
+  <text x="480" y="71" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="12" fill="#f87171" text-anchor="middle" letter-spacing="2">
+    ⚠️ PROBLEM STATEMENT
+  </text>
+
+  <!-- Main Headline -->
+  <text x="480" y="160" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="52" fill="url(#hookTitleGrad)" text-anchor="middle" letter-spacing="1">
+    BIKIN SHOWCASE PORTOFOLIO
+  </text>
+
+  <!-- Strikethrough Subheading (Pain Point) -->
+  <g transform="translate(0, 40)" filter="url(#hookGlow)">
+    <text x="480" y="210" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="44" fill="#ef4444" text-anchor="middle" letter-spacing="0.5">
+      Makan Waktu Jam-jaman?
+    </text>
+    <!-- Dynamic Red Strike-Through Cross Line -->
+    <line x1="210" y1="210" x2="750" y2="185" stroke="#ef4444" stroke-width="6" stroke-linecap="round" />
+  </g>
+
+  <!-- Solution Teaser Subtitle -->
+  <g transform="translate(480, 360)">
+    <rect x="-240" y="-24" width="480" height="48" rx="24" fill="rgba(16, 185, 129, 0.14)" stroke="#10b981" stroke-width="1.5" />
+    <text x="0" y="7" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="16" fill="#34d399" text-anchor="middle">
+      ⚡ Ada Cara Yang Jauh Lebih Cepat &amp; Otomatis!
+    </text>
+  </g>
+</svg>

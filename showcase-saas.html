@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PULSE — Autonomous AI Engineering & Motion Cloud</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050811;
+      --bg-card: rgba(15, 23, 42, 0.72);
+      --border: rgba(255, 255, 255, 0.1);
+      --emerald: #10b981;
+      --cyan: #38bdf8;
+      --violet: #8b5cf6;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+    /* Hide clunky desktop scrollbar in mobile viewports */
+    @media (max-width: 768px) {
+      html, body {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+      }
+      ::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+    }
+    /* Elegant sleek scrollbar on desktop */
+    @media (min-width: 769px) {
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 9999px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.4);
+      }
+    }
+    body {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 20% 15%, rgba(16, 185, 129, 0.14), transparent 40%),
+        radial-gradient(circle at 80% 25%, rgba(56, 189, 248, 0.12), transparent 42%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Top Navbar */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(5, 8, 17, 0.78);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+      color: #fff;
+      text-decoration: none;
+    }
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 12px var(--emerald);
+    }
+    .nav-Menu {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-Menu a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .nav-Menu a:hover {
+      color: #fff;
+    }
+    .header-cta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #031d15;
+      border-color: rgba(16, 185, 129, 0.5);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.28);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: #e2e8f0;
+    }
+
+    /* Main Sections */
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    section {
+      padding: 68px 0;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 44px;
+      align-items: center;
+      padding-top: 92px;
+    }
+    @media (max-width: 860px) {
+      .hero-section {
+        grid-template-columns: 1fr;
+      }
+      .nav-Menu {
+        display: none;
+      }
+    }
+    @media (max-width: 600px) {
+      header.site-header {
+        padding: 10px 14px;
+      }
+      .brand-logo {
+        font-size: 14.5px;
+        gap: 6px;
+      }
+      .header-cta .btn-secondary {
+        display: none; /* Hide Sign In on small mobile so Deploy Agent button has comfortable space */
+      }
+      .header-cta .btn-primary {
+        padding: 7px 13px;
+        font-size: 12px;
+      }
+      main {
+        padding: 0 16px;
+      }
+      .hero-section {
+        padding-top: 40px;
+        gap: 24px;
+      }
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+      .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .metrics-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .metric-card {
+        padding: 14px 12px;
+      }
+      .metric-num {
+        font-size: 26px;
+      }
+    }
+    .release-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-size: clamp(34px, 4.5vw, 56px);
+      font-weight: 900;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+    .hero-sub {
+      font-size: 16.5px;
+      color: var(--muted);
+      max-width: 52ch;
+      margin-bottom: 28px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+    .hero-visual-card {
+      background: linear-gradient(160deg, rgba(15, 23, 42, 0.9), rgba(8, 13, 26, 0.95));
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(16, 185, 129, 0.12);
+    }
+    .hero-visual-card figure {
+      width: 100%;
+      margin: 0;
+    }
+    .hero-visual-card svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    /* Metrics Strip (Triggers Kinetic Counter Roll) */
+    .metrics-section {
+      padding: 28px 0 48px;
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 780px) {
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 20px;
+      backdrop-filter: blur(12px);
+    }
+    .metric-num {
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--emerald);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: -0.03em;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .metric-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    /* Section Headers */
+    .sec-head {
+      margin-bottom: 34px;
+    }
+    .sec-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--cyan);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .sec-title {
+      font-size: clamp(26px, 3.2vw, 38px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    /* Bento Features Grid (6 Cards -> Curated Mode Picks Top 4 & Reflows!) */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .bento-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .bento-card.featured {
+      border-color: rgba(16, 185, 129, 0.36);
+      background: linear-gradient(160deg, rgba(16, 185, 129, 0.09), rgba(15, 23, 42, 0.8));
+    }
+    .bento-badge {
+      align-self: flex-start;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.14);
+      color: var(--cyan);
+    }
+    .bento-card h3 {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .bento-card p {
+      font-size: 13.8px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .bento-art {
+      margin-top: auto;
+      padding-top: 10px;
+    }
+    .bento-art svg {
+      width: 100%;
+      height: 84px;
+      border-radius: 10px;
+      display: block;
+    }
+
+    /* Low-priority FAQ & Noise Section (Automatically filtered out in AI Curated Mode) */
+    .faq-section {
+      border-top: 1px solid var(--border);
+      padding-top: 48px;
+    }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .faq-item {
+      padding: 18px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+    }
+    .faq-item h4 {
+      font-size: 14.5px;
+      margin-bottom: 6px;
+    }
+    .faq-item p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    footer.site-footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 5vw;
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* Quick Floating Trigger Button for Standalone Demo */
+    #demo-trigger-bar {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      z-index: 9999;
+      display: flex;
+      gap: 10px;
+    }
+    .btn-launch-rebuildr {
+      background: linear-gradient(135deg, #10b981, #0ea5e9);
+      color: #04131a;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 12.5px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 12px 32px rgba(16, 185, 129, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-launch-rebuildr:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 16px 40px rgba(16, 185, 129, 0.55);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="site-header">
+    <a href="#" class="brand-logo">
+      <span class="brand-dot"></span>
+      <span>PULSE // AI CLOUD</span>
+    </a>
+    <ul class="nav-Menu">
+      <li><a href="#features">Neural Engine</a></li>
+      <li><a href="#metrics">Benchmarks</a></li>
+      <li><a href="#workflow">Swarm Pipeline</a></li>
+      <li><a href="#faq">Docs</a></li>
+    </ul>
+    <div class="header-cta">
+      <a href="#launch" class="btn btn-secondary">Sign In</a>
+      <a href="#deploy" class="btn btn-primary">Deploy Agent ⚡</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Hero Section -->
+    <section class="hero-section" id="hero">
+      <div class="hero-copy">
+        <div class="release-pill">⚡ PULSE ENGINE v4.2 · AUTONOMOUS SWARM</div>
+        <h1 class="hero-title">Rakit Antarmuka Produksi dengan Kecepatan Neural.</h1>
+        <p class="hero-sub">
+          8 agen AI otonom berkolaborasi merancang wireframe, merender poligon shader, dan men-deploy arsitektur cloud secara real-time tanpa konfigurasi manual.
+        </p>
+        <div class="hero-actions">
+          <a href="#start" class="btn btn-primary">Mulai Eksperimen Gratis →</a>
+          <a href="#demo" class="btn btn-secondary">Tonton Arsitektur 60FPS</a>
+        </div>
+
+        <!-- Live Interactive Sandbox Widget for Feature Tour Demo -->
+        <div class="interactive-demo-widget" style="margin-top: 24px; padding: 16px 20px; background: rgba(15,23,42,0.85); border: 1px solid rgba(16,185,129,0.3); border-radius: 12px; max-width: 520px; box-shadow: 0 12px 30px rgba(0,0,0,0.4);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+            <span style="font-size: 11px; font-weight: 800; color: #10b981; font-family: monospace; letter-spacing: 0.5px;">⚡ LIVE FEATURE SEARCH & FILTER</span>
+            <span style="font-size: 10.5px; color: #94a3b8; background: rgba(255,255,255,0.06); padding: 2px 7px; border-radius: 4px;">Interactive Demo</span>
+          </div>
+          <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+            <input type="search" placeholder="Cari modul AI atau arsitektur..." style="flex: 1; padding: 10px 14px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: 13px; outline: none;" />
+            <button class="btn btn-primary" style="padding: 10px 16px; font-size: 13px; border-radius: 8px;">Cari</button>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="filter-chip active" style="padding: 4px 10px; border-radius: 6px; background: rgba(16,185,129,0.2); border: 1px solid #10b981; color: #fff; font-size: 11.5px; cursor: pointer;">⚡ Neural Grid</button>
+            <button class="filter-chip" style="padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-size: 11.5px; cursor: pointer;">📐 SVG Triangulation</button>
+            <button class="filter-chip" style="padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-size: 11.5px; cursor: pointer;">🎬 60FPS Video</button>
+          </div>
+
+          <!-- Micro-Interactions: Toggle Switch, Range Slider, & Select Dropdown -->
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08);">
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #e2e8f0; cursor: pointer;">
+              <input type="checkbox" id="toggle-turbo-mode" style="accent-color: #10b981; width: 16px; height: 16px; cursor: pointer;" />
+              <span>⚡ Neural Turbo Acceleration (2.5x Speed)</span>
+            </label>
+            <span style="font-size: 10.5px; color: #10b981; font-family: monospace;">STATUS: READY</span>
+          </div>
+
+          <div style="margin-top: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: #94a3b8; margin-bottom: 4px;">
+              <span>Alokasi GPU Cluster</span>
+              <span id="slider-val" style="color: #38bdf8; font-family: monospace;">78% Active</span>
+            </div>
+            <input type="range" id="gpu-range-slider" min="10" max="100" value="45" style="width: 100%; accent-color: #10b981; cursor: pointer;" />
+          </div>
+
+          <div style="margin-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <label for="select-preset" style="font-size: 11.5px; color: #94a3b8;">Arsitektur Cloud:</label>
+            <select id="select-preset" style="background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 4px 8px; font-size: 11.5px; outline: none; cursor: pointer;">
+              <option value="multi-region">Multi-Region Neural Mesh (Tokyo & US)</option>
+              <option value="edge-accelerated" selected>Edge Accelerated 60FPS Low-Latency</option>
+              <option value="enterprise-dedicated">Enterprise Dedicated GPU Pod</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual-card">
+        <figure>
+          <svg viewBox="0 0 520 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="520" height="340" rx="14" fill="#070D1B"/>
+            <g opacity="0.25" stroke="#1E293B" stroke-width="1">
+              <line x1="0" y1="68" x2="520" y2="68"/>
+              <line x1="0" y1="136" x2="520" y2="136"/>
+              <line x1="0" y1="204" x2="520" y2="204"/>
+              <line x1="0" y1="272" x2="520" y2="272"/>
+              <line x1="104" y1="0" x2="104" y2="340"/>
+              <line x1="208" y1="0" x2="208" y2="340"/>
+              <line x1="312" y1="0" x2="312" y2="340"/>
+              <line x1="416" y1="0" x2="416" y2="340"/>
+            </g>
+            <!-- Neural Polygon Nodes -->
+            <polygon points="260,44 160,118 210,220 310,220 360,118" fill="rgba(16,185,129,0.14)" stroke="#10B981" stroke-width="2"/>
+            <polygon points="260,44 210,220 310,220" fill="rgba(56,189,248,0.16)" stroke="#38BDF8" stroke-width="1.8"/>
+            <path d="M74 268 C140 190, 200 240, 260 148 C320 60, 380 180, 456 92" stroke="#10B981" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M74 290 C150 250, 220 270, 290 200 C350 140, 400 210, 456 164" stroke="#38BDF8" stroke-width="2.5" stroke-dasharray="6 6"/>
+            <circle cx="260" cy="44" r="7" fill="#10B981"/>
+            <circle cx="160" cy="118" r="6" fill="#38BDF8"/>
+            <circle cx="360" cy="118" r="6" fill="#38BDF8"/>
+            <circle cx="210" cy="220" r="6" fill="#8B5CF6"/>
+            <circle cx="310" cy="220" r="6" fill="#8B5CF6"/>
+            <rect x="28" y="24" width="148" height="46" rx="8" fill="rgba(15,23,42,0.88)" stroke="rgba(16,185,129,0.45)"/>
+            <text x="42" y="45" fill="#10B981" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">SWARM // ACTIVE</text>
+            <text x="42" y="61" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="10">8 Nodes · 99.8% Sync</text>
+          </svg>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 2. Live Metrics Strip (Triggers Kinetic Counter Roll!) -->
+    <section class="metrics-section" id="metrics">
+      <div class="metrics-grid" data-curate-grid>
+        <div class="metric-card featured" data-curate-priority="high">
+          <span class="metric-num">99%</span>
+          <span class="metric-label">Akurasi Transpilasi DOM</span>
+        </div>
+        <div class="metric-card featured" data-curate-priority="high">
+          <span class="metric-num">14x</span>
+          <span class="metric-label">Kecepatan Render Visual</span>
+        </div>
+        <div class="metric-card featured" data-curate-priority="high">
+          <span class="metric-num">60fps</span>
+          <span class="metric-label">Perekaman Motion Stream</span>
+        </div>
+        <div class="metric-card" data-curate-priority="high">
+          <span class="metric-num">240ms</span>
+          <span class="metric-label">Latensi Sinkronisasi Agen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Bento Features Grid -->
+    <section id="features">
+      <div class="sec-head">
+        <span class="sec-kicker">ARSITEKTUR MULTI-AGEN</span>
+        <h2 class="sec-title">Dirancang untuk Eksperimen & Showcase Produk</h2>
+      </div>
+
+      <div class="bento-grid" data-curate-grid>
+        <!-- Card 1 (High Priority) -->
+        <article class="bento-card featured" data-curate-priority="high">
+          <span class="bento-badge">01 // POLYGON MESH</span>
+          <h3>Triangulasi Vektor Otomatis</h3>
+          <p>Setiap aset visual dipetakan menjadi jaring poligon berpresisi tinggi sebelum disapu dengan shader laser.</p>
+          <div class="bento-art">
+            <svg viewBox="0 0 280 84" fill="none">
+              <rect width="280" height="84" rx="8" fill="#091326"/>
+              <polygon points="24,68 78,18 134,58 196,16 256,64" fill="rgba(16,185,129,0.18)" stroke="#10B981" stroke-width="2"/>
+              <circle cx="78" cy="18" r="4" fill="#fff"/>
+              <circle cx="196" cy="16" r="4" fill="#fff"/>
+            </svg>
+          </div>
+        </article>
+
+        <!-- Card 2 (High Priority) -->
+        <article class="bento-card featured" data-curate-priority="high">
+          <span class="bento-badge">02 // AI CURATOR</span>
+          <h3>Smart Layout Re-arranger</h3>
+          <p>Menyaring elemen halaman yang kurang penting dan menyusun ulang grid agar tampil simetris di video 9:16 maupun 16:9.</p>
+          <div class="bento-art">
+            <svg viewBox="0 0 280 84" fill="none">
+              <rect width="280" height="84" rx="8" fill="#091326"/>
+              <rect x="18" y="16" width="72" height="52" rx="6" fill="rgba(56,189,248,0.2)" stroke="#38BDF8" stroke-width="1.6"/>
+              <rect x="104" y="16" width="72" height="52" rx="6" fill="rgba(16,185,129,0.2)" stroke="#10B981" stroke-width="1.6"/>
+              <rect x="190" y="16" width="72" height="52" rx="6" fill="rgba(139,92,246,0.2)" stroke="#8B5CF6" stroke-width="1.6"/>
+            </svg>
+          </div>
+        </article>
+
+        <!-- Card 3 (High Priority) -->
+        <article class="bento-card featured" data-curate-priority="high">
+          <span class="bento-badge">03 // AUDIO SYNTH</span>
+          <h3>Procedural Sound Design</h3>
+          <p>Efek suara mekanik, whoosh transisi kamera, dan detak counter disintesis langsung via Web Audio API.</p>
+          <div class="bento-art">
+            <svg viewBox="0 0 280 84" fill="none">
+              <rect width="280" height="84" rx="8" fill="#091326"/>
+              <path d="M20 42 Q 45 10, 70 42 T 120 42 T 170 42 T 220 42 T 260 42" stroke="#10B981" stroke-width="2.4" fill="none"/>
+              <path d="M20 42 Q 45 70, 70 42 T 120 42 T 170 42 T 220 42 T 260 42" stroke="#38BDF8" stroke-width="1.6" stroke-dasharray="4 4" fill="none"/>
+            </svg>
+          </div>
+        </article>
+
+        <!-- Card 4 (High Priority) -->
+        <article class="bento-card featured" data-curate-priority="high">
+          <span class="bento-badge">04 // 60FPS EXPORT</span>
+          <h3>Direct MP4 & WebM Recorder</h3>
+          <p>Rekam kanvas beserta jalur suara sintetis langsung menjadi file video tajam siap posting ke TikTok dan Reels.</p>
+          <div class="bento-art">
+            <svg viewBox="0 0 280 84" fill="none">
+              <rect width="280" height="84" rx="8" fill="#091326"/>
+              <circle cx="52" cy="42" r="14" fill="rgba(244,63,94,0.25)" stroke="#F43F5E" stroke-width="2"/>
+              <circle cx="52" cy="42" r="6" fill="#F43F5E"/>
+              <rect x="84" y="28" width="168" height="10" rx="5" fill="#1E293B"/>
+              <rect x="84" y="28" width="124" height="10" rx="5" fill="#10B981"/>
+              <rect x="84" y="46" width="110" height="8" rx="4" fill="#334155"/>
+            </svg>
+          </div>
+        </article>
+
+        <!-- Card 5 (Secondary - Omitted in Curated Mode so grid stays compact) -->
+        <article class="bento-card" data-curate-priority="low">
+          <span class="bento-badge">05 // LEGACY LOGS</span>
+          <h3>Arsip Telemetri Harian</h3>
+          <p>Penyimpanan log historis mentah untuk kebutuhan audit server internal dan pemeliharaan berkala.</p>
+        </article>
+
+        <!-- Card 6 (Secondary - Omitted in Curated Mode so grid stays compact) -->
+        <article class="bento-card" data-curate-priority="low">
+          <span class="bento-badge">06 // COMPLIANCE</span>
+          <h3>Konfigurasi Regulasi Regional</h3>
+          <p>Pengaturan kebijakan privasi tambahan dan manajemen persetujuan kuki untuk berbagai wilayah hukum.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. Noise / Clutter FAQ Section (Automatically omitted by AI Curator!) -->
+    <section class="faq-section" id="faq" data-curate="omit">
+      <div class="sec-head">
+        <span class="sec-kicker">INFORMASI TAMBAHAN</span>
+        <h2 class="sec-title">Pertanyaan Umum & Catatan Lisensi</h2>
+      </div>
+      <div class="faq-grid">
+        <details class="faq-item" style="cursor: pointer; padding: 16px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+          <summary style="font-weight: 700; color: #f8fafc; outline: none;">Bagaimana cara mengekspor video resolusi tinggi?</summary>
+          <p style="margin-top: 10px; color: #94a3b8; font-size: 13.5px;">Rebuildr Studio mengekspor video berkecepatan 60 FPS langsung dalam format MP4 dan WebM dengan sinkronisasi Web Audio API.</p>
+        </details>
+        <div class="faq-item">
+          <h4>Apakah bagian ini ikut masuk ke video kurasi?</h4>
+          <p>Tidak. Saat fitur Kurasi AI aktif, bagian FAQ dan catatan kaki seperti ini otomatis disembunyikan agar durasi video tetap padat.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Bagaimana dengan tata letak kartu di atas?</h4>
+          <p>Dari 6 kartu Bento, AI Curator memilih 4 kartu terbaik yang memiliki grafik visual dan menyusun ulang grid-nya secara simetris.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" data-curate="omit">
+    <span>© 2026 PULSE AI Cloud · Powered by Rebuildr Studio v3.6</span>
+    <span>Status: All 8 Swarm Nodes Operational</span>
+  </footer>
+
+  <!-- Standalone Demo Launcher -->
+  <div id="demo-trigger-bar" data-curate="omit">
+    <button class="btn-launch-rebuildr" id="btn-trigger-swarm">
+      ⚡ Buka Rebuildr Studio (Alt+Shift+S)
+    </button>
+  </div>
+
+  <script>
+    document.getElementById("btn-trigger-swarm")?.addEventListener("click", () => {
+      if (window.__swarmRebuild) {
+        window.__swarmRebuild.toggle();
+        return;
+      }
+      const s = document.createElement("script");
+      s.src = "./swarm.js";
+      document.body.appendChild(s);
+    });
+  </script>
+</body>
+</html>

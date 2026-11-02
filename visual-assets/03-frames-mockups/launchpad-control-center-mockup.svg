@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 840" width="760" height="840" fill="none">
+  <defs>
+    <filter id="lpGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="30" flood-color="#000000" flood-opacity="0.8" />
+    </filter>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(30, 41, 59, 0.7)" />
+      <stop offset="100%" stop-color="rgba(15, 23, 42, 0.9)" />
+    </linearGradient>
+  </defs>
+
+  <!-- Modal Backdrop Box -->
+  <g transform="translate(30, 30)" filter="url(#lpGlow)">
+    <rect x="0" y="0" width="700" height="780" rx="28" fill="#0b0f19" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.8" />
+    <rect x="2" y="2" width="696" height="776" rx="26" stroke="#10b981" stroke-width="1" stroke-opacity="0.4" fill="none" />
+
+    <!-- Header Section -->
+    <g transform="translate(36, 36)">
+      <!-- Badge -->
+      <rect x="0" y="0" width="170" height="26" rx="13" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="1" />
+      <text x="14" y="17" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="11" fill="#34d399">⚡ REBUILDR STUDIO v3.5</text>
+      
+      <!-- Close Button -->
+      <circle cx="628" cy="18" r="16" fill="rgba(255, 255, 255, 0.08)" />
+      <text x="628" y="23" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="15" fill="#94a3b8" text-anchor="middle">✕</text>
+
+      <text x="0" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="26" fill="#ffffff">Pusat Kontrol Perakitan</text>
+      <text x="0" y="84" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="13" fill="#94a3b8">Sesuaikan rasio aspek, mode kamera sinematik, dan AI director sebelum mulai.</text>
+      <line x1="0" y1="102" x2="628" y2="102" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" />
+    </g>
+
+    <!-- Card 1: Format Kanvas Video (16:9 vs 9:16) -->
+    <g transform="translate(36, 160)">
+      <rect x="0" y="0" width="628" height="120" rx="16" fill="url(#cardGrad)" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+      <text x="20" y="30" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="14" fill="#ffffff">📐 Format Kanvas Video (Rasio Layar)</text>
+      <text x="20" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="11" fill="#64748b">Pilih rasio kanvas untuk platform tujuan</text>
+
+      <!-- 16:9 Button -->
+      <rect x="20" y="60" width="288" height="46" rx="10" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(255, 255, 255, 0.12)" />
+      <text x="36" y="83" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="12" fill="#cbd5e1">🖥️ 16:9 Landscape</text>
+      <text x="36" y="96" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="9" fill="#64748b">Desktop / YouTube Widescreen</text>
+
+      <!-- 9:16 Button (Active) -->
+      <rect x="320" y="60" width="288" height="46" rx="10" fill="rgba(16, 185, 129, 0.16)" stroke="#10b981" stroke-width="1.5" />
+      <text x="336" y="83" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="12" fill="#ffffff">📱 9:16 Portrait (Reels / TikTok)</text>
+      <text x="336" y="96" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="9" fill="#34d399">Kanvas mobile 440px di tengah (1 Kolom)</text>
+    </g>
+
+    <!-- Card 2: Mode Video (Motion Design vs Scroll) -->
+    <g transform="translate(36, 300)">
+      <rect x="0" y="0" width="628" height="120" rx="16" fill="url(#cardGrad)" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+      <text x="20" y="30" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="14" fill="#ffffff">🎬 Mode Video &amp; Pergerakan Kamera</text>
+      <text x="20" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="11" fill="#64748b">Pilih gaya visual pergerakan kamera</text>
+
+      <!-- Motion Mode (Active) -->
+      <rect x="20" y="60" width="288" height="46" rx="10" fill="rgba(16, 185, 129, 0.16)" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="83" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="12" fill="#ffffff">🎬 Motion Design Mode (G)</text>
+      <text x="36" y="96" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="9" fill="#34d399">Title card kinetik, DoF, transisi mulus</text>
+
+      <!-- Scroll Mode -->
+      <rect x="320" y="60" width="288" height="46" rx="10" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(255, 255, 255, 0.12)" />
+      <text x="336" y="83" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="12" fill="#cbd5e1">📜 Smooth Scroll Mode</text>
+      <text x="336" y="96" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="9" fill="#64748b">Kamera auto-scroll alami dari atas ke bawah</text>
+    </g>
+
+    <!-- Card 3: Lingkup Kurasi AI -->
+    <g transform="translate(36, 440)">
+      <rect x="0" y="0" width="628" height="110" rx="16" fill="url(#cardGrad)" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+      <text x="20" y="28" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="14" fill="#ffffff">🎯 Lingkup Perakitan Halaman (Scope)</text>
+      
+      <!-- 3 Segments -->
+      <rect x="20" y="44" width="186" height="52" rx="10" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(255, 255, 255, 0.1)" />
+      <text x="32" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="11" fill="#cbd5e1">🌐 Semua Halaman</text>
+      <text x="32" y="80" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="9" fill="#64748b">Rakit alur lengkap</text>
+
+      <rect x="221" y="44" width="186" height="52" rx="10" fill="rgba(16, 185, 129, 0.16)" stroke="#10b981" stroke-width="1.5" />
+      <text x="233" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="11" fill="#ffffff">✨ Kurasi AI (30s)</text>
+      <text x="233" y="80" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="9" fill="#34d399">Highlight karya &amp; stats</text>
+
+      <rect x="422" y="44" width="186" height="52" rx="10" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(255, 255, 255, 0.1)" />
+      <text x="434" y="66" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="11" fill="#cbd5e1">🎯 Pilih Manual (S)</text>
+      <text x="434" y="80" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="9" fill="#64748b">Klik kartu tertentu</text>
+    </g>
+
+    <!-- Toggles Row: DoF + Zoom + Counter Roll -->
+    <g transform="translate(36, 570)">
+      <rect x="0" y="0" width="198" height="66" rx="12" fill="rgba(16, 185, 129, 0.08)" stroke="#10b981" stroke-width="1" />
+      <circle cx="24" cy="24" r="9" fill="#10b981" />
+      <path d="M 20 24 L 23 27 L 29 21" stroke="#ffffff" stroke-width="2" />
+      <text x="42" y="27" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="11" fill="#ffffff">🎥 Camera Zoom</text>
+      <text x="16" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="9" fill="#94a3b8">Elevasi kartu aktif 3D</text>
+
+      <rect x="215" y="0" width="198" height="66" rx="12" fill="rgba(16, 185, 129, 0.08)" stroke="#10b981" stroke-width="1" />
+      <circle cx="239" cy="24" r="9" fill="#10b981" />
+      <path d="M 235 24 L 238 27 L 244 21" stroke="#ffffff" stroke-width="2" />
+      <text x="257" y="27" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="11" fill="#ffffff">🔍 Depth of Field</text>
+      <text x="231" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="9" fill="#94a3b8">Rack focus bokeh blur</text>
+
+      <rect x="430" y="0" width="198" height="66" rx="12" fill="rgba(16, 185, 129, 0.08)" stroke="#10b981" stroke-width="1" />
+      <circle cx="454" cy="24" r="9" fill="#10b981" />
+      <path d="M 450 24 L 453 27 L 459 21" stroke="#ffffff" stroke-width="2" />
+      <text x="472" y="27" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="11" fill="#ffffff">🔢 Counter Roll</text>
+      <text x="446" y="48" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="9" fill="#94a3b8">Putaran angka Apple</text>
+    </g>
+
+    <!-- Footer Bar with Start Button -->
+    <g transform="translate(36, 670)">
+      <rect x="0" y="0" width="628" height="74" rx="18" fill="rgba(15, 23, 42, 0.95)" stroke="rgba(255, 255, 255, 0.1)" />
+      
+      <!-- Start Button (Big Emerald Action) -->
+      <rect x="360" y="14" width="252" height="46" rx="23" fill="#10b981" />
+      <text x="486" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="14" fill="#0b0f19" text-anchor="middle" letter-spacing="1">
+        ▶ MULAI RAKIT SEKARANG
+      </text>
+
+      <!-- Tip Text -->
+      <text x="24" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="12" fill="#94a3b8">
+        💡 Tekan <tspan fill="#ffffff" font-weight="800">Spasi</tspan> untuk mulai langsung
+      </text>
+    </g>
+  </g>
+</svg>

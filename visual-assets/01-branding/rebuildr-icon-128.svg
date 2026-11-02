@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" fill="none">
+  <defs>
+    <linearGradient id="neonEmerald128" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="50%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <filter id="glow128" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Squircle -->
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="#0b0f19" stroke="url(#neonEmerald128)" stroke-width="2.5" />
+  <rect x="10" y="10" width="108" height="108" rx="22" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" fill="none" />
+
+  <!-- Corner Blueprint Ticks -->
+  <path d="M 18 26 L 26 26 M 22 22 L 22 30" stroke="#38bdf8" stroke-width="1.5" />
+  <path d="M 102 26 L 110 26 M 106 22 L 106 30" stroke="#38bdf8" stroke-width="1.5" />
+  <path d="M 18 102 L 26 102 M 22 98 L 22 106" stroke="#38bdf8" stroke-width="1.5" />
+  <path d="M 102 102 L 110 102 M 106 98 L 106 106" stroke="#38bdf8" stroke-width="1.5" />
+
+  <!-- Lightning Bolt -->
+  <path d="M 72 20 L 38 72 L 62 72 L 50 110 L 90 58 L 66 58 Z" 
+        fill="url(#neonEmerald128)" 
+        stroke="#a7f3d0" 
+        stroke-width="2" 
+        stroke-linejoin="round"
+        filter="url(#glow128)" />
+
+  <!-- Multi-Agent Dots -->
+  <circle cx="38" cy="72" r="3.5" fill="#38bdf8" filter="url(#glow128)" />
+  <circle cx="90" cy="58" r="3.5" fill="#a855f7" filter="url(#glow128)" />
+  <circle cx="50" cy="110" r="3.5" fill="#f59e0b" filter="url(#glow128)" />
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920" fill="none">
+  <defs>
+    <!-- Small 20x20 Grid -->
+    <pattern id="gridSmall" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255, 255, 255, 0.03)" stroke-width="0.75" />
+    </pattern>
+
+    <!-- Large 100x100 Grid with Crosshairs -->
+    <pattern id="gridLarge" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="url(#gridSmall)" />
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(56, 189, 248, 0.08)" stroke-width="1.2" />
+      <!-- Center Crosshair -->
+      <path d="M 46 50 L 54 50 M 50 46 L 50 54" stroke="rgba(16, 185, 129, 0.2)" stroke-width="1.5" />
+    </pattern>
+
+    <!-- Ambient Vignette Gradient -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#0b0f19" stop-opacity="0.8" />
+      <stop offset="60%" stop-color="#070a13" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#020408" stop-opacity="1" />
+    </radialGradient>
+
+    <!-- Emerald Top Glow -->
+    <radialGradient id="topGlow" cx="50%" cy="0%" r="60%">
+      <stop offset="0%" stop-color="rgba(16, 185, 129, 0.12)" />
+      <stop offset="100%" stop-color="rgba(16, 185, 129, 0)" />
+    </radialGradient>
+  </defs>
+
+  <!-- Deep Slate Canvas Base -->
+  <rect width="1080" height="1920" fill="#070a13" />
+
+  <!-- Pattern Grid Fill -->
+  <rect width="1080" height="1920" fill="url(#gridLarge)" />
+
+  <!-- Ambient Top & Bottom Lighting -->
+  <rect width="1080" height="1920" fill="url(#topGlow)" />
+  <rect width="1080" height="1920" fill="url(#vignette)" />
+
+  <!-- Laser Scanline Guides -->
+  <line x1="0" y1="280" x2="1080" y2="280" stroke="rgba(16, 185, 129, 0.15)" stroke-width="1" stroke-dasharray="12 6" />
+  <line x1="0" y1="960" x2="1080" y2="960" stroke="rgba(56, 189, 248, 0.15)" stroke-width="1" stroke-dasharray="12 6" />
+  <line x1="0" y1="1640" x2="1080" y2="1640" stroke="rgba(168, 85, 247, 0.15)" stroke-width="1" stroke-dasharray="12 6" />
+
+  <!-- Coordinate Markings -->
+  <text x="36" y="274" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(16, 185, 129, 0.4)">Y:0280 [HEADER_SAFE]</text>
+  <text x="36" y="954" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(56, 189, 248, 0.4)">Y:0960 [VIEWPORT_CENTER]</text>
+  <text x="36" y="1634" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(168, 85, 247, 0.4)">Y:1640 [FOOTER_SAFE]</text>
+</svg>

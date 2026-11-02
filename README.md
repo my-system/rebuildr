@@ -1,62 +1,152 @@
-# Rebuildr ⚡ (Swarm Rebuild Studio v3.5)
+# REBUILDR AI ⚡
+### Autonomous Website Motion Engine & 60FPS Video Generator
 
-> **Live DOM Multiplayer Cursor & Autonomous Website Rebuilder** — Deconstructs any live website and rebuilds it from scratch using 8 synchronized AI & design agents (or **Ghost Self-Building Mode**) for promotional videos, product launches, and portfolio showcases.
-
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-![Manifest: v3](https://img.shields.io/badge/Manifest-v3-green.svg)
-![Vanilla JS: 100%](https://img.shields.io/badge/Vanilla%20JS-Zero%20Dependencies-yellow.svg)
+> **Turn any live website URL into a broadcast-quality 60FPS promotional video, mobile reel, and showcase in seconds.** Powered by 8 synchronized AI cursor agents or autonomous Ghost Self-Building mode.
 
 ---
 
-## ✨ Key Features
+<p align="center">
+  <img src="assets/demo-preview-16-9.gif" alt="Rebuildr Studio Demo Preview" width="85%" style="border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);" />
+</p>
 
-- **8-Agent Multiplayer Swarm (`Mouse Mode`):** 8 specialized cursors (`Lead Dev`, `Copywriter`, `Figma Vector`, `WebGL Polygon`, `GSAP Motion`, `Data Analytics`, `Shader FX`, and `Audio/Layout`) powered by spring physics (`stiffness` & `damping`).
-- **👻 Ghost Self-Building Mode (`C` Key):** Hide the cursors and agent pills at any time so the website **magically assembles itself from scratch** (wireframes draw themselves, polygons triangulate, and text types autonomously).
-- **💻 Live Floating Code & AI Prompt Terminal (`T` Key):** A sleek glassmorphic mini-terminal in the bottom-left corner streaming real-time DOM, SVG mesh, and layout commands synchronized with the active build.
-- **🎨 3 Visual Blueprint Themes (`B` Key):** Switch instantly between **Figma Emerald Grid**, **Architect CAD Blueprint**, and **Cyberpunk Neon Matrix**.
-- **🎯 Interactive Section Picker (`S` Key & Right-Click Menu):** Hover and click any specific card, form, or section on the page to deconstruct and rebuild *only that component* for quick 5–10s social media clips.
-- **🔴 Built-in 60FPS Video Recorder (`V` Key):** Record the browser tab directly to a crisp `.webm` video file using the native `MediaRecorder API`—automatically hides the HUD bar and downloads the video as soon as the build completes.
-- **⏸️ Timeline Pause / Resume (`Space` Key):** Pause and resume the rebuild animation at any moment while recording voiceovers.
-- **📐 SVG Polygon Triangulation & Laser Scanline:** Triangulates images and hero illustrations into low-poly meshes vertex-by-vertex before revealing full-color media with a sweep shader.
-- **📦 Dynamic Wireframe-First Boxes:** Renders buttons, badges, pills, and cards as empty dashed blueprint shells with real-time `W × H` bounding dimensions that expand as text is typed.
-
----
-
-## ⌨️ Keyboard Shortcuts
-
-| Shortcut | Action |
-| :--- | :--- |
-| **`Alt` + `Shift` + `S`** | **Start / Toggle Rebuildr** on the current webpage |
-| **`C`** | **Toggle Ghost Mode** (Hide/show cursors for autonomous self-building effect) |
-| **`Space`** | **Pause / Resume** the rebuild animation |
-| **`T`** | **Toggle Mini Code Terminal** (Show/hide live code & prompt streamer) |
-| **`B`** | **Cycle Blueprint Theme** (`Figma` → `Architect CAD` → `Cyberpunk Neon`) |
-| **`S`** | **Section Picker Mode** (Click any element on the page to rebuild just that part) |
-| **`V`** | **Start / Stop Built-in Video Recording** (Auto-exports `.webm` at 60 FPS) |
-| **`H`** | **Toggle Bottom HUD Bar** (Clean 100% borderless screen recording) |
-| **`R`** | **Replay / Restart** from the top of the page |
-| **`1` / `2` / `3`** | Switch animation speed instantly (`1×`, `2×`, or `3×`) |
-| **`M`** | **Mute / Unmute** procedural Web Audio synthesizer sound effects |
-| **`Esc`** | **Stop / Exit** (or cancel Section Picker) and restore the page |
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js 18+" />
+  <img src="https://img.shields.io/badge/Puppeteer-Core-40B5A4?style=for-the-badge&logo=puppeteer&logoColor=white" alt="Puppeteer" />
+  <img src="https://img.shields.io/badge/FFmpeg-60FPS%20MP4%20%26%20GIF-007808?style=for-the-badge&logo=ffmpeg&logoColor=white" alt="FFmpeg" />
+  <img src="https://img.shields.io/badge/Vanilla%20JS-Zero%20Framework-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="Vanilla JS" />
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="License MIT" />
+</p>
 
 ---
 
-## 🚀 Installation
+## 🌟 Highlights & Key Features
 
-1. Clone or download this repository:
+### 1. 🎬 Dual-View Architecture (Landing Page & Studio Pro)
+- **Modern Landing Showcase (`/`)**: Dark-glassmorphic product hero page featuring an interactive device switcher, auto-playing video showcase gallery, feature highlights, and an omnibar input to quickly launch any website URL.
+- **Studio Pro Workbench (`/studio`)**: A workstation with a live preview stage, timeline scrubber, standby/resume controls, device mockup switcher, and 4 modular setting tabs (*Preset & Flow*, *Canvas & Frame*, *Visual & AI*, *Audio Studio*).
+
+### 2. 📱 Adaptive Device Mockups (Multi-Platform)
+- 💻 **MacBook Pro 16:9 Landscape**: Ideal for YouTube, landing page feature sections, and widescreen desktop presentations.
+- 📱 **iPhone 15 Pro Titanium with Dynamic Island (9:16 Vertical)**: Tailored for TikTok, Instagram Reels, and YouTube Shorts with safe-area spacing and automatic mobile viewport injection.
+- ⬛ **Square Studio Card (1:1)**: Optimized for Instagram Feed and square portfolio cards.
+
+### 3. 🤖 8-Agent Swarm & Ghost Self-Building Mode
+- **8 Synchronized AI Cursors**: Powered by spring-physics animation (`Lead Dev`, `Copywriter`, `Figma Vector`, `WebGL Polygon`, `GSAP Motion`, `Data Analytics`, `Shader FX`, and `Audio/Layout`).
+- **Ghost Mode (`C` key)**: Hide all cursors with a single click/keystroke so the website **autonomously builds itself from scratch** (dynamic wireframes draw themselves, polygons triangulate, and typography types automatically).
+
+### 4. ⚡ Direct 60FPS Cloud/Local Headless Video Pipeline
+- Captures uncompressed frames via **Chrome DevTools Protocol (CDP)** screencast streaming.
+- Real-time encoding into crisp **60FPS MP4** video and high-quality **Lanczos-dithered GIF** using system `ffmpeg`.
+- Built-in asynchronous queue to manage concurrent render jobs safely without crashing memory.
+
+### 5. 🛡️ Production-Grade Reverse Proxy & Defused Popups
+- **Anti-SSRF Protection**: Restricts target URLs to public hosts and actively blocks access to internal/private IP ranges (`127.0.0.1`, `10.0.0.0/8`, `192.168.0.0/16`, `169.254.0.0/16`).
+- **Defused Annoyances**: Locks `window.onbeforeunload` and `document.onbeforeunload` using property descriptors so annoying "Leave site?" confirm dialogs never interrupt recording.
+
+---
+
+## 📸 Device Preview Showcase
+
+| 16:9 Desktop (MacBook Pro) | 9:16 Mobile (iPhone 15 Pro Titanium) |
+| :---: | :---: |
+| <img src="assets/demo-preview-16-9.gif" width="100%" /> | <img src="assets/demo-preview-9-16.gif" width="70%" /> |
+
+---
+
+## 🚀 Quickstart (Running Locally)
+
+### Prerequisites
+
+1. **Node.js** (v18.0.0 or higher recommended)
+2. **Google Chrome** installed on your system
+3. **FFmpeg** installed and accessible from your system terminal / `PATH`:
+   - **Windows** (via winget):
+     ```bash
+     winget install Gyan.FFmpeg
+     ```
+   - **macOS** (via Homebrew):
+     ```bash
+     brew install ffmpeg
+     ```
+   - **Linux / Ubuntu / Debian**:
+     ```bash
+     sudo apt update && sudo apt install -y ffmpeg
+     ```
+
+---
+
+### Installation & Run
+
+1. **Clone this repository**:
    ```bash
-   git clone https://github.com/my-system/rebuildr.git
+   git clone https://github.com/your-username/rebuildr.git
+   cd rebuildr
    ```
-2. Open your browser and navigate to the Extensions page:
-   - **Google Chrome:** `chrome://extensions/`
-   - **Microsoft Edge:** `edge://extensions/`
-   - **Brave:** `brave://extensions/`
-3. Enable **Developer mode** (toggle in the top-right corner).
-4. Click **Load unpacked** and select the folder containing `manifest.json`.
-5. *(Optional)* Go to `chrome://extensions/shortcuts` to customize or verify the **`Alt + Shift + S`** shortcut.
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Start the local server**:
+   ```bash
+   npm start
+   ```
+
+4. **Open in your browser**:
+   ```
+   http://localhost:3000
+   ```
+   - Visit `http://localhost:3000` for the **Landing Showcase**.
+   - Visit `http://localhost:3000/studio` to enter the **Studio Pro Workbench**.
+
+---
+
+## ⌨️ Studio Keyboard Shortcuts
+
+| Shortcut | Description |
+| :--- | :--- |
+| **`Space`** | **Pause / Resume** live studio rebuild animation |
+| **`C`** | **Toggle Ghost Mode** (Hide/show cursor swarm) |
+| **`B`** | **Cycle Blueprint Themes** (`Figma Grid` → `Architect CAD` → `Cyberpunk Neon`) |
+| **`1` / `2` / `3`** | Change animation speed multiplier (`1×`, `2×`, or `3×`) |
+| **`R`** | **Replay / Restart** animation from the beginning |
+| **`H`** | **Toggle HUD & Header** for borderless clean preview |
+| **`Esc`** | **Stop / Restore** original webpage DOM |
+
+---
+
+## 📁 Project Architecture
+
+```
+rebuildr/
+├── assets/                  # Demo GIF previews & screenshots for documentation
+├── public/
+│   ├── index.html           # Landing Showcase page
+│   ├── landing.css          # Landing page styling & animations
+│   ├── landing.js           # Multi-aspect video switcher & omnibar logic
+│   ├── studio.html          # Studio Pro Workbench page
+│   ├── app.css              # Obsidian glassmorphic workbench styling
+│   ├── app.js               # Studio stage controller & render modal logic
+│   └── exports/             # Video & GIF showcase assets
+├── server.js                # Node.js HTTP server, SSRF proxy & Puppeteer CDP encoder
+├── swarm.js                 # 8-Agent DOM deconstruction & kinetic motion engine
+├── package.json             # Project metadata and dependencies
+├── LICENSE                  # MIT License
+└── README.md                # Project documentation
+```
+
+---
+
+## 🛠️ Technology Stack
+
+- **Runtime**: Node.js
+- **Headless Browser Automation**: Puppeteer-core (Chrome DevTools Protocol)
+- **Video & GIF Processing**: FFmpeg
+- **Client Engineering**: 100% Vanilla ES6+ JavaScript, CSS3 Variables, Glassmorphism, SVG Triangulation (Zero React/Vue overhead for maximum frame rate)
 
 ---
 
 ## 📄 License
 
-MIT License. Free to use for personal and commercial showcase videos.
+This project is licensed under the [MIT License](LICENSE) — free to use for personal, open-source, and commercial experiments.

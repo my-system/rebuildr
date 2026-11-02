@@ -1,0 +1,24 @@
+{
+  "name": "rebuildr",
+  "version": "4.0.0",
+  "description": "Autonomous Website Motion Engine & 60FPS Video Generator — Turn any live website URL into a broadcast-quality motion showcase video.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/my-system/rebuildr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/my-system/rebuildr/issues"
+  },
+  "homepage": "https://github.com/my-system/rebuildr#readme",
+  "dependencies": {
+    "puppeteer-core": "^25.16.0"
+  }
+}

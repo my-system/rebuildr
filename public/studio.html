@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rebuildr Studio — Turn Any Website into 60FPS Motion Graphic Videos</title>
+  <meta name="description" content="Kirim link website apapun, 8 agen AI akan membongkar dan merakit ulang menjadi video motion graphic 60FPS sinematik untuk TikTok, Reels, dan Showcase." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2310b981'%3E%3Cpolygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./app.css" />
+</head>
+<body class="theme-obsidian">
+
+  <!-- Background Ambient Glow & Grid -->
+  <div class="ambient-mesh-canvas" aria-hidden="true">
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-grid"></div>
+  </div>
+
+  <!-- Top App Navigation Bar -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="brand-container">
+        <div class="brand-logo-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-badge-row">
+            <span class="brand-name">REBUILDR</span>
+            <span class="brand-version-tag">STUDIO PRO v3.8</span>
+          </div>
+          <span class="brand-sub">Autonomous Website Motion Engine</span>
+        </div>
+      </div>
+      <a href="/" class="btn-back-home" title="Kembali ke Halaman Pengenalan" style="display:inline-flex; align-items:center; gap:6px; margin-left:14px; padding:6px 12px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); color:#94a3b8; font-size:12px; text-decoration:none; font-weight:500; transition:all 0.2s ease;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Beranda</span>
+      </a>
+    </div>
+
+    <!-- Center Live Connection Badge with Audio Waveform -->
+    <div class="header-center">
+      <div class="live-pill" id="header-status-pill">
+        <span class="pulse-dot" id="header-pulse-dot"></span>
+        <span class="live-pill-text">Live Studio:</span>
+        <span class="live-pill-site" id="current-preview-tag">showcase-saas.html</span>
+        <span class="header-audio-eq" id="header-audio-eq" title="Audio Waveform">
+          <span class="eq-bar bar-1"></span>
+          <span class="eq-bar bar-2"></span>
+          <span class="eq-bar bar-3"></span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Right Header Actions -->
+    <div class="header-right">
+      <nav class="header-nav">
+        <button type="button" class="header-link btn-shortcuts-trigger" id="btn-shortcuts-trigger" title="Panduan Pintasan Keyboard (Tekan ?)">
+          <kbd class="kbd-badge">?</kbd>
+          <span>Pintasan</span>
+        </button>
+        <a href="#recent-gallery" class="header-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+            <line x1="7" y1="2" x2="7" y2="22"></line>
+            <line x1="17" y1="2" x2="17" y2="22"></line>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <line x1="2" y1="7" x2="7" y2="7"></line>
+            <line x1="2" y1="17" x2="7" y2="17"></line>
+            <line x1="17" y1="17" x2="22" y2="17"></line>
+            <line x1="17" y1="7" x2="22" y2="7"></line>
+          </svg>
+          <span>Galeri Video</span>
+        </a>
+      </nav>
+
+      <button type="button" class="btn-top-render" id="btn-top-render-action">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+        <span>Render Video 60FPS</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile View Switcher (Visible on small screens) -->
+  <div class="mobile-workbench-tabs" id="mobile-tabs-bar">
+    <button type="button" class="mob-tab active" data-target="inspector">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+      <span>Pengaturan Studio</span>
+    </button>
+    <button type="button" class="mob-tab" data-target="stage">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+        <line x1="12" y1="18" x2="12.01" y2="18"></line>
+      </svg>
+      <span>Live Stage Preview</span>
+    </button>
+  </div>
+
+  <!-- Main Creative Workbench Studio -->
+  <main class="workbench-layout">
+
+    <!-- LEFT PANE: Studio Inspector Controls -->
+    <aside class="studio-inspector" id="workbench-inspector">
+      <div class="inspector-scroll-area">
+
+        <!-- Top Input & Quick Presets Section -->
+        <div class="inspector-card omnibar-card">
+          <div class="card-eyebrow">
+            <span class="eyebrow-badge">URL SUMBER</span>
+            <span class="eyebrow-hint">Ketik / Tempel link website</span>
+          </div>
+
+          <div class="omnibar-wrap">
+            <div class="omnibar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+            </div>
+            <input
+              type="url"
+              id="input-url"
+              class="omnibar-input"
+              placeholder="https://domain-kamu.com atau /showcase-saas.html"
+              value="/showcase-saas.html"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button type="button" class="btn-paste-url" id="btn-paste-url" title="Tempel URL dari Clipboard (Ctrl+V)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Tempel</span>
+            </button>
+            <button type="button" class="btn-clear-url" id="btn-clear-url" title="Hapus URL">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Quick Samples Selector -->
+          <div class="preset-samples-row">
+            <span class="samples-title">Contoh Preset:</span>
+            <div class="preset-chips" id="quick-presets">
+              <button type="button" class="chip active" data-url="/showcase-saas.html">
+                <span class="chip-dot"></span>
+                <span>⚡ PULSE Cloud SaaS</span>
+              </button>
+              <button type="button" class="chip" data-url="https://portfolio-yusuf-stat.vercel.app/">
+                <span>Visual Novel Yusuf</span>
+              </button>
+              <button type="button" class="chip" data-url="https://linear.app">
+                <span>Linear</span>
+              </button>
+              <button type="button" class="chip" data-url="https://stripe.com">
+                <span>Stripe</span>
+              </button>
+              <button type="button" class="chip" data-url="https://github.com">
+                <span>GitHub</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inspector Category Navigation Tabs -->
+        <nav class="inspector-tabs-nav" aria-label="Studio Options Tabs">
+          <button type="button" class="tab-btn active" data-tab="tab-preset">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span>Preset & Alur</span>
+          </button>
+          <button type="button" class="tab-btn" data-tab="tab-format">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            <span>Kanvas & Frame</span>
+          </button>
+          <button type="button" class="tab-btn" data-tab="tab-visual">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"></path>
+            </svg>
+            <span>Visual & AI</span>
+          </button>
+          <button type="button" class="tab-btn" data-tab="tab-audio">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18V5l12-2v13"></path>
+              <circle cx="6" cy="18" r="3"></circle>
+              <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+            <span>Audio Studio</span>
+          </button>
+        </nav>
+
+        <!-- TAB PANE 1: PRESET & ALUR CERITA -->
+        <section class="tab-panel active" id="tab-preset">
+          <!-- Preset Mode Selection Cards -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Pilih Gaya Showcase</span>
+              <span class="section-subtitle">Tentukan alur gerak video yang cocok untuk audiensmu</span>
+            </div>
+
+            <div class="seg-cards-grid" id="seg-preset">
+              <button type="button" class="card-seg-btn" data-val="feature-tour">
+                <div class="card-seg-header">
+                  <div class="seg-icon-box green">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                    </svg>
+                  </div>
+                  <div class="card-seg-info">
+                    <strong>🎯 Feature Tour Demo</strong>
+                    <span class="badge-sub">Presenter Guide</span>
+                  </div>
+                </div>
+                <p class="card-seg-desc">Panduan interaktif menyorot fitur unggulan satu per satu dengan narasi suara & kursor presenter.</p>
+              </button>
+
+              <button type="button" class="card-seg-btn active" data-val="before-after">
+                <div class="card-seg-header">
+                  <div class="seg-icon-box purple">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <polyline points="16 3 21 3 21 8"></polyline>
+                      <line x1="4" y1="20" x2="21" y2="3"></line>
+                      <polyline points="21 16 21 21 16 21"></polyline>
+                      <line x1="15" y1="15" x2="21" y2="21"></line>
+                      <line x1="4" y1="4" x2="9" y2="9"></line>
+                    </svg>
+                  </div>
+                  <div class="card-seg-info">
+                    <strong>🔀 Before vs After</strong>
+                    <span class="badge-sub">Viral TikTok/Reels</span>
+                  </div>
+                </div>
+                <p class="card-seg-desc">Transisi dramatis dari wireframe/sketsa kusam menuju website megah nan modern.</p>
+              </button>
+
+              <button type="button" class="card-seg-btn" data-val="teaser-30s">
+                <div class="card-seg-header">
+                  <div class="seg-icon-box orange">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                  </div>
+                  <div class="card-seg-info">
+                    <strong>🔥 30s Viral Teaser</strong>
+                    <span class="badge-sub">High Engagement</span>
+                  </div>
+                </div>
+                <p class="card-seg-desc">Tempo cepat, cuts dinamis, zoom sinematik untuk menangkap impresi kilat di media sosial.</p>
+              </button>
+
+              <button type="button" class="card-seg-btn" data-val="standard">
+                <div class="card-seg-header">
+                  <div class="seg-icon-box blue">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                      <line x1="8" y1="21" x2="16" y2="21"></line>
+                      <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                  </div>
+                  <div class="card-seg-info">
+                    <strong>⚡ Rebuild Scratch</strong>
+                    <span class="badge-sub">Multiplayer AI</span>
+                  </div>
+                </div>
+                <p class="card-seg-desc">8 Agen AI membongkar struktur dan merakit ulang seluruh komponen website dari nol.</p>
+              </button>
+            </div>
+          </div>
+
+          <!-- Solo Feature Tour Detailed Configuration (Conditional) -->
+          <div class="feature-tour-box" id="card-feature-tour-settings" style="display: none;">
+            <div class="box-head">
+              <div class="box-title-wrap">
+                <span class="indicator-emerald"></span>
+                <strong>Konfigurasi Solo Presenter</strong>
+              </div>
+              <span class="box-tag">TOUR SETTINGS</span>
+            </div>
+            <div class="box-grid">
+              <div class="control-field">
+                <label for="tour-count-select">Jumlah Fitur</label>
+                <div class="select-wrapper">
+                  <select id="tour-count-select">
+                    <option value="3">⚡ Kilat (3 Fitur ~ 15s)</option>
+                    <option value="5" selected>🎯 Standar (5 Fitur ~ 30s)</option>
+                    <option value="7">🔍 Mendalam (7 Fitur ~ 45s)</option>
+                    <option value="10">💎 Komprehensif (10 Fitur ~ 60s)</option>
+                    <option value="12">🚀 Master Tour (12 Fitur ~ 75s)</option>
+                    <option value="15">🌐 Keynote Penuh (15 Fitur ~ 90s)</option>
+                    <option value="all">⭐ Semua Fitur Terdeteksi (All Features)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="control-field">
+                <label for="tour-niche-select">Kategori Niche</label>
+                <div class="select-wrapper">
+                  <select id="tour-niche-select">
+                    <option value="auto" selected>✨ Otomatis Deteksi</option>
+                    <option value="saas">⚡ SaaS & Cloud</option>
+                    <option value="ecommerce">🛍️ E-Commerce</option>
+                    <option value="fintech">💳 Fintech & Finansial</option>
+                    <option value="creative">🎨 Studio Desain</option>
+                    <option value="education">🎓 Edukasi & Kursus Online</option>
+                    <option value="culinary">🍽️ Kuliner & Restoran</option>
+                  </select>
+                </div>
+              </div>
+              <div class="control-field">
+                <label for="tour-lang-select">Narasi & SFX Suara</label>
+                <div class="select-wrapper">
+                  <select id="tour-lang-select">
+                    <option value="id" selected>🗣️ Suara Narasi Natural Bahasa Indonesia (+ SFX)</option>
+                    <option value="en">🗣️ Natural Voiceover English (+ SFX)</option>
+                    <option value="sfx-only">🎵 SFX Formant Blips Saja (Retro Synth Sound)</option>
+                    <option value="mute">🔇 Hening / Mute (Tanpa Suara)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="control-field">
+                <label for="tour-overlay-select">Gaya Overlay Tour</label>
+                <div class="select-wrapper">
+                  <select id="tour-overlay-select">
+                    <option value="full" selected>📱 Stories Bar & Caption</option>
+                    <option value="clean">🎬 Clean Video (Tanpa Overlay UI)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Custom Hook Headline Row -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Headline Intro / Custom Hook</span>
+              <span class="section-subtitle">Teks pancingan yang muncul di awal video untuk memikat audiens</span>
+            </div>
+
+            <div class="hook-field-container">
+              <div class="hook-input-wrapper">
+                <input
+                  type="text"
+                  id="input-hook-text"
+                  class="hook-input"
+                  placeholder="BEFORE: Wireframe Kuno -> AFTER: Dirakit 8 AI ⚡"
+                  value="BEFORE: Wireframe Kuno -> AFTER: Dirakit 8 AI ⚡"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="hook-quick-chips">
+                <button type="button" class="hook-chip" data-hook="🎯 Demo Fitur: Panduan Interaktif Otomatis ⚡">
+                  <span>🎯 Feature Tour Demo</span>
+                </button>
+                <button type="button" class="hook-chip" data-hook="BEFORE: Wireframe Kuno -> AFTER: Dirakit 8 AI ⚡">
+                  <span>🔀 Before-After Viral</span>
+                </button>
+                <button type="button" class="hook-chip" data-hook="🚀 Portofolio Interaktif Visual Novel">
+                  <span>🎮 Visual Novel Story</span>
+                </button>
+                <button type="button" class="hook-chip" data-hook="⚡ Bikin Web Sekeren Ini Cuma Modal 1 Prompt">
+                  <span>💡 Hook Edukasi</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB PANE 2: KANVAS & FRAME -->
+        <section class="tab-panel" id="tab-format">
+          <!-- 1. Rasio Kanvas Video -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Format Kanvas Video</span>
+              <span class="section-subtitle">Pilih aspek rasio sesuai platform publikasi</span>
+            </div>
+            <div class="ratio-button-group" id="seg-format">
+              <button type="button" class="ratio-btn" data-val="9:16">
+                <div class="ratio-icon-box">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="6" y="2" width="12" height="20" rx="2" ry="2"></rect>
+                  </svg>
+                </div>
+                <div class="ratio-text-wrap">
+                  <strong>9:16 Vertikal</strong>
+                  <span>Reels, TikTok, Shorts</span>
+                </div>
+              </button>
+              <button type="button" class="ratio-btn active" data-val="16:9">
+                <div class="ratio-icon-box">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect>
+                  </svg>
+                </div>
+                <div class="ratio-text-wrap">
+                  <strong>16:9 Landscape</strong>
+                  <span>YouTube, Website</span>
+                </div>
+              </button>
+              <button type="button" class="ratio-btn" data-val="1:1">
+                <div class="ratio-icon-box">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                  </svg>
+                </div>
+                <div class="ratio-text-wrap">
+                  <strong>1:1 Persegi</strong>
+                  <span>Instagram Feed</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Device Mockup Frame -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Device Mockup 3D Frame</span>
+              <span class="section-subtitle">Bingkai perangkat sinematik di dalam video</span>
+            </div>
+            <div class="pill-segmented-control" id="seg-mockup">
+              <button type="button" class="seg-btn active" data-val="flat">
+                <span>🖥️ Flat Studio</span>
+              </button>
+              <button type="button" class="seg-btn" data-val="mockup-phone">
+                <span>📱 iPhone 15 Pro</span>
+              </button>
+              <button type="button" class="seg-btn" data-val="mockup-laptop">
+                <span>💻 MacBook Pro</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Target Durasi Video -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Target Durasi Video</span>
+              <span class="section-subtitle">Waktu putar optimal untuk hasil terbaik</span>
+            </div>
+            <div class="pill-segmented-control" id="seg-duration">
+              <button type="button" class="seg-btn" data-val="15s">
+                <span>⚡ 15 Detik (Teaser)</span>
+              </button>
+              <button type="button" class="seg-btn" data-val="30s">
+                <span>🔥 30 Detik (Standar)</span>
+              </button>
+              <button type="button" class="seg-btn active" data-val="60s">
+                <span>🎬 60 Detik (Mendalam)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. Mode Pergerakan Kamera -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Mode Pergerakan Kamera</span>
+              <span class="section-subtitle">Gaya transisi antar komponen</span>
+            </div>
+            <div class="pill-segmented-control" id="seg-mode">
+              <button type="button" class="seg-btn active" data-val="motion">
+                <span>🎬 Motion Cuts & Zoom</span>
+              </button>
+              <button type="button" class="seg-btn" data-val="scroll">
+                <span>📜 Smooth Auto-Scroll</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 5. Kurasi AI & Tata Letak -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Kurasi AI & Tata Letak</span>
+              <span class="section-subtitle">Saring elemen pengganggu dan rapikan layout</span>
+            </div>
+            <div class="pill-segmented-control" id="seg-scope">
+              <button type="button" class="seg-btn" data-val="curated">
+                <span>✨ Filter Noise & Auto-Grid</span>
+              </button>
+              <button type="button" class="seg-btn active" data-val="full">
+                <span>🌐 Seluruh Halaman Lengkap</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB PANE 3: VISUAL & AI AGENT -->
+        <section class="tab-panel" id="tab-visual">
+          <!-- 1. Tema Blueprint -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Tema Visual Blueprint</span>
+              <span class="section-subtitle">Gaya visual garis kisi & aksen estetika</span>
+            </div>
+            <div class="pill-segmented-control" id="seg-theme">
+              <button type="button" class="seg-btn active" data-val="figma">
+                <span>🎨 Figma Emerald</span>
+              </button>
+              <button type="button" class="seg-btn" data-val="architect">
+                <span>📐 Architect CAD</span>
+              </button>
+              <button type="button" class="seg-btn" data-val="cyberpunk">
+                <span>⚡ Neon Matrix</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Kursor Agen AI -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Kursor Agen AI (Multiplayer)</span>
+              <span class="section-subtitle">Efek kursor kolaboratif ala Figma</span>
+            </div>
+            <div class="pill-segmented-control" id="seg-ghost">
+              <button type="button" class="seg-btn" data-val="false">
+                <span>🤖 8 Kursor AI Aktif</span>
+              </button>
+              <button type="button" class="seg-btn active" data-val="true">
+                <span>👻 Ghost Mode (Bersih)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Mini Terminal Kode DOM -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Mini Terminal Kode DOM</span>
+              <span class="section-subtitle">HUD teks kode live di sudut layar</span>
+            </div>
+            <div class="pill-segmented-control" id="seg-terminal">
+              <button type="button" class="seg-btn" data-val="true">
+                <span>💻 Tampilkan Terminal</span>
+              </button>
+              <button type="button" class="seg-btn active" data-val="false">
+                <span>👁️ Sembunyikan (Fokus)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. Kecepatan Animasi -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Kecepatan Animasi Rakit</span>
+              <span class="section-subtitle">Atur tempo akselerasi gerak</span>
+            </div>
+            <div class="speed-pill-group" id="seg-speed">
+              <button type="button" class="speed-btn active" data-val="1">1.0×</button>
+              <button type="button" class="speed-btn" data-val="1.5">1.5×</button>
+              <button type="button" class="speed-btn" data-val="2">2.0×</button>
+              <button type="button" class="speed-btn" data-val="3">3.0×</button>
+            </div>
+          </div>
+
+          <!-- 5. Watermark & Branding -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Watermark & Branding</span>
+              <span class="section-subtitle">Identitas logo di hasil akhir render</span>
+            </div>
+            <div class="pill-segmented-control" id="seg-watermark">
+              <button type="button" class="seg-btn active" data-val="none">
+                <span>✨ Polos Bersih (Tanpa Watermark)</span>
+              </button>
+              <button type="button" class="seg-btn" data-val="rebuildr">
+                <span>⚡ Badge Rebuildr AI</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB PANE 4: AUDIO STUDIO -->
+        <section class="tab-panel" id="tab-audio">
+          <!-- 1. Procedural BGM -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Musik Latar (Procedural WebAudio)</span>
+              <span class="section-subtitle">BGM bebas copyright disintesis secara langsung</span>
+            </div>
+            <div class="pill-segmented-control" id="seg-bgm">
+              <button type="button" class="seg-btn" data-val="lofi">
+                <span>🎧 Lo-Fi Beats</span>
+              </button>
+              <button type="button" class="seg-btn" data-val="synthwave">
+                <span>⚡ Synthwave</span>
+              </button>
+              <button type="button" class="seg-btn active" data-val="none">
+                <span>🔇 SFX Saja (Mute Musik)</span>
+              </button>
+            </div>
+            <button type="button" class="btn-ghost-sm" id="btn-bgm-preview" style="margin-top:8px; width:100%; display:flex; align-items:center; justify-content:center; gap:6px; font-size:12px; padding:7px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.04); color:#94a3b8; cursor:pointer; transition:all 0.2s ease;">
+              <span>🔊 Tes Pratinjau Audio (5 Detik)</span>
+            </button>
+          </div>
+
+          <!-- 2. Keseimbangan Audio Mixer -->
+          <div class="panel-section">
+            <div class="section-title-wrap">
+              <span class="section-title">Keseimbangan Audio (Mixer)</span>
+              <span class="section-subtitle">Prioritas suara antara musik dan ketikan keyboard</span>
+            </div>
+            <div class="pill-segmented-control" id="seg-audio-balance">
+              <button type="button" class="seg-btn active" data-val="balanced">
+                <span>🎚️ Seimbang (BGM + SFX)</span>
+              </button>
+              <button type="button" class="seg-btn" data-val="bgm">
+                <span>🎵 BGM Dominan</span>
+              </button>
+              <button type="button" class="seg-btn" data-val="sfx">
+                <span>⌨️ SFX Ketikan Saja</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Sticky Bottom Action Footer in Sidebar -->
+      <footer class="inspector-footer">
+        <div class="footer-actions-wrap">
+          <button type="button" class="btn-sidebar-preview" id="btn-launch-preview" title="Muat ulang ke Live Studio">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>Live Studio</span>
+          </button>
+
+          <button type="button" class="btn-sidebar-render" id="btn-start-render">
+            <div class="render-btn-main">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+              <span>Auto-Generate Video (60FPS)</span>
+            </div>
+            <span class="render-btn-meta" id="render-cta-meta">16:9 • 60s • SFX Only</span>
+          </button>
+        </div>
+      </footer>
+    </aside>
+
+    <!-- RIGHT PANE: Live Interactive Studio Canvas Stage -->
+    <section class="studio-canvas" id="workbench-stage">
+
+      <!-- Canvas Top Toolbar Controls -->
+      <header class="canvas-toolbar">
+        <div class="toolbar-left">
+          <div class="stage-tag">
+            <span class="live-blink-dot" id="live-status-dot"></span>
+            <strong id="live-stage-title">Live Stage</strong>
+          </div>
+          <span class="stage-divider"></span>
+          
+          <!-- Quick Ratio Switcher -->
+          <div class="canvas-ratio-quick-switcher" id="canvas-ratio-quick" title="Format Aspek Rasio">
+            <button type="button" class="quick-ratio-btn" data-ratio="9:16" title="Ganti ke 9:16 Vertikal (Shorts/Reels)">📱 9:16</button>
+            <button type="button" class="quick-ratio-btn active" data-ratio="16:9" title="Ganti ke 16:9 Landscape (Desktop/YouTube)">🖥️ 16:9</button>
+            <button type="button" class="quick-ratio-btn" data-ratio="1:1" title="Ganti ke 1:1 Persegi (Feed)">⏹️ 1:1</button>
+            <button type="button" class="quick-ratio-btn" data-ratio="4:5" title="Ganti ke 4:5 Portrait (Feed & Ads)">📸 4:5</button>
+          </div>
+
+          <span class="stage-divider"></span>
+
+          <!-- Quick Mockup Switcher -->
+          <div class="canvas-mockup-quick-switcher" id="canvas-mockup-quick" title="Bingkai Perangkat Mockup">
+            <button type="button" class="quick-mock-btn active" data-mockup="flat" title="Flat Studio Frame">🖥️ Flat</button>
+            <button type="button" class="quick-mock-btn" data-mockup="mockup-laptop" title="MacBook Pro Chassis">💻 Laptop</button>
+            <button type="button" class="quick-mock-btn" data-mockup="mockup-phone" title="iPhone 15 Pro Titanium">📱 Phone</button>
+          </div>
+
+          <span class="stage-divider"></span>
+
+          <!-- Canvas Zoom Scale Control -->
+          <div class="canvas-zoom-quick" id="canvas-zoom-quick" title="Zoom & Skala Tampilan Kanvas">
+            <button type="button" class="quick-zoom-btn active" data-zoom="fit" title="Fit to Screen (Otomatis)">Fit</button>
+            <button type="button" class="quick-zoom-btn" data-zoom="1" title="Skala Asli 100%">100%</button>
+            <button type="button" class="quick-zoom-btn" data-zoom="0.85" title="Skala Ringkas 85%">85%</button>
+          </div>
+        </div>
+
+        <div class="toolbar-right">
+          <!-- Live Play / Pause Button -->
+          <button type="button" class="tool-icon-btn btn-stage-pause is-paused" id="btn-stage-pause" title="Putar / Jeda Animasi Live (Spasi)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" id="stage-pause-icon">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span id="stage-pause-label">Putar Live</span>
+          </button>
+
+          <button type="button" class="tool-icon-btn" id="btn-reload-studio" title="Muat Ulang Animasi Studio (R)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+            </svg>
+            <span>Reload</span>
+          </button>
+
+          <button type="button" class="tool-icon-btn" id="btn-open-new-tab" title="Buka di Tab Baru Layar Penuh">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            <span>Tab Baru</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Center Stage Area -->
+      <div class="stage-viewport-container" id="studio-frame">
+        <div class="device-ambient-glow" id="device-glow"></div>
+
+        <!-- Live Phase HUD Badge -->
+        <div class="stage-phase-hud" id="stage-phase-hud">
+          <span class="hud-indicator-dot"></span>
+          <span class="hud-phase-label" id="stage-phase-label">FASE 1/4 • Wireframe Sketsa</span>
+        </div>
+
+        <!-- Floating Pause Overlay (Shown when in standby or paused) -->
+        <div class="stage-pause-overlay" id="stage-pause-overlay" title="Klik untuk memutar live tour">
+          <div class="stage-pause-card">
+            <div class="pause-play-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+            <div class="pause-text-wrap">
+              <strong>Mode Standby (Siap Diputar)</strong>
+              <span>Atur opsi di sebelah kiri, lalu klik di sini untuk memutar live demo</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulated Device Frame -->
+        <div class="device-stage format-16-9" id="device-wrapper">
+          <div class="device-bezel">
+            <!-- Dynamic Island / Top Camera Notch -->
+            <div class="device-notch dynamic-island">
+              <span class="sensor"></span>
+              <span class="camera"></span>
+            </div>
+
+            <!-- Iframe Container -->
+            <div class="iframe-container">
+              <iframe id="studio-iframe" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals" allow="autoplay; fullscreen; clipboard-read; clipboard-write"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Live Timeline Controller & Scrubber Bar -->
+      <footer class="canvas-timeline-bar" id="canvas-timeline-bar">
+        <div class="timeline-inner">
+          <!-- Transport Controls: Play/Pause, Replay, Timecode -->
+          <div class="timeline-transport-controls">
+            <button type="button" class="btn-transport" id="btn-transport-play" title="Putar / Jeda Live (Spasi)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" id="transport-play-svg">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </button>
+            <button type="button" class="btn-transport" id="btn-transport-replay" title="Ulangi dari Awal (R)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M1 4v6h6"></path>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg>
+            </button>
+            <div class="timeline-timestamp">
+              <span id="time-current">00:00</span>
+              <span class="time-sep">/</span>
+              <span id="time-total">01:00</span>
+            </div>
+          </div>
+
+          <!-- Progress Track with Scrub Handle and Chapter Markers -->
+          <div class="timeline-track-wrap" id="timeline-track-wrap" title="Klik untuk melompat titik durasi">
+            <div class="timeline-progress-track" id="timeline-track">
+              <div class="timeline-progress-fill" id="timeline-progress-fill" style="width: 0%;"></div>
+              <div class="timeline-scrub-handle" id="timeline-scrub-handle" style="left: 0%;"></div>
+              
+              <!-- Chapters / Scene Marks -->
+              <div class="chapter-marker ch-1" style="left: 0%;" title="Intro Headline">
+                <span class="marker-dot"></span>
+                <span class="marker-label">Intro</span>
+              </div>
+              <div class="chapter-marker ch-2" style="left: 25%;" title="Wireframe Stage">
+                <span class="marker-dot"></span>
+                <span class="marker-label">Wireframe</span>
+              </div>
+              <div class="chapter-marker ch-3" style="left: 55%;" title="8 AI Reconstruction">
+                <span class="marker-dot"></span>
+                <span class="marker-label">AI Reconstruct</span>
+              </div>
+              <div class="chapter-marker ch-4" style="left: 85%;" title="Final Polish">
+                <span class="marker-dot"></span>
+                <span class="marker-label">Finish</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline Meta & Audio Controls -->
+          <div class="timeline-meta-controls">
+            <button type="button" class="btn-transport btn-transport-sound" id="btn-transport-sound" title="Mute / Unmute Suara (M)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="transport-sound-svg">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+            </button>
+            <span class="timeline-fps-badge">60 FPS</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Recent Showcase Gallery Section -->
+  <section class="recent-gallery-section" id="recent-gallery">
+    <div class="gallery-container">
+      <div class="gallery-head">
+        <div class="gallery-title-wrap">
+          <span class="gallery-badge">📁 RIWAYAT KREASI</span>
+          <h2>Galeri Video Showcase Terkini</h2>
+          <p>Tonton, putar ulang, atau unduh kembali video MP4 dan animasi GIF yang telah berhasil dibuat sebelumnya.</p>
+        </div>
+        <button type="button" class="btn-clear-gallery" id="btn-clear-gallery" title="Hapus riwayat lokal">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          <span>Bersihkan Riwayat</span>
+        </button>
+      </div>
+
+      <div class="gallery-grid" id="gallery-cards-grid">
+        <div class="gallery-empty-state" id="gallery-empty">
+          <span class="empty-icon">🎬</span>
+          <p>Belum ada video di riwayat. Tekan <strong>"Auto-Generate Video"</strong> di atas untuk membuat video pertamamu!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cloud Render Modal Dialog -->
+  <div class="modal-backdrop" id="render-modal">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div class="modal-brand">
+          <span class="m-badge">⚡ CLOUD RENDER ENGINE</span>
+          <h3 id="modal-heading">Merender Video Motion Graphic...</h3>
+        </div>
+        <button type="button" class="modal-close" id="btn-close-modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Quality Preset Options -->
+        <div class="render-quality-row" id="render-quality-row">
+          <span class="quality-label">KUALITAS OUTPUT RENDER:</span>
+          <div class="quality-options" id="seg-render-quality">
+            <button type="button" class="btn-quality active" data-quality="1080p">
+              <span>✨ 1080p 60FPS (Full HD)</span>
+            </button>
+            <button type="button" class="btn-quality" data-quality="720p">
+              <span>⚡ 720p 60FPS (Cepat)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- High Tech Render Steps Visualizer -->
+        <div class="render-steps-indicator">
+          <div class="step-node active" id="step-node-1">
+            <span class="step-num">1</span>
+            <span class="step-text">Browser</span>
+          </div>
+          <div class="step-line" id="step-line-1"></div>
+          <div class="step-node" id="step-node-2">
+            <span class="step-num">2</span>
+            <span class="step-text">DOM Tree</span>
+          </div>
+          <div class="step-line" id="step-line-2"></div>
+          <div class="step-node" id="step-node-3">
+            <span class="step-num">3</span>
+            <span class="step-text">Capture 60FPS</span>
+          </div>
+          <div class="step-line" id="step-line-3"></div>
+          <div class="step-node" id="step-node-4">
+            <span class="step-num">4</span>
+            <span class="step-text">MP4/GIF</span>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-wrap">
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="job-progress-fill" style="width: 10%;"></div>
+          </div>
+          <div class="progress-labels">
+            <span id="job-status-text">Menyiapkan browser headless...</span>
+            <div class="progress-right-wrap">
+              <span id="job-eta" class="job-eta-badge">⏱️ Estimasi: ~35s</span>
+              <span id="job-percentage">10%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Terminal Stream Logs -->
+        <div class="terminal-log-box" id="job-terminal-logs">
+          <div class="term-line">> Rebuildr Cloud Worker diinisialisasi...</div>
+        </div>
+
+        <!-- Result Video Player Container (Hidden until completed) -->
+        <div class="result-video-wrap is-hidden" id="result-video-container">
+          <div class="result-player-box">
+            <video id="result-video-player" controls loop playsinline></video>
+          </div>
+          <div class="download-action-row">
+            <a href="#" download class="btn-download" id="btn-download-video">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Download Video MP4 (60FPS)</span>
+            </a>
+            <a href="#" download class="btn-download btn-download-gif is-hidden" id="btn-download-gif">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              <span>Download GIF (GitHub README)</span>
+            </a>
+            <button type="button" class="btn-copy-link" id="btn-copy-video-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Salin Link</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcuts Cheat Sheet Modal -->
+  <div class="modal-backdrop" id="shortcuts-modal">
+    <div class="modal-dialog shortcuts-dialog">
+      <div class="modal-head">
+        <div class="modal-brand">
+          <span class="m-badge">⚡ WORKBENCH CHEAT SHEET</span>
+          <h3>Pintasan Keyboard Studio</h3>
+        </div>
+        <button type="button" class="modal-close" id="btn-close-shortcuts">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcuts-grid">
+          <div class="shortcut-item">
+            <kbd>Space</kbd>
+            <span>Jeda / Lanjutkan Live Preview (Play/Pause)</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>R</kbd>
+            <span>Ulangi Animasi dari Awal (Replay Scene)</span>
+          </div>
+          <div class="shortcut-item">
+            <div class="kbd-combo"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd></div>
+            <span>Ganti Format Layar (9:16 / 16:9 / 1:1 / 4:5)</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>F</kbd>
+            <span>Ganti Bingkai Mockup (Flat / Laptop / Phone)</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>M</kbd>
+            <span>Mute / Unmute Suara BGM & SFX</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>Enter</kbd>
+            <span>Mulai Auto-Generate Video 60FPS</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>?</kbd>
+            <span>Buka / Tutup Jendela Panduan Ini</span>
+          </div>
+          <div class="shortcut-item">
+            <kbd>Esc</kbd>
+            <span>Tutup Jendela Dialog / Modal Aktif</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-stack" id="toast-stack"></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

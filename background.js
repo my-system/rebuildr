@@ -12,6 +12,31 @@ async function rebuild(tab, mode = "toggle") {
           window.__swarmStartInPickerMode = true;
         },
       });
+    } else if (mode === "tour") {
+      await chrome.scripting.executeScript({
+        target,
+        func: () => {
+          window.__rebuildrAutoLaunch = {
+            showcasePreset: "feature-tour",
+            autoStart: true,
+          };
+          if (window.__swarmRebuild) {
+            window.__swarmRebuild.stop();
+          }
+        },
+      });
+    } else if (mode === "motion" || mode === "scroll") {
+      const wantMotion = mode === "motion";
+      await chrome.scripting.executeScript({
+        target,
+        args: [wantMotion],
+        func: (isMotion) => {
+          window.__rebuildrMotionMode = isMotion;
+          if (window.__swarmRebuild) {
+            window.__swarmRebuild.stop();
+          }
+        },
+      });
     }
     await chrome.scripting.executeScript({
       target,
@@ -45,13 +70,23 @@ chrome.runtime.onInstalled.addListener(() => {
   try {
     chrome.contextMenus.removeAll(() => {
       chrome.contextMenus.create({
+        id: "rebuildr-feature-tour",
+        title: "🎯 Demo Fitur Interaktif — Feature Tour (Rebuildr)",
+        contexts: ["all"],
+      });
+      chrome.contextMenus.create({
         id: "rebuildr-pick-section",
         title: "⚡ Rakit ulang bagian/elemen ini (Rebuildr)",
         contexts: ["all"],
       });
       chrome.contextMenus.create({
         id: "rebuildr-full-page",
-        title: "🎬 Rakit ulang seluruh halaman (Rebuildr)",
+        title: "📜 Rakit ulang seluruh halaman — Mode Scroll (Rebuildr)",
+        contexts: ["all"],
+      });
+      chrome.contextMenus.create({
+        id: "rebuildr-motion-mode",
+        title: "🎬 Rakit ulang seluruh halaman — Mode Motion Design (Rebuildr)",
         contexts: ["all"],
       });
     });
@@ -59,10 +94,14 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId === "rebuildr-pick-section") {
+  if (info.menuItemId === "rebuildr-feature-tour") {
+    rebuild(tab, "tour");
+  } else if (info.menuItemId === "rebuildr-pick-section") {
     rebuild(tab, "pick");
   } else if (info.menuItemId === "rebuildr-full-page") {
-    rebuild(tab, "toggle");
+    rebuild(tab, "scroll");
+  } else if (info.menuItemId === "rebuildr-motion-mode") {
+    rebuild(tab, "motion");
   }
 });
 

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Rebuildr — Swarm Rebuild Studio v3.5",
-  "version": "3.5.0",
-  "description": "Deconstructs any live website and rebuilds it from scratch using 8 multiplayer AI cursors (or Ghost Self-Building Mode).",
+  "name": "Rebuildr — Swarm Rebuild Studio v3.6",
+  "version": "3.6.0",
+  "description": "Deconstructs any live website and rebuilds it from scratch using 8 multiplayer AI cursors, AI Layout Curator, Before/After Hooks & Rich Synth SFX.",
   "action": {
     "default_title": "Rebuildr Studio (Alt+Shift+S)",
     "default_icon": {

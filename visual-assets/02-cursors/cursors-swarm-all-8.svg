@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 640" width="1080" height="640" fill="none">
+  <defs>
+    <filter id="swarmGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#10b981" flood-opacity="0.3" />
+    </filter>
+    <linearGradient id="orbitLine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(16, 185, 129, 0.4)" />
+      <stop offset="50%" stop-color="rgba(56, 189, 248, 0.2)" />
+      <stop offset="100%" stop-color="rgba(168, 85, 247, 0.4)" />
+    </linearGradient>
+  </defs>
+
+  <!-- Central Target Bounding Frame -->
+  <g transform="translate(340, 180)">
+    <rect x="0" y="0" width="400" height="280" rx="16" fill="rgba(15, 23, 42, 0.7)" stroke="#10b981" stroke-width="2" stroke-dasharray="8 6" />
+    
+    <!-- Handles -->
+    <rect x="-6" y="-6" width="12" height="12" fill="#ffffff" stroke="#10b981" stroke-width="2" />
+    <rect x="394" y="-6" width="12" height="12" fill="#ffffff" stroke="#10b981" stroke-width="2" />
+    <rect x="-6" y="274" width="12" height="12" fill="#ffffff" stroke="#10b981" stroke-width="2" />
+    <rect x="394" y="274" width="12" height="12" fill="#ffffff" stroke="#10b981" stroke-width="2" />
+
+    <!-- Center Label -->
+    <text x="200" y="130" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="28" fill="#ffffff" text-anchor="middle" letter-spacing="1">
+      8-AGENT SWARM
+    </text>
+    <text x="200" y="165" font-family="'JetBrains Mono', monospace" font-weight="600" font-size="14" fill="#38bdf8" text-anchor="middle" letter-spacing="2">
+      // SYNCHRONIZED MULTI-THREADING
+    </text>
+
+    <!-- Dimension Pill -->
+    <rect x="150" y="240" width="100" height="24" rx="12" fill="#0b0f19" stroke="rgba(255, 255, 255, 0.2)" />
+    <text x="200" y="256" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="11" fill="#94a3b8" text-anchor="middle">
+      400 × 280 px
+    </text>
+  </g>
+
+  <!-- 8 Cursor Agents Positioned in Dynamic Collaborative Action -->
+  
+  <!-- 1. Lead Dev (Top-Center) -->
+  <g transform="translate(390, 80)" filter="url(#swarmGlow)">
+    <path d="M 0 0 L 0 22 L 5 16 L 11 27 L 16 24 L 10 13 L 17 12 Z" fill="#10b981" stroke="#ffffff" stroke-width="1.6" />
+    <rect x="22" y="0" width="135" height="28" rx="14" fill="#0f172a" stroke="#10b981" stroke-width="1.4" />
+    <text x="36" y="18" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="11" fill="#ffffff">Yusuf · Lead Dev</text>
+  </g>
+
+  <!-- 2. Copywriter (Top-Right) -->
+  <g transform="translate(740, 110)" filter="url(#swarmGlow)">
+    <path d="M 0 0 L 0 22 L 5 16 L 11 27 L 16 24 L 10 13 L 17 12 Z" fill="#f59e0b" stroke="#ffffff" stroke-width="1.6" />
+    <rect x="22" y="0" width="138" height="28" rx="14" fill="#0f172a" stroke="#f59e0b" stroke-width="1.4" />
+    <text x="36" y="18" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="11" fill="#ffffff">Claude · Copywriter</text>
+  </g>
+
+  <!-- 3. Figma Vector (Mid-Right) -->
+  <g transform="translate(790, 290)" filter="url(#swarmGlow)">
+    <path d="M 0 0 L 0 22 L 5 16 L 11 27 L 16 24 L 10 13 L 17 12 Z" fill="#ec4899" stroke="#ffffff" stroke-width="1.6" />
+    <rect x="22" y="0" width="140" height="28" rx="14" fill="#0f172a" stroke="#ec4899" stroke-width="1.4" />
+    <text x="36" y="18" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="11" fill="#ffffff">Figma · Vector UI</text>
+  </g>
+
+  <!-- 4. WebGL Polygon (Bottom-Right) -->
+  <g transform="translate(720, 460)" filter="url(#swarmGlow)">
+    <path d="M 0 0 L 0 22 L 5 16 L 11 27 L 16 24 L 10 13 L 17 12 Z" fill="#06b6d4" stroke="#ffffff" stroke-width="1.6" />
+    <rect x="22" y="0" width="144" height="28" rx="14" fill="#0f172a" stroke="#06b6d4" stroke-width="1.4" />
+    <text x="36" y="18" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="11" fill="#ffffff">WebGL · 3D Polygon</text>
+  </g>
+
+  <!-- 5. GSAP Motion (Bottom-Center) -->
+  <g transform="translate(420, 500)" filter="url(#swarmGlow)">
+    <path d="M 0 0 L 0 22 L 5 16 L 11 27 L 16 24 L 10 13 L 17 12 Z" fill="#8b5cf6" stroke="#ffffff" stroke-width="1.6" />
+    <rect x="22" y="0" width="140" height="28" rx="14" fill="#0f172a" stroke="#8b5cf6" stroke-width="1.4" />
+    <text x="36" y="18" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="11" fill="#ffffff">Motion · GSAP 60fps</text>
+  </g>
+
+  <!-- 6. Data Analytics (Bottom-Left) -->
+  <g transform="translate(130, 460)" filter="url(#swarmGlow)">
+    <path d="M 0 0 L 0 22 L 5 16 L 11 27 L 16 24 L 10 13 L 17 12 Z" fill="#3b82f6" stroke="#ffffff" stroke-width="1.6" />
+    <rect x="22" y="0" width="138" height="28" rx="14" fill="#0f172a" stroke="#3b82f6" stroke-width="1.4" />
+    <text x="36" y="18" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="11" fill="#ffffff">Data AI · Stats Counter</text>
+  </g>
+
+  <!-- 7. Shader FX (Mid-Left) -->
+  <g transform="translate(80, 270)" filter="url(#swarmGlow)">
+    <path d="M 0 0 L 0 22 L 5 16 L 11 27 L 16 24 L 10 13 L 17 12 Z" fill="#f43f5e" stroke="#ffffff" stroke-width="1.6" />
+    <rect x="22" y="0" width="136" height="28" rx="14" fill="#0f172a" stroke="#f43f5e" stroke-width="1.4" />
+    <text x="36" y="18" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="11" fill="#ffffff">Shader FX · Lasers</text>
+  </g>
+
+  <!-- 8. Audio FX (Top-Left) -->
+  <g transform="translate(150, 110)" filter="url(#swarmGlow)">
+    <path d="M 0 0 L 0 22 L 5 16 L 11 27 L 16 24 L 10 13 L 17 12 Z" fill="#14b8a6" stroke="#ffffff" stroke-width="1.6" />
+    <rect x="22" y="0" width="136" height="28" rx="14" fill="#0f172a" stroke="#14b8a6" stroke-width="1.4" />
+    <text x="36" y="18" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="11" fill="#ffffff">Audio · Synth Beat</text>
+  </g>
+</svg>
