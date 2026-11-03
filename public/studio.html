@@ -329,8 +329,9 @@
                 <label for="tour-lang-select">Narasi & SFX Suara</label>
                 <div class="select-wrapper">
                   <select id="tour-lang-select">
-                    <option value="id" selected>🗣️ Suara Narasi Natural Bahasa Indonesia (+ SFX)</option>
-                    <option value="en">🗣️ Natural Voiceover English (+ SFX)</option>
+                    <option value="id" selected>🎙️ Suara Natural AI Bahasa Indonesia (Neural HD + SFX)</option>
+                    <option value="en">🎙️ Natural AI Voiceover English (Neural HD + SFX)</option>
+                    <option value="browser-id">🗣️ Suara Lokal Perangkat (Web Speech API Indonesia)</option>
                     <option value="sfx-only">🎵 SFX Formant Blips Saja (Retro Synth Sound)</option>
                     <option value="mute">🔇 Hening / Mute (Tanpa Suara)</option>
                   </select>
@@ -459,10 +460,10 @@
               <button type="button" class="seg-btn" data-val="15s">
                 <span>⚡ 15 Detik (Teaser)</span>
               </button>
-              <button type="button" class="seg-btn" data-val="30s">
+              <button type="button" class="seg-btn active" data-val="30s">
                 <span>🔥 30 Detik (Standar)</span>
               </button>
-              <button type="button" class="seg-btn active" data-val="60s">
+              <button type="button" class="seg-btn" data-val="60s">
                 <span>🎬 60 Detik (Mendalam)</span>
               </button>
             </div>
@@ -491,10 +492,10 @@
               <span class="section-subtitle">Saring elemen pengganggu dan rapikan layout</span>
             </div>
             <div class="pill-segmented-control" id="seg-scope">
-              <button type="button" class="seg-btn" data-val="curated">
+              <button type="button" class="seg-btn active" data-val="curated">
                 <span>✨ Filter Noise & Auto-Grid</span>
               </button>
-              <button type="button" class="seg-btn active" data-val="full">
+              <button type="button" class="seg-btn" data-val="full">
                 <span>🌐 Seluruh Halaman Lengkap</span>
               </button>
             </div>
@@ -529,10 +530,10 @@
               <span class="section-subtitle">Efek kursor kolaboratif ala Figma</span>
             </div>
             <div class="pill-segmented-control" id="seg-ghost">
-              <button type="button" class="seg-btn" data-val="false">
+              <button type="button" class="seg-btn active" data-val="false">
                 <span>🤖 8 Kursor AI Aktif</span>
               </button>
-              <button type="button" class="seg-btn active" data-val="true">
+              <button type="button" class="seg-btn" data-val="true">
                 <span>👻 Ghost Mode (Bersih)</span>
               </button>
             </div>
@@ -655,7 +656,7 @@
     </aside>
 
     <!-- RIGHT PANE: Live Interactive Studio Canvas Stage -->
-    <section class="studio-canvas" id="workbench-stage">
+    <section class="studio-canvas is-hidden-mobile" id="workbench-stage">
 
       <!-- Canvas Top Toolbar Controls -->
       <header class="canvas-toolbar">
@@ -748,15 +749,51 @@
         <!-- Simulated Device Frame -->
         <div class="device-stage format-16-9" id="device-wrapper">
           <div class="device-bezel">
-            <!-- Dynamic Island / Top Camera Notch -->
-            <div class="device-notch dynamic-island">
-              <span class="sensor"></span>
-              <span class="camera"></span>
+            <!-- Hardware Buttons (Titanium precision triggers) -->
+            <div class="phone-btn phone-btn-action"></div>
+            <div class="phone-btn phone-btn-vol-up"></div>
+            <div class="phone-btn phone-btn-vol-down"></div>
+            <div class="phone-btn phone-btn-power"></div>
+            
+            <!-- Micro Speaker Ear-Piece -->
+            <div class="iphone-speaker-slit"></div>
+
+            <!-- Authentic iOS Top Status Bar (Only visible in iPhone / 9:16 mode) -->
+            <div class="iphone-status-bar">
+              <span class="status-time">9:41</span>
+              <div class="dynamic-island">
+                <span class="island-camera"></span>
+              </div>
+              <div class="status-indicators">
+                <!-- Cellular 4-bars -->
+                <svg class="status-icon" width="16" height="11" viewBox="0 0 17 11" fill="currentColor">
+                  <rect x="0" y="8" width="3" height="3" rx="0.8"/>
+                  <rect x="4.5" y="5.5" width="3" height="5.5" rx="0.8"/>
+                  <rect x="9" y="3" width="3" height="8" rx="0.8"/>
+                  <rect x="13.5" y="0" width="3" height="11" rx="0.8"/>
+                </svg>
+                <!-- Wi-Fi 3-arcs -->
+                <svg class="status-icon" width="14" height="11" viewBox="0 0 16 12" fill="currentColor">
+                  <path d="M8 9.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4.24-3.53a6.002 6.002 0 018.48 0 .8.8 0 101.13-1.13 7.602 7.602 0 00-10.74 0 .8.8 0 101.13 1.13zm-2.83-2.83a10.003 10.003 0 0114.14 0 .8.8 0 101.13-1.13A11.604 11.604 0 00.93 1.99a.8.8 0 101.13 1.13z"/>
+                </svg>
+                <!-- Battery Indicator with Fill -->
+                <div class="status-battery">
+                  <div class="battery-shell">
+                    <div class="battery-fill"></div>
+                  </div>
+                  <div class="battery-cap"></div>
+                </div>
+              </div>
             </div>
 
             <!-- Iframe Container -->
             <div class="iframe-container">
               <iframe id="studio-iframe" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals" allow="autoplay; fullscreen; clipboard-read; clipboard-write"></iframe>
+            </div>
+
+            <!-- iOS Bottom Home Indicator Bar -->
+            <div class="iphone-home-bar">
+              <div class="home-indicator"></div>
             </div>
           </div>
         </div>

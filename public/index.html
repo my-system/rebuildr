@@ -3,385 +3,484 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rebuildr AI — Ubah Website Menjadi Video Motion 60FPS Sinematik</title>
-  <meta name="description" content="Mesin otonom untuk mengubah tautan website apapun menjadi video motion graphic sinematik 60FPS berkualitas siaran dalam hitungan detik.">
+  <title>Rebuildr // Autonomous Website Motion Engine 60FPS</title>
+  <meta name="description" content="Sistem otonom untuk merekonstruksi website apapun menjadi video motion graphics 60FPS berkualitas broadcast.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2310b981'%3E%3Cpolygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/landing.css">
 </head>
 <body>
-  <!-- Ambient Background FX -->
-  <div class="landing-ambient-wrap">
-    <div class="ambient-glow-top"></div>
-    <div class="ambient-grid"></div>
+
+  <!-- Ambient Darkroom Radiance & Precision Grid -->
+  <div class="ambient-darkroom" aria-hidden="true">
+    <div class="ambient-orb orb-emerald"></div>
+    <div class="ambient-orb orb-violet"></div>
+    <div class="ambient-orb orb-cyan"></div>
+    <div class="ambient-dot-grid"></div>
   </div>
 
-  <!-- Header Navigation -->
+  <!-- Floating Hairline Navigation Header -->
   <header class="landing-header">
     <div class="nav-container">
-      <a href="/" class="brand-link">
-        <div class="brand-icon-box">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <a href="/" class="brand-wrap">
+        <div class="brand-glyph">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
           </svg>
         </div>
-        <div class="brand-title-wrap">
-          <div class="brand-title">
-            <span>REBUILDR</span>
-            <span class="badge-tag">AI 60FPS</span>
+        <div class="brand-info">
+          <div class="brand-title-row">
+            <span class="brand-logotype">REBUILDR</span>
+            <div class="status-fps-pill">
+              <span class="pulse-led"></span>
+              <span>60.0 FPS CORE</span>
+            </div>
           </div>
-          <span class="brand-sub">Autonomous Motion Engine</span>
+          <span class="brand-descriptor">Autonomous Motion Engine</span>
         </div>
       </a>
 
-      <ul class="nav-links">
-        <li><a href="#cara-kerja">Cara Kerja</a></li>
-        <li><a href="#fitur">Fitur Unggulan</a></li>
-        <li><a href="#showcase">Galeri Video</a></li>
-        <li><a href="#faq">FAQ</a></li>
+      <ul class="nav-links-wrap">
+        <li><a href="#cinema-stage">Director Stage</a></li>
+        <li><a href="#neural-swarm">Neural Swarm</a></li>
+        <li><a href="#audio-synth">Audio Synth</a></li>
+        <li><a href="#showcase-reel">Showcase Reel</a></li>
+        <li><a href="#engine-specs">Engine Specs</a></li>
       </ul>
 
-      <a href="/studio" class="btn-open-studio">
-        <span>⚡ Masuk Studio Workbench</span>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+      <a href="/studio" class="header-action-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+        <span>Masuk Studio Workbench</span>
       </a>
     </div>
   </header>
 
   <main>
-    <!-- HERO SECTION -->
-    <section class="hero-section landing-wrap">
-      <div class="hero-pill">
-        <span>✨ Perekaman Otonom 60FPS Ultra HD • Siap Publikasi</span>
-      </div>
-
-      <h1 class="hero-title">
-        Ubah Website Apapun Menjadi Video Motion <span class="gradient-text">Sinematik 60FPS</span> dalam Sekejap.
-      </h1>
-
-      <p class="hero-desc">
-        Tampilkan fitur unggulan, arsitektur UI, dan alur aplikasi Anda dalam video produk memukau berstandar Apple & Linear — siap tayang di TikTok, Instagram Reels, YouTube, dan Product Hunt tanpa perlu keahlian video editing rumit.
-      </p>
-
-      <!-- Quick Launch Omnibar Form -->
-      <form class="hero-omnibar-box" id="landing-omnibar-form">
-        <div class="omnibar-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+    <!-- HERO SECTION: INTERACTIVE CINEMA LAB -->
+    <section class="section-lab" id="cinema-stage">
+      <div class="hero-header-block">
+        <div class="linear-pill-badge">
+          <span>⚡ Otonom Tanpa Keyframe Manual • Native 60FPS</span>
         </div>
-        <input type="text" class="hero-omnibar-input" id="landing-url-input" placeholder="Masukkan link website (misal: linear.app, github.com, stripe.com...)" autocomplete="off">
-        <button type="submit" class="btn-hero-launch" id="btn-landing-launch">
-          <span>🚀 Rakit Video Sekarang</span>
-        </button>
-      </form>
 
-      <!-- Quick Chips -->
-      <div class="hero-chips-wrap">
-        <span class="chips-label">Coba Preset Contoh:</span>
-        <button type="button" class="hero-chip" data-url="/showcase-saas.html">⚡ PULSE Cloud SaaS</button>
-        <button type="button" class="hero-chip" data-url="https://github.com">🐙 GitHub Universe</button>
-        <button type="button" class="hero-chip" data-url="https://linear.app">🚀 Linear.app</button>
-        <button type="button" class="hero-chip" data-url="https://vite.dev">⚡ Vite.dev Tooling</button>
+        <h1 class="hero-main-title">
+          Rakit Website Apapun Menjadi Video Motion <span class="title-glow">Sinematik 60FPS</span>.
+        </h1>
+
+        <p class="hero-sub-p">
+          Kirim tautan website apa saja. 8 agen AI otonom akan membongkar arsitektur DOM, merakit ulang sketsa wireframe, mengarahkan kamera sinematik, dan menyintesis audio prosedural secara langsung.
+        </p>
+
+        <!-- Command Palette Omnibar -->
+        <form class="hero-omnibar-deck" id="landing-omnibar-form">
+          <div class="omnibar-lead-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </div>
+          <input
+            type="text"
+            class="omnibar-field"
+            id="landing-url-input"
+            placeholder="Ketik atau tempel URL (misal: linear.app, github.com, stripe.com...)"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button type="submit" class="btn-launch-workbench" id="btn-landing-launch">
+            <span>Buka di Studio Workbench</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </button>
+        </form>
+
+        <!-- Quick Samples Target Chips -->
+        <div class="quick-preset-chips">
+          <span class="chips-caption">Coba Preset Contoh:</span>
+          <button type="button" class="preset-chip-btn" data-url="/showcase-saas.html">⚡ PULSE Cloud SaaS</button>
+          <button type="button" class="preset-chip-btn" data-url="https://github.com">🐙 GitHub Universe</button>
+          <button type="button" class="preset-chip-btn" data-url="https://linear.app">🚀 Linear.app</button>
+          <button type="button" class="preset-chip-btn" data-url="https://vite.dev">⚡ Vite.dev Tooling</button>
+        </div>
       </div>
 
-      <!-- HERO SHOWCASE DEVICE MOCKUP (MACBOOK PRO) -->
-      <div class="hero-device-wrapper">
-        <div class="device-tabs-bar">
-          <div class="device-tab-group">
-            <button type="button" class="device-tab-btn active" data-format="16:9">
+      <!-- INTERACTIVE CINEMA DIRECTOR STAGE -->
+      <div class="cinema-stage-container">
+        <!-- Director Control Bar -->
+        <div class="stage-director-bar">
+          <div class="director-left-meta">
+            <div class="rec-indicator">
+              <span class="rec-dot"></span>
+              <span>REC 60FPS</span>
+            </div>
+            <div class="timecode-readout" id="stage-timecode">TC 00:00:08:14</div>
+          </div>
+
+          <!-- Interactive Aspect Ratio Switcher -->
+          <div class="stage-ratio-deck">
+            <button type="button" class="ratio-deck-btn active" data-format="16:9" id="btn-format-16-9">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-              <span>16:9 Landscape (Product Hunt & YouTube)</span>
+              <span>16:9 Landscape</span>
             </button>
-            <button type="button" class="device-tab-btn" data-format="9:16">
+            <button type="button" class="ratio-deck-btn" data-format="9:16" id="btn-format-9-16">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-              <span>9:16 Vertikal (Reels & TikTok)</span>
+              <span>9:16 Vertikal</span>
             </button>
-            <button type="button" class="device-tab-btn" data-format="1:1">
+            <button type="button" class="ratio-deck-btn" data-format="1:1" id="btn-format-1-1">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
-              <span>1:1 Persegi (Instagram Feed)</span>
+              <span>1:1 Persegi</span>
             </button>
           </div>
-          <div class="live-stream-badge">
-            <span class="live-dot-green"></span>
-            <span>Video Rekaman 60FPS Teroptimasi</span>
+
+          <div class="director-right-meta">
+            <span class="meta-chip-tag">1080p60 MASTER READY</span>
           </div>
         </div>
 
-        <div class="device-stage-viewport" id="hero-device-stage">
-          <!-- 1. MacBook Frame (16:9 Landscape) -->
-          <div class="macbook-frame" id="frame-macbook">
-            <div class="macbook-camera-notch">
-              <div class="camera-lens"></div>
+        <!-- Authentic Hardware Chassis Viewport -->
+        <div class="cinema-screen-viewport">
+          <!-- 1. MacBook Pro Aluminum Chassis (16:9) -->
+          <div class="chassis-macbook" id="frame-macbook">
+            <div class="macbook-lid">
+              <div class="macbook-notch">
+                <span class="macbook-lens"></span>
+              </div>
+              <div class="macbook-display">
+                <video id="hero-video-16-9" autoplay loop muted playsinline>
+                  <source src="/exports/video_1_vite_dev_16_9.mp4" type="video/mp4">
+                </video>
+              </div>
             </div>
-            <div class="macbook-screen">
-              <video id="hero-video-16-9" autoplay loop muted playsinline>
-                <source src="/exports/video_1_vite_dev_16_9.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="macbook-base">
-              <div class="macbook-notch-lip"></div>
-            </div>
-          </div>
-
-          <!-- 2. iPhone 15 Pro Titanium Frame (9:16 Vertikal Reels & TikTok) -->
-          <div class="iphone-frame" id="frame-iphone" style="display:none;">
-            <div class="iphone-dynamic-island">
-              <span class="sensor-dot"></span>
-            </div>
-            <div class="iphone-screen">
-              <video id="hero-video-9-16" loop muted playsinline>
-                <source src="/exports/video_2_linear_app_9_16.mp4" type="video/mp4">
-              </video>
+            <div class="macbook-bottom-case">
+              <div class="macbook-case-lip"></div>
             </div>
           </div>
 
-          <!-- 3. Square Studio Card Frame (1:1 Feed Instagram) -->
-          <div class="square-frame" id="frame-square" style="display:none;">
-            <div class="square-screen">
-              <video id="hero-video-1-1" loop muted playsinline>
-                <source src="/exports/video_3_pulse_saas_1_1.mp4" type="video/mp4">
-              </video>
+          <!-- 2. iPhone 15 Pro Titanium Chassis (9:16) -->
+          <div class="chassis-iphone" id="frame-iphone">
+            <div class="iphone-bezel">
+              <!-- Hardware Titanium Side Buttons -->
+              <div class="phone-btn phone-btn-action"></div>
+              <div class="phone-btn phone-btn-vol-up"></div>
+              <div class="phone-btn phone-btn-vol-down"></div>
+              <div class="phone-btn phone-btn-power"></div>
+
+              <!-- Micro Speaker Ear-Piece Slit -->
+              <div class="iphone-speaker-slit"></div>
+
+              <!-- Authentic iOS Top Status Bar -->
+              <div class="iphone-status-bar">
+                <span class="status-time">9:41</span>
+                <div class="dynamic-island">
+                  <span class="island-camera"></span>
+                </div>
+                <div class="status-indicators">
+                  <svg class="status-icon" width="16" height="11" viewBox="0 0 17 11" fill="currentColor">
+                    <rect x="0" y="8" width="3" height="3" rx="0.8"/>
+                    <rect x="4.5" y="5.5" width="3" height="5.5" rx="0.8"/>
+                    <rect x="9" y="3" width="3" height="8" rx="0.8"/>
+                    <rect x="13.5" y="0" width="3" height="11" rx="0.8"/>
+                  </svg>
+                  <svg class="status-icon" width="14" height="11" viewBox="0 0 16 12" fill="currentColor">
+                    <path d="M8 9.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4.24-3.53a6.002 6.002 0 018.48 0 .8.8 0 101.13-1.13 7.602 7.602 0 00-10.74 0 .8.8 0 101.13 1.13zm-2.83-2.83a10.003 10.003 0 0114.14 0 .8.8 0 101.13-1.13A11.604 11.604 0 00.93 1.99a.8.8 0 101.13 1.13z"/>
+                  </svg>
+                  <div class="status-battery">
+                    <div class="battery-shell">
+                      <div class="battery-fill"></div>
+                    </div>
+                    <div class="battery-cap"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Display Viewport -->
+              <div class="iphone-display">
+                <video id="hero-video-9-16" loop muted playsinline>
+                  <source src="/exports/video_2_linear_app_9_16.mp4" type="video/mp4">
+                </video>
+              </div>
+
+              <!-- iOS Bottom Home Indicator Bar -->
+              <div class="iphone-home-bar">
+                <div class="home-indicator"></div>
+              </div>
             </div>
           </div>
+
+          <!-- 3. Square Slate Chassis (1:1) -->
+          <div class="chassis-square" id="frame-square">
+            <div class="square-bezel">
+              <div class="square-display">
+                <video id="hero-video-1-1" loop muted playsinline>
+                  <source src="/exports/video_3_pulse_saas_1_1.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage Scrubber Bar -->
+        <div class="stage-scrubber-bar">
+          <button type="button" class="stage-play-pause-btn" id="btn-hero-play-pause" title="Putar / Jeda Video">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </button>
+          <div class="stage-scrub-track" id="hero-scrub-track">
+            <div class="stage-scrub-fill" id="hero-scrub-fill"></div>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);" id="hero-duration-meta">00:08 / 00:26</span>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 2: 3 LANGKAH CARA KERJA -->
-    <section class="landing-wrap" id="cara-kerja">
-      <div class="section-header">
-        <span class="section-tag">Alur Kerja Cepat</span>
-        <h2 class="section-heading">Tiga Langkah Sederhana untuk Menghasilkan Video Spektakuler</h2>
-        <p class="section-subheading">Tidak perlu install plugin berat atau merender berjam-jam. Cukup 3 langkah dari browser Anda.</p>
+    <!-- SECTION 2: NEURAL MOTION SWARM (Interactive Agent Lab) -->
+    <section class="section-swarm-lab" id="neural-swarm">
+      <div class="swarm-lab-header">
+        <div class="linear-pill-badge">
+          <span>🧠 Kolaborasi Multi-Agen Otonom</span>
+        </div>
+        <h2 class="swarm-lab-title">8 Agen AI Mengorkestrasi Seluruh Rantai Produksi</h2>
+        <p style="color: var(--text-muted); font-size: 15px;">
+          Bukan sekadar template rekaman layar biasa. Setiap agen memiliki keahlian spesialis untuk mengekstraksi, merakit kode, mengarahkan kamera, dan memoles motion graphic secara real-time.
+        </p>
       </div>
 
-      <div class="steps-grid">
-        <div class="step-card">
-          <span class="step-number-watermark">01</span>
-          <div class="step-icon-badge">🔗</div>
-          <h3 class="step-title">Masukkan Link Website</h3>
-          <p class="step-desc">
-            Cukup ketik URL landing page, aplikasi SaaS, portofolio, atau repositori GitHub Anda. Mesin kami akan menganalisis hierarki DOM secara otomatis.
+      <div class="swarm-agents-grid">
+        <!-- Agent 1 -->
+        <div class="agent-interactive-card active-emerald">
+          <div class="agent-meta-top">
+            <span class="agent-id-tag">AGENT // 01</span>
+            <span class="agent-cursor-dot"></span>
+          </div>
+          <h3 class="agent-name">DOM Decompiler</h3>
+          <p class="agent-role-desc">Menganalisis semantic tree, menyaring elemen pengganggu (banner cookie & chat widget), serta memetakan hero bounding-box.</p>
+          <div class="agent-code-peek"><code>decompileTree(document.body) -> 48 clean nodes</code></div>
+        </div>
+
+        <!-- Agent 2 -->
+        <div class="agent-interactive-card">
+          <div class="agent-meta-top">
+            <span class="agent-id-tag">AGENT // 02</span>
+            <span class="agent-cursor-dot" style="background:#06b6d4; box-shadow:0 0 10px #06b6d4;"></span>
+          </div>
+          <h3 class="agent-name">Wireframe Architect</h3>
+          <p class="agent-role-desc">Mengubah elemen menjadi sketsa blueprint CAD transparan sebelum transformasi dinamis dimulai.</p>
+          <div class="agent-code-peek"><code>buildWireframeSkeleton({ theme: "figma-emerald" })</code></div>
+        </div>
+
+        <!-- Agent 3 -->
+        <div class="agent-interactive-card">
+          <div class="agent-meta-top">
+            <span class="agent-id-tag">AGENT // 03</span>
+            <span class="agent-cursor-dot" style="background:#8b5cf6; box-shadow:0 0 10px #8b5cf6;"></span>
+          </div>
+          <h3 class="agent-name">GSAP Motion Director</h3>
+          <p class="agent-role-desc">Mengatur timing kamera cuts, zoom dinamis ke kartu fitur, serta transisi spring physics 60FPS bebas patah-patah.</p>
+          <div class="agent-code-peek"><code>camera.zoomTo(".feature-card", { scale: 1.15, ease: "spring" })</code></div>
+        </div>
+
+        <!-- Agent 4 -->
+        <div class="agent-interactive-card">
+          <div class="agent-meta-top">
+            <span class="agent-id-tag">AGENT // 04</span>
+            <span class="agent-cursor-dot" style="background:#f59e0b; box-shadow:0 0 10px #f59e0b;"></span>
+          </div>
+          <h3 class="agent-name">Procedural Audio Synthesizer</h3>
+          <p class="agent-role-desc">Menyintesis track musik latar Lo-Fi & SFX haptic ketikan secara algoritmik dari WebAudio API tanpa masalah copyright.</p>
+          <div class="agent-code-peek"><code>synthWebAudio({ bpm: 84, scale: "pentatonic", mix: "balanced" })</code></div>
+        </div>
+
+        <!-- Agent 5 -->
+        <div class="agent-interactive-card">
+          <div class="agent-meta-top">
+            <span class="agent-id-tag">AGENT // 05</span>
+            <span class="agent-cursor-dot" style="background:#ec4899; box-shadow:0 0 10px #ec4899;"></span>
+          </div>
+          <h3 class="agent-name">Headless Screencast Engine</h3>
+          <p class="agent-role-desc">Menangkap frame mentah via Chrome DevTools Protocol pada 60 frame per detik stabil tanpa drop resolusi.</p>
+          <div class="agent-code-peek"><code>Page.startScreencast({ format: "jpeg", quality: 100, everyNthFrame: 1 })</code></div>
+        </div>
+
+        <!-- Agent 6 -->
+        <div class="agent-interactive-card">
+          <div class="agent-meta-top">
+            <span class="agent-id-tag">AGENT // 06</span>
+            <span class="agent-cursor-dot" style="background:#3b82f6; box-shadow:0 0 10px #3b82f6;"></span>
+          </div>
+          <h3 class="agent-name">FFmpeg 1080p Compositor</h3>
+          <p class="agent-role-desc">Merender file MP4 H.264 High-Profile dengan kompresi cerdas serta menghasilkan animasi GIF teroptimasi.</p>
+          <div class="agent-code-peek"><code>ffmpeg.encode({ preset: "slow", crf: 18, pix_fmt: "yuv420p" })</code></div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE PROCEDURAL AUDIO SYNTH DECK -->
+      <div class="synth-deck-container" id="audio-synth">
+        <div class="synth-info-wrap">
+          <span class="synth-badge">LIVE WEBAUDIO ENGINE</span>
+          <h3 class="synth-heading">Dengarkan Sintesis Audio Prosedural</h3>
+          <p class="synth-desc">
+            Klik tombol di samping untuk menguji synthesizer WebAudio bawaan Rebuildr. Musik latar Lo-Fi & Synthwave dibuat langsung oleh algoritma browser — 100% bebas royalti komersial selamanya.
           </p>
         </div>
 
-        <div class="step-card">
-          <span class="step-number-watermark">02</span>
-          <div class="step-icon-badge">🎬</div>
-          <h3 class="step-title">Pilih Format & Mockup 3D</h3>
-          <p class="step-desc">
-            Sesuaikan rasio publikasi (Reels 9:16, YouTube 16:9, Feed 1:1), pasang bingkai realistis MacBook Pro atau iPhone 15 Pro, dan pilih musik latar Lo-Fi/Synthwave.
-          </p>
-        </div>
+        <div class="synth-controls-wrap">
+          <button type="button" class="synth-mode-btn" id="btn-synth-lofi">
+            <span class="synth-icon">🎧</span>
+            <span class="synth-label">Lo-Fi Beats</span>
+            <div class="synth-eq-bars">
+              <span class="synth-bar"></span>
+              <span class="synth-bar"></span>
+              <span class="synth-bar"></span>
+            </div>
+          </button>
 
-        <div class="step-card">
-          <span class="step-number-watermark">03</span>
-          <div class="step-icon-badge">🚀</div>
-          <h3 class="step-title">Ekspor Video HD & GIF</h3>
-          <p class="step-desc">
-            Klik tombol render dan mesin FFmpeg screencast akan menghasilkan file MP4 60 FPS jernih serta animasi GIF teroptimasi siap pakai.
-          </p>
+          <button type="button" class="synth-mode-btn" id="btn-synth-synthwave">
+            <span class="synth-icon">⚡</span>
+            <span class="synth-label">Synthwave</span>
+            <div class="synth-eq-bars">
+              <span class="synth-bar"></span>
+              <span class="synth-bar"></span>
+              <span class="synth-bar"></span>
+            </div>
+          </button>
+
+          <button type="button" class="synth-mode-btn" id="btn-synth-sfx">
+            <span class="synth-icon">⌨️</span>
+            <span class="synth-label">Haptic SFX</span>
+            <div class="synth-eq-bars">
+              <span class="synth-bar"></span>
+              <span class="synth-bar"></span>
+              <span class="synth-bar"></span>
+            </div>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 3: FITUR UNGGULAN -->
-    <section class="landing-wrap" id="fitur">
-      <div class="section-header">
-        <span class="section-tag">Keunggulan Mesin Rebuildr</span>
-        <h2 class="section-heading">Direkayasa Khusus untuk Pembuat Produk & Startup</h2>
-        <p class="section-subheading">Setiap detail dirancang agar video promosi Anda terlihat seperti dibuat oleh agensi motion design kelas atas.</p>
+    <!-- SECTION 3: SHOWCASE REEL -->
+    <section class="section-reel" id="showcase-reel">
+      <div class="swarm-lab-header">
+        <div class="linear-pill-badge">
+          <span>🎬 Hasil Rekaman Nyata</span>
+        </div>
+        <h2 class="swarm-lab-title">Showcase Video 60FPS yang Siap Dipublikasikan</h2>
+        <p style="color: var(--text-muted); font-size: 15px;">
+          Setiap video di bawah ini dibuat otomatis oleh Rebuildr Studio langsung dari tautan website publik.
+        </p>
       </div>
 
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon-box">⚡</div>
-          <h3 class="feature-title">Native 60 FPS Screencast</h3>
-          <p class="feature-desc">Merekam langsung dari Chromium DevTools Protocol tanpa lag atau frame drop, menghasilkan kelancaran animasi tingkat tinggi.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-box">🛡️</div>
-          <h3 class="feature-title">Pembersih Iklan & Banner Otomatis</h3>
-          <p class="feature-desc">Spanduk persetujuan cookie, GDPR, dan widget live chat (Intercom, Crisp, Zendesk) otomatis dihilangkan agar rekaman 100% bersih.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-box">📐</div>
-          <h3 class="feature-title">Bingkai Perangkat 3D Realistis</h3>
-          <p class="feature-desc">Bungkus website Anda ke dalam mockup MacBook Pro kaca sinematik atau iPhone 15 Pro dengan Dynamic Island yang presisi.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-box">🎵</div>
-          <h3 class="feature-title">WebAudio BGM Bebas Royalti</h3>
-          <p class="feature-desc">Musik latar Lo-Fi dan Synthwave disintesis secara algoritmik dari kode browser, 100% aman hak cipta komersial.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-box">🎯</div>
-          <h3 class="feature-title">Smart Headline Hook Generator</h3>
-          <p class="feature-desc">AI menganalisis konten domain dan secara cerdas menyarankan judul pengait visual berdaya konversi tinggi.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-box">🔒</div>
-          <h3 class="feature-title">Mode Standby & Zero Pop-up</h3>
-          <p class="feature-desc">Bebas dari dialog pop-up "Keluar dari situs" yang mengganggu. Anda memegang kendali penuh kapan live demo dimulai.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 4: GALERI SHOWCASE HASIL -->
-    <section class="landing-wrap" id="showcase">
-      <div class="section-header">
-        <span class="section-tag">Hasil Nyata</span>
-        <h2 class="section-heading">Lihat Contoh Video yang Dihasilkan</h2>
-        <p class="section-subheading">Semua video di bawah ini dihasilkan 100% secara otomatis oleh Rebuildr Studio dari tautan website publik.</p>
-      </div>
-
-      <div class="showcase-grid">
-        <!-- Card 1 -->
-        <div class="showcase-card">
-          <div class="showcase-thumb-box">
+      <div class="reel-grid">
+        <div class="reel-card">
+          <div class="reel-video-box">
             <video autoplay loop muted playsinline>
               <source src="/exports/video_1_vite_dev_16_9.mp4" type="video/mp4">
             </video>
           </div>
-          <div class="showcase-card-body">
-            <div class="showcase-badge-row">
-              <span class="showcase-pill-format">16:9 Landscape</span>
-              <span class="showcase-pill-format">60 FPS</span>
+          <div class="reel-card-body">
+            <h4 class="reel-card-title">Vite.dev Next-Gen Tooling</h4>
+            <div class="reel-card-meta">
+              <span class="badge-tag-fmt">16:9 Landscape</span>
+              <span>⏱️ 26s</span>
+              <a href="/exports/video_1_vite_dev_16_9.mp4" download class="btn-reel-dl">⬇ MP4 (60FPS)</a>
             </div>
-            <h3 class="showcase-card-title">Vite.dev — Next Generation Tooling</h3>
-            <p class="showcase-card-desc">Showcase alur dokumentasi dan ekosistem frontend dengan transisi sinematik 16:9.</p>
-            <a href="/studio?url=https://vite.dev" class="showcase-btn-launch">
-              <span>🚀 Buka di Studio</span>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-            </a>
           </div>
         </div>
 
-        <!-- Card 2 -->
-        <div class="showcase-card">
-          <div class="showcase-thumb-box">
+        <div class="reel-card">
+          <div class="reel-video-box">
             <video autoplay loop muted playsinline>
               <source src="/exports/video_2_linear_app_9_16.mp4" type="video/mp4">
             </video>
           </div>
-          <div class="showcase-card-body">
-            <div class="showcase-badge-row">
-              <span class="showcase-pill-format">9:16 Vertikal</span>
-              <span class="showcase-pill-format">TikTok / Reels</span>
+          <div class="reel-card-body">
+            <h4 class="reel-card-title">Linear App Modern Project Sync</h4>
+            <div class="reel-card-meta">
+              <span class="badge-tag-fmt">9:16 Vertikal</span>
+              <span>⏱️ 30s</span>
+              <a href="/exports/video_2_linear_app_9_16.mp4" download class="btn-reel-dl">⬇ MP4 (60FPS)</a>
             </div>
-            <h3 class="showcase-card-title">Linear.app — Project Management</h3>
-            <p class="showcase-card-desc">Format vertikal berkecepatan tinggi yang dirancang untuk menarik impresi maksimal di media sosial.</p>
-            <a href="/studio?url=https://linear.app" class="showcase-btn-launch">
-              <span>🚀 Buka di Studio</span>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-            </a>
           </div>
         </div>
 
-        <!-- Card 3 -->
-        <div class="showcase-card">
-          <div class="showcase-thumb-box">
+        <div class="reel-card">
+          <div class="reel-video-box">
             <video autoplay loop muted playsinline>
               <source src="/exports/video_3_pulse_saas_1_1.mp4" type="video/mp4">
             </video>
           </div>
-          <div class="showcase-card-body">
-            <div class="showcase-badge-row">
-              <span class="showcase-pill-format">1:1 Square</span>
-              <span class="showcase-pill-format">Instagram Feed</span>
+          <div class="reel-card-body">
+            <h4 class="reel-card-title">PULSE Cloud AI Infrastructure</h4>
+            <div class="reel-card-meta">
+              <span class="badge-tag-fmt">1:1 Persegi</span>
+              <span>⏱️ 15s</span>
+              <a href="/exports/video_3_pulse_saas_1_1.mp4" download class="btn-reel-dl">⬇ MP4 (60FPS)</a>
             </div>
-            <h3 class="showcase-card-title">PULSE Cloud — SaaS Dashboard</h3>
-            <p class="showcase-card-desc">Format persegi simetris yang ideal untuk posting grid Instagram dan iklan berbayar.</p>
-            <a href="/studio?url=/showcase-saas.html" class="showcase-btn-launch">
-              <span>🚀 Buka di Studio</span>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 5: FAQ -->
-    <section class="landing-wrap" id="faq">
-      <div class="section-header">
-        <span class="section-tag">Tanya Jawab</span>
-        <h2 class="section-heading">Pertanyaan yang Sering Diajukan</h2>
-        <p class="section-subheading">Informasi lengkap seputar lisensi, kompatibilitas, dan cara kerja mesin kami.</p>
-      </div>
-
-      <div class="faq-wrap">
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Apakah saya perlu keahlian software editing seperti Adobe After Effects?</span>
-            <span class="faq-toggle-icon">+</span>
-          </div>
-          <div class="faq-answer">
-            Sama sekali tidak. Rebuildr Studio 100% otomatis. Anda hanya perlu menempelkan URL website Anda, memilih aspek rasio serta bingkai perangkat, dan sistem akan langsung menganimasikan serta merender video lengkap.
-          </div>
+    <!-- SECTION 4: ENGINE SPECIFICATIONS TABLE -->
+    <section class="section-specs" id="engine-specs">
+      <div class="swarm-lab-header">
+        <div class="linear-pill-badge">
+          <span>⚙️ Spesifikasi Arsitektur Mesin</span>
         </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Apakah video dan audio yang dihasilkan bebas hak cipta (bebas royalti)?</span>
-            <span class="faq-toggle-icon">+</span>
-          </div>
-          <div class="faq-answer">
-            Ya. Musik latar disintesis langsung menggunakan Web Audio API tanpa sampel audio pihak ketiga, sehingga 100% bebas royalti komersial dan aman untuk dimonetisasi di YouTube, TikTok, dan Instagram.
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Berapa lama waktu yang dibutuhkan untuk membuat satu video?</span>
-            <span class="faq-toggle-icon">+</span>
-          </div>
-          <div class="faq-answer">
-            Live preview berjalan secara instan (*real-time*). Untuk ekspor video resolusi tinggi 60 FPS dan GIF teroptimasi, proses render hanya memakan waktu sekitar 30 hingga 50 detik.
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Apakah mendukung aplikasi lokal seperti localhost:3000 atau Vite dev server?</span>
-            <span class="faq-toggle-icon">+</span>
-          </div>
-          <div class="faq-answer">
-            Tentu saja. Anda dapat memasukkan URL lokal seperti `http://localhost:5173` atau `http://localhost:3000` untuk membuat video showcase sebelum website Anda resmi di-deploy ke internet.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 6: FINAL CALL TO ACTION -->
-    <section class="landing-wrap">
-      <div class="cta-banner-box">
-        <h2 class="cta-banner-title">Siap Memamerkan Website Anda dalam Kualitas Sinematik?</h2>
-        <p class="cta-banner-desc">
-          Buka Rebuildr Studio Workbench sekarang dan buat video promosi produk pertama Anda dalam hitungan detik.
+        <h2 class="swarm-lab-title">Engine Specs & Capabilities</h2>
+        <p style="color: var(--text-muted); font-size: 15px;">
+          Standar teknik di balik kehalusan rekaman, ketajaman piksel, dan keamanan eksekusi.
         </p>
-        <a href="/studio" class="btn-cta-big">
-          <span>⚡ Buka Rebuildr Studio Workbench</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-        </a>
+      </div>
+
+      <div class="specs-card-deck">
+        <table class="specs-table">
+          <thead>
+            <tr>
+              <th>Fitur / Parameter</th>
+              <th>Spesifikasi Teknis Rebuildr</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="spec-key">Output Frame Rate</td>
+              <td class="spec-val">Native 60.0 FPS locked screencast via Chromium CDP protocol buffer</td>
+            </tr>
+            <tr>
+              <td class="spec-key">Video Codec & Encoding</td>
+              <td class="spec-val">H.264 High Profile 4.2 • CRF 18 visually lossless • YUV420P kompatibel semua platform</td>
+            </tr>
+            <tr>
+              <td class="spec-key">Aspect Ratios Supported</td>
+              <td class="spec-val">16:9 Landscape (1920×1080), 9:16 Vertikal (1080×1920), 1:1 Persegi (1080×1080)</td>
+            </tr>
+            <tr>
+              <td class="spec-key">Hardware Mockups</td>
+              <td class="spec-val">MacBook Pro 16" CNC Aluminum, iPhone 15 Pro Titanium dengan Dynamic Island, Flat Studio Frame</td>
+            </tr>
+            <tr>
+              <td class="spec-key">Audio Architecture</td>
+              <td class="spec-val">Synthesizer WebAudio prosedural bebas royalti (Pentatonic Lo-Fi, Synthwave Arpeggiator, SFX Haptic)</td>
+            </tr>
+            <tr>
+              <td class="spec-key">Noise & Cookie Purge</td>
+              <td class="spec-val">Pembersih otonom: menghapus OneTrust, Cookiebot, Intercom, Zendesk, Crisp, dan banner GDPR</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
+  <!-- Modern Minimal Footer -->
   <footer class="landing-footer">
-    <div class="footer-content">
-      <span>© 2026 REBUILDR AI — Autonomous Website Motion Engine. Seluruh hak cipta dilindungi.</span>
-      <div class="footer-links">
-        <a href="/studio">Studio Workbench</a>
-        <a href="#cara-kerja">Cara Kerja</a>
-        <a href="#fitur">Fitur</a>
-        <a href="#faq">FAQ</a>
-      </div>
+    <div class="footer-inner">
+      <span>REBUILDR STUDIO // Autonomous Motion Engine v3.8 PRO</span>
+      <span>Designed for High-Velocity Product Creators • 60FPS Output</span>
+      <a href="/studio" style="color: var(--emerald-light); text-decoration: none; font-weight: 600;">Buka Workbench →</a>
     </div>
   </footer>
 

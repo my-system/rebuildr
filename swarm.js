@@ -6,6 +6,12 @@
 //   Stage 4: Caret-Tracked Word-by-Word & Character-by-Character Live Typing (I-beam cursor types every heading & paragraph)
 (() => {
   if (window.__swarmRebuild) {
+    if (window.__rebuildrAutoLaunch && window.__rebuildrAutoLaunch.autoStart) {
+      if (!window.__swarmRebuild.running) {
+        window.__swarmRebuild.start();
+      }
+      return;
+    }
     window.__swarmRebuild.toggle();
     return;
   }
@@ -990,15 +996,9 @@
     body[data-fullscreen-render="true"] #swarm-mini-terminal,
     body[data-fullscreen-render="true"] #swarm-tour-sound-btn,
     body[data-fullscreen-render="true"] #swarm-tour-takeover-btn,
-    body[data-fullscreen-render="true"] #swarm-tour-resume-btn {
-      display: none !important;
-    }
+    body[data-fullscreen-render="true"] #swarm-tour-resume-btn,
     body[data-fullscreen-render="true"] #swarm-studio-hud {
-      padding: 4px 14px !important;
-      background: rgba(11, 15, 25, 0.88) !important;
-      bottom: 12px !important;
-      max-width: 440px !important;
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      display: none !important;
     }
 
     /* Auto-Dismiss GDPR, Cookie Notices, Live Chat Bubbles & Intrusive Backdrop Overlays */
@@ -1748,6 +1748,11 @@
     body.swarm-reels-stage main,
     body.swarm-reels-stage .story-scene,
     body.swarm-reels-stage > div:not(#swarm-studio-overlay):not(#swarm-launchpad-backdrop):not(.character-stage),
+    body.swarm-reels-stage section,
+    body.swarm-reels-stage header,
+    body.swarm-reels-stage footer,
+    body.swarm-reels-stage .container,
+    body.swarm-reels-stage [class*='container'],
     body.swarm-square-stage #story-scroll-container,
     body.swarm-square-stage main,
     body.swarm-square-stage .story-scene,
@@ -1763,7 +1768,50 @@
       border-left: none !important;
       border-right: none !important;
       box-shadow: none !important;
+      box-sizing: border-box !important;
       overflow-x: hidden !important;
+    }
+    body.swarm-reels-stage,
+    body.swarm-reels-stage * {
+      box-sizing: border-box !important;
+    }
+    body.swarm-reels-stage [class*='hero'],
+    body.swarm-reels-stage [class*='row'],
+    body.swarm-reels-stage [class*='flex'] {
+      flex-wrap: wrap !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    body.swarm-reels-stage h1,
+    body.swarm-reels-stage [class*="h1" i],
+    body.swarm-reels-stage [class*="Heading--1" i] {
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+      word-break: normal !important;
+      white-space: normal !important;
+      font-size: min(28px, 7.5vw) !important;
+      line-height: 1.25 !important;
+    }
+    body.swarm-reels-stage .line,
+    body.swarm-reels-stage [class*="line" i] {
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+      word-break: normal !important;
+      white-space: normal !important;
+      display: inline !important;
+    }
+    body.swarm-reels-stage .word,
+    body.swarm-reels-stage [class*="word" i] {
+      max-width: 100% !important;
+      white-space: normal !important;
+      display: inline !important;
+    }
+    body.swarm-reels-stage img,
+    body.swarm-reels-stage svg,
+    body.swarm-reels-stage video,
+    body.swarm-reels-stage canvas {
+      max-width: 100% !important;
+      height: auto !important;
     }
     body.swarm-reels-stage .projects-grid,
     body.swarm-reels-stage .skills-grid,
@@ -4337,34 +4385,43 @@
       if (this.sound) {
         this.sound.stopBgm();
       }
+      const markDone = () => {
+        if (window.__rebuildrReconstructionDone) return;
+        window.__rebuildrReconstructionDone = true;
+        window.dispatchEvent(new CustomEvent("rebuildr:done"));
+        if (window.parent && window.parent !== window) {
+          try {
+            window.parent.postMessage({ type: "rebuildr:done" }, "*");
+          } catch (_) {}
+        }
+      };
       if (this.audioRecorder && this.audioRecorder.state !== "inactive") {
         try {
+          const fallbackTimer = setTimeout(markDone, 1500);
           this.audioRecorder.onstop = () => {
-            const blob = new Blob(this.audioChunks, { type: "audio/webm" });
-            const reader = new FileReader();
-            reader.onloadend = () => {
-              window.__rebuildrAudioBase64 = reader.result;
-              window.__rebuildrReconstructionDone = true;
-              window.dispatchEvent(new CustomEvent("rebuildr:done"));
-              if (window.parent && window.parent !== window) {
-                try {
-                  window.parent.postMessage({ type: "rebuildr:done" }, "*");
-                } catch (_) {}
-              }
-            };
-            reader.readAsDataURL(blob);
+            try {
+              const blob = new Blob(this.audioChunks, { type: "audio/webm" });
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                clearTimeout(fallbackTimer);
+                window.__rebuildrAudioBase64 = reader.result;
+                markDone();
+              };
+              reader.onerror = () => {
+                clearTimeout(fallbackTimer);
+                markDone();
+              };
+              reader.readAsDataURL(blob);
+            } catch (_) {
+              clearTimeout(fallbackTimer);
+              markDone();
+            }
           };
           this.audioRecorder.stop();
           return;
         } catch (_) {}
       }
-      window.__rebuildrReconstructionDone = true;
-      window.dispatchEvent(new CustomEvent("rebuildr:done"));
-      if (window.parent && window.parent !== window) {
-        try {
-          window.parent.postMessage({ type: "rebuildr:done" }, "*");
-        } catch (_) {}
-      }
+      markDone();
     }
 
     onKeyDown(e) {
@@ -6061,46 +6118,206 @@
       return dict.saas;
     }
 
-    speakTourNarration(text) {
-      if (!text || this.sound?.muted) return;
-      if (this.tourLanguage === "mute" || this.tourLanguage === "sfx-only") return;
+    ensureTourAudio() {
+      if (!this.tourAudio) {
+        this.tourAudio = new Audio();
+        this.tourAudio.crossOrigin = "anonymous";
+        this.tourAudio.preload = "auto";
+      }
+      return this.tourAudio;
+    }
 
-      const synth = window.speechSynthesis || window.top?.speechSynthesis || window.parent?.speechSynthesis;
-      if (!synth) return;
+    stopTourNarration() {
+      // 1. Invalidate any ongoing or pending speech attempts
+      this.narrationSeq = (this.narrationSeq || 0) + 1;
+
+      // 2. Teardown active audio track on the single dedicated audio channel
+      if (this.tourAudio) {
+        try {
+          this.tourAudio.onended = null;
+          this.tourAudio.onerror = null;
+          this.tourAudio.oncanplay = null;
+          this.tourAudio.pause();
+          this.tourAudio.currentTime = 0;
+          this.tourAudio.removeAttribute("src");
+          this.tourAudio.load();
+        } catch (_) {}
+      }
+
+      // 3. Cancel all Web Speech synthesizers across iframe and top/parent windows
+      const synths = [window.speechSynthesis, window.top?.speechSynthesis, window.parent?.speechSynthesis];
+      synths.forEach((synth) => {
+        try {
+          if (synth && (synth.speaking || synth.pending)) {
+            synth.cancel();
+          }
+        } catch (_) {}
+      });
+
+      if (this.activeUtterance) {
+        try {
+          this.activeUtterance.onend = null;
+          this.activeUtterance.onerror = null;
+          this.activeUtterance = null;
+        } catch (_) {}
+      }
+
+      // 4. Resolve any awaiting promise so the tour loop continues cleanly
+      if (this.activeNarrationResolver) {
+        const resolve = this.activeNarrationResolver;
+        this.activeNarrationResolver = null;
+        resolve();
+      }
+    }
+
+    async speakTourNarration(text) {
+      if (!text || this.sound?.muted) return Promise.resolve();
+      if (this.tourLanguage === "mute" || this.tourLanguage === "sfx-only") return Promise.resolve();
+
+      // Immediately cancel and teardown any previous speech on the single channel
+      this.stopTourNarration();
+      const currentSeq = this.narrationSeq;
+
+      // Clean text for natural pronunciation
+      const cleanText = String(text)
+        .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}⚡🚀🔍⌨️📊✨⚙️🎛️📋📂📑🎠🛍️💳🎓🍽️🎬★•]/gu, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      if (!cleanText) return Promise.resolve();
+
+      const htmlLang = (document.documentElement.lang || document.querySelector('meta[http-equiv="content-language"]')?.content || "").toLowerCase();
+      const isEnglish = this.tourLanguage === "en" || (!this.tourLanguage && htmlLang.startsWith("en"));
+      const langCode = isEnglish ? "en" : "id";
+
+      this.currentNarrationPromise = new Promise((resolve) => {
+        let isResolved = false;
+        const safeResolve = () => {
+          if (!isResolved) {
+            isResolved = true;
+            this.activeNarrationResolver = null;
+            resolve();
+          }
+        };
+        this.activeNarrationResolver = safeResolve;
+
+        // Dynamic safety timeout
+        const safetyTimeoutMs = Math.min(18000, Math.max(4000, cleanText.length * 140 + 2500));
+        const safetyTimer = setTimeout(() => {
+          if (this.narrationSeq === currentSeq) {
+            safeResolve();
+          }
+        }, safetyTimeoutMs);
+
+        const fallbackToSpeechSynthesis = () => {
+          if (this.narrationSeq !== currentSeq) return;
+          this.speakWithSpeechSynthesis(cleanText, langCode, isEnglish, safeResolve, safetyTimer, currentSeq);
+        };
+
+        // ENGINE 1: Natural Neural AI Voice via Single Tour Audio Element
+        if (this.tourLanguage !== "browser-id") {
+          try {
+            const baseUrl = (window.location.origin && (window.location.origin.includes("localhost") || window.location.origin.includes("127.0.0.1")))
+              ? window.location.origin
+              : (window.__rebuildrServerOrigin || "http://localhost:3000");
+            const ttsUrl = `${baseUrl}/api/tts?text=${encodeURIComponent(cleanText)}&lang=${langCode}`;
+            
+            const audio = this.ensureTourAudio();
+            audio.onended = () => {
+              if (this.narrationSeq !== currentSeq) return;
+              clearTimeout(safetyTimer);
+              safeResolve();
+            };
+
+            audio.onerror = () => {
+              if (this.narrationSeq !== currentSeq) return;
+              if (!audio.src || audio.src === window.location.href) return;
+              console.warn("[VOICE] Neural audio error, falling back to Web Speech API");
+              fallbackToSpeechSynthesis();
+            };
+
+            if (this.sound) this.sound.duckBgm(0.18, 900);
+
+            audio.src = ttsUrl;
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+              playPromise.catch((err) => {
+                if (this.narrationSeq !== currentSeq) return;
+                console.warn("[VOICE] Audio play() blocked, falling back to Web Speech API:", err.message);
+                fallbackToSpeechSynthesis();
+              });
+            }
+            return;
+          } catch (_) {
+            fallbackToSpeechSynthesis();
+            return;
+          }
+        }
+
+        // ENGINE 2: Web Speech API (Local device speech)
+        fallbackToSpeechSynthesis();
+      });
+
+      return this.currentNarrationPromise;
+    }
+
+    speakWithSpeechSynthesis(cleanText, langCode, isEnglish, resolveCb, safetyTimer, currentSeq = null) {
+      if (currentSeq !== null && this.narrationSeq !== currentSeq) return;
 
       try {
-        synth.cancel();
+        const synth = window.speechSynthesis || window.top?.speechSynthesis || window.parent?.speechSynthesis;
+        if (!synth) {
+          if (safetyTimer) clearTimeout(safetyTimer);
+          resolveCb();
+          return;
+        }
 
-        // Strip emoji and symbol characters for clean and natural pronunciation
-        const cleanText = String(text)
-          .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}⚡🚀🔍⌨️📊✨⚙️🎛️📋📂📑🎠🛍️💳🎓🍽️🎬★•]/gu, "")
-          .replace(/\s+/g, " ")
-          .trim();
-
-        if (!cleanText) return;
+        // Cancel any pending speech before launching new utterance
+        [window.speechSynthesis, window.top?.speechSynthesis, window.parent?.speechSynthesis].forEach((s) => {
+          try { if (s && (s.speaking || s.pending)) s.cancel(); } catch (_) {}
+        });
 
         const utterance = new SpeechSynthesisUtterance(cleanText);
-        const htmlLang = (document.documentElement.lang || document.querySelector('meta[http-equiv="content-language"]')?.content || "").toLowerCase();
-        const isEnglish = this.tourLanguage === "en" || (!this.tourLanguage && htmlLang.startsWith("en"));
-
         utterance.lang = isEnglish ? "en-US" : "id-ID";
-        utterance.rate = 1.05;
-        utterance.pitch = 1.0;
+        utterance.rate = 0.93;
+        utterance.pitch = 1.02;
         utterance.volume = 1.0;
+        this.activeUtterance = utterance;
+
+        utterance.onend = () => {
+          if (currentSeq !== null && this.narrationSeq !== currentSeq) return;
+          this.activeUtterance = null;
+          if (safetyTimer) clearTimeout(safetyTimer);
+          resolveCb();
+        };
+
+        utterance.onerror = () => {
+          if (currentSeq !== null && this.narrationSeq !== currentSeq) return;
+          this.activeUtterance = null;
+          if (safetyTimer) clearTimeout(safetyTimer);
+          resolveCb();
+        };
 
         const voices = (synth.getVoices ? synth.getVoices() : []) || [];
         if (voices.length > 0) {
           const targetPrefix = isEnglish ? "en" : "id";
-          const matchedVoice = voices.find(v => v.lang && v.lang.toLowerCase().replace("_", "-").startsWith(targetPrefix))
-            || voices.find(v => v.lang && v.lang.toLowerCase().includes(targetPrefix));
+          const langVoices = voices.filter(v => v.lang && v.lang.toLowerCase().replace("_", "-").startsWith(targetPrefix));
+
+          // Prefer Natural / Neural / Online / Google / Human voices
+          const naturalVoice = langVoices.find(v => /natural|neural|online|google|gadis|ardi|wavenet|multilingual/i.test(v.name));
+          const matchedVoice = naturalVoice || langVoices[0] || voices.find(v => v.lang && v.lang.toLowerCase().includes(targetPrefix));
+
           if (matchedVoice) {
             utterance.voice = matchedVoice;
           }
         }
 
+        if (this.sound) this.sound.duckBgm(0.2, 800);
         synth.speak(utterance);
       } catch (err) {
-        console.warn("[VOICE] Speech synthesis notice:", err);
+        console.warn("[VOICE] SpeechSynthesis error:", err);
+        if (safetyTimer) clearTimeout(safetyTimer);
+        resolveCb();
       }
     }
 
@@ -7150,7 +7367,13 @@
     }
 
     async runFeatureTourFlow(manualList = null) {
-      if (!this.running || this.aborted) return;
+      if (this.isTourRunning) {
+        console.warn("[TOUR] runFeatureTourFlow is already active! Preventing duplicate concurrent tour.");
+        return;
+      }
+      this.isTourRunning = true;
+      try {
+        if (!this.running || this.aborted) return;
       this.dismissAnnoyancesAndBanners();
       this.updateHudStatus(`<strong>🎯 Feature Tour</strong> · Solo Presenter Memandu Demo`, 10);
       this.logTerminal(AGENTS[0], "TOUR", "Initiating Solo Presenter Feature Tour Mode...");
@@ -7278,9 +7501,13 @@
       this.sound.playWhoosh(1.2);
 
       await this.glideCursorBezier(heroCursor, window.innerWidth * 0.5, window.innerHeight * 0.38, 700, { arch: 1 });
-      await this.sleep(1800);
+      if (this.currentNarrationPromise) {
+        await Promise.race([this.currentNarrationPromise, this.sleep(14000)]);
+      } else {
+        await this.sleep(1800);
+      }
       this.hideTourCaption();
-      await this.sleep(250);
+      await this.sleep(450);
 
       // CHAPTER TIMELINE TRACKER
       const chapters = [
@@ -7324,7 +7551,12 @@
 
         await this.glideCursorBezier(heroCursor, window.innerWidth * 0.5, window.innerHeight * 0.5 - 170, 600, { arch: -1 });
 
-        await this.sleep(3200);
+        if (this.currentNarrationPromise) {
+          await Promise.race([this.currentNarrationPromise, this.sleep(7000)]);
+        } else {
+          await this.sleep(3200);
+        }
+        await this.sleep(600);
         this.hideTourChapterCard();
       }
 
@@ -7342,7 +7574,10 @@
       } else {
         this.notifyReconstructionComplete();
       }
+    } finally {
+      this.isTourRunning = false;
     }
+  }
 
     async presentSingleFeature(feat, idx, total, heroCursor) {
       const el = feat.element;
@@ -7576,12 +7811,24 @@
         this.setHeroCursorMode(heroCursor, "default");
       }
 
-      // 6. Dwell Time for Reader & Complete Stories Step (Adaptive per Target Duration)
-      this.completeTourStoryActive(idx);
-      const dwellMs = this.targetDuration === "15s" ? 950 : (this.targetDuration === "60s" ? 3200 : 1600);
-      await this.sleep(dwellMs);
+      // 6. SYNCHRONIZED NARRATION DWELL: Wait until the voice explanation finishes speaking completely!
+      if (this.currentNarrationPromise) {
+        await Promise.race([
+          this.currentNarrationPromise,
+          this.sleep(14000) // Safety cap so it never hangs indefinitely
+        ]);
+      } else {
+        const dwellMs = this.targetDuration === "15s" ? 1400 : (this.targetDuration === "60s" ? 3600 : 2200);
+        await this.sleep(dwellMs);
+      }
 
-      // 7. Cleanup & Smooth Camera Zoom Pullback
+      // Mark the active feature story segment completed now that explanation is 100% finished!
+      this.completeTourStoryActive(idx);
+
+      // 7. Natural Breath Pause (550ms) so user absorbs the takeaway before camera moves
+      await this.sleep(550);
+
+      // 8. Cleanup & Smooth Camera Zoom Pullback
       this.resetCinematicCameraZoom();
       this.hideTourSpotlight();
       this.hideTourCaption();
@@ -9500,6 +9747,7 @@
     stop() {
       this.running = false;
       this.aborted = true;
+      this.stopTourNarration();
       this.disableSectionPicker();
       this.clearFocusAndDof();
       this.clearTourElementFocus();
@@ -9549,6 +9797,10 @@
       else if (studio.paused) studio.togglePause();
     } else if (e.data.type === "REBUILDR_RESTART") {
       studio.launchRebuild();
+    } else if (e.data.type === "REBUILDR_MUTE") {
+      studio.sound.muted = !!e.data.muted;
+      if (studio.tourAudio) studio.tourAudio.muted = !!e.data.muted;
+      if (e.data.muted) studio.stopTourNarration();
     }
   });
 

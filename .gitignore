@@ -27,3 +27,5 @@ public/exports/rebuildr-job_*
 public/exports/raw-job_*
 public/exports/*.tmp
 public/exports/*.temp
+public/cache/
+content-package/

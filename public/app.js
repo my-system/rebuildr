@@ -3,16 +3,16 @@
   const state = {
     url: "/showcase-saas.html",
     format: "16:9",
-    duration: "60s",
-    bgm: "none",
+    duration: "30s",
+    bgm: "lofi",
     mockup: "flat",
     preset: "before-after",
-    scope: "full",
+    scope: "curated",
     mode: "motion",
     theme: "figma",
-    speed: 1,
+    speed: 1.5,
     customHookText: "BEFORE: Wireframe Kuno -> AFTER: Dirakit 8 AI ⚡",
-    ghost: "true",
+    ghost: "false",
     terminal: "false",
     watermark: "none",
     audioBalance: "balanced",
@@ -517,21 +517,32 @@
     isLivePaused = !isLivePaused;
     setLivePausedState(isLivePaused);
 
-    // Communicate to iframe
+    // Communicate to iframe (single-channel delivery to prevent dual-launch)
     if (iframe && iframe.contentWindow) {
-      iframe.contentWindow.postMessage(
-        { type: isLivePaused ? "REBUILDR_PAUSE" : "REBUILDR_RESUME" },
-        "*"
-      );
+      let handledDirectly = false;
       try {
         if (iframe.contentWindow.__swarmRebuild) {
-          if (!isLivePaused && !iframe.contentWindow.__swarmRebuild.running) {
-            iframe.contentWindow.__swarmRebuild.launchRebuild();
-          } else if (iframe.contentWindow.__swarmRebuild.paused !== isLivePaused) {
-            iframe.contentWindow.__swarmRebuild.togglePause();
+          if (isLivePaused) {
+            if (iframe.contentWindow.__swarmRebuild.running && !iframe.contentWindow.__swarmRebuild.paused) {
+              iframe.contentWindow.__swarmRebuild.togglePause();
+            }
+          } else {
+            if (!iframe.contentWindow.__swarmRebuild.running) {
+              iframe.contentWindow.__swarmRebuild.launchRebuild();
+            } else if (iframe.contentWindow.__swarmRebuild.paused) {
+              iframe.contentWindow.__swarmRebuild.togglePause();
+            }
           }
+          handledDirectly = true;
         }
       } catch (_) {}
+
+      if (!handledDirectly) {
+        iframe.contentWindow.postMessage(
+          { type: isLivePaused ? "REBUILDR_PAUSE" : "REBUILDR_RESUME" },
+          "*"
+        );
+      }
     }
 
     showToast(isLivePaused ? "Live preview dijeda (Pause)" : "Live tour dimulai (Playing)", isLivePaused ? "⏸️" : "▶️");
@@ -676,13 +687,16 @@
   btnTransportReplay?.addEventListener("click", () => {
     resetTimeline();
     if (iframe && iframe.contentWindow) {
-      iframe.contentWindow.postMessage({ type: "REBUILDR_RESTART" }, "*");
+      let handledDirectly = false;
       try {
         if (iframe.contentWindow.__swarmRebuild) {
           iframe.contentWindow.__swarmRebuild.launchRebuild();
+          handledDirectly = true;
         }
-      } catch (_) {
-        launchStudioPreview();
+      } catch (_) {}
+
+      if (!handledDirectly) {
+        iframe.contentWindow.postMessage({ type: "REBUILDR_RESTART" }, "*");
       }
     } else {
       launchStudioPreview();
@@ -747,6 +761,23 @@
         transportSoundSvg.innerHTML = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>`;
       }
     }
+
+    // Synchronize mute state to iframe
+    if (iframe && iframe.contentWindow) {
+      try {
+        if (iframe.contentWindow.__swarmRebuild) {
+          iframe.contentWindow.__swarmRebuild.sound.muted = isMuted;
+          if (iframe.contentWindow.__swarmRebuild.tourAudio) {
+            iframe.contentWindow.__swarmRebuild.tourAudio.muted = isMuted;
+          }
+          if (isMuted) {
+            iframe.contentWindow.__swarmRebuild.stopTourNarration();
+          }
+        }
+      } catch (_) {}
+      iframe.contentWindow.postMessage({ type: "REBUILDR_MUTE", muted: isMuted }, "*");
+    }
+
     updateTimelineUi();
     showToast(isMuted ? "Suara studio dimatikan (Muted)" : "Suara studio diaktifkan (Unmuted)", isMuted ? "🔇" : "🔊");
   });
@@ -876,7 +907,8 @@
       "format-16-9",
       "format-1-1",
       "mockup-phone",
-      "mockup-laptop"
+      "mockup-laptop",
+      "mockup-flat"
     );
 
     if (state.format === "9:16") {
@@ -891,6 +923,8 @@
       deviceWrapper.classList.add("mockup-phone");
     } else if (state.mockup === "mockup-laptop") {
       deviceWrapper.classList.add("mockup-laptop");
+    } else {
+      deviceWrapper.classList.add("mockup-flat");
     }
 
     if (btnToggleRatio) {
@@ -958,8 +992,8 @@
   }
 
   btnLaunch?.addEventListener("click", () => {
-    launchStudioPreview(true);
-    showToast("Live Studio dimuat ulang", "▶");
+    launchStudioPreview(true, true);
+    showToast("Live Studio diputar", "▶");
   });
 
   btnToggleRatio?.addEventListener("click", () => {
@@ -1067,12 +1101,16 @@
     const tourLang = tourLangSelect ? tourLangSelect.value : "id";
     const tourOverlay = tourOverlaySelect ? tourOverlaySelect.value : "full";
 
+    // Route external http/https URLs through local /proxy so strict remote CSP headers never block Swarm AI injection
+    const renderTargetUrl = /^https?:\/\//i.test(raw) ? buildProxyUrl(true) : raw;
+
     try {
       const res = await fetch("/api/render", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          url: raw,
+          url: renderTargetUrl,
+          rawUrl: raw,
           format: state.format,
           preset: state.preset,
           scope: state.scope,

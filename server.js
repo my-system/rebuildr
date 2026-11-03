@@ -1,6 +1,7 @@
 // Rebuildr Web Studio & Cloud Video Generator Server
 // Turn any website URL into an automated motion graphic showcase video.
 const http = require("http");
+const https = require("https");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
@@ -84,9 +85,101 @@ const PORT = process.env.PORT || 3000;
 const ROOT_DIR = __dirname;
 const PUBLIC_DIR = path.join(ROOT_DIR, "public");
 const EXPORTS_DIR = path.join(PUBLIC_DIR, "exports");
+const TTS_CACHE_DIR = path.join(PUBLIC_DIR, "cache", "tts");
 
 if (!fs.existsSync(EXPORTS_DIR)) {
   fs.mkdirSync(EXPORTS_DIR, { recursive: true });
+}
+if (!fs.existsSync(TTS_CACHE_DIR)) {
+  fs.mkdirSync(TTS_CACHE_DIR, { recursive: true });
+}
+
+function chunkTtsText(text, maxLen = 140) {
+  const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+  const chunks = [];
+  let cur = "";
+  for (let s of sentences) {
+    s = s.trim();
+    if (!s) continue;
+    if ((cur + " " + s).trim().length <= maxLen) {
+      cur = (cur ? cur + " " : "") + s;
+    } else {
+      if (cur) chunks.push(cur);
+      if (s.length > maxLen) {
+        const words = s.split(" ");
+        let sub = "";
+        for (let w of words) {
+          if ((sub + " " + w).trim().length <= maxLen) {
+            sub = (sub ? sub + " " : "") + w;
+          } else {
+            if (sub) chunks.push(sub);
+            sub = w;
+          }
+        }
+        if (sub) chunks.push(sub);
+        cur = "";
+      } else {
+        cur = s;
+      }
+    }
+  }
+  if (cur) chunks.push(cur);
+  return chunks;
+}
+
+function fetchTtsChunk(text, lang = "id") {
+  return new Promise((resolve, reject) => {
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${lang}&client=tw-ob&q=${encodeURIComponent(text)}`;
+    const req = https.get(url, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+      },
+      timeout: 5000
+    }, (res) => {
+      if (res.statusCode !== 200) {
+        return reject(new Error(`Upstream TTS status ${res.statusCode}`));
+      }
+      const chunks = [];
+      res.on("data", (d) => chunks.push(d));
+      res.on("end", () => resolve(Buffer.concat(chunks)));
+    });
+    req.on("error", reject);
+    req.on("timeout", () => {
+      req.destroy();
+      reject(new Error("Upstream TTS timeout"));
+    });
+  });
+}
+
+async function getNeuralTtsAudio(text, lang = "id") {
+  const clean = String(text)
+    .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}⚡🚀🔍⌨️📊✨⚙️🎛️📋📂📑🎠🛍️💳🎓🍽️🎬★•]/gu, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!clean) return null;
+
+  const hash = crypto.createHash("md5").update(`${lang}:${clean}`).digest("hex");
+  const cacheFile = path.join(TTS_CACHE_DIR, `${hash}.mp3`);
+
+  if (fs.existsSync(cacheFile)) {
+    return fs.readFileSync(cacheFile);
+  }
+
+  const chunks = chunkTtsText(clean, 140);
+  const buffers = [];
+  for (const c of chunks) {
+    const buf = await fetchTtsChunk(c, lang);
+    buffers.push(buf);
+    if (chunks.length > 1) {
+      await new Promise((r) => setTimeout(r, 60));
+    }
+  }
+
+  const fullAudio = Buffer.concat(buffers);
+  try {
+    fs.writeFileSync(cacheFile, fullAudio);
+  } catch (_) {}
+  return fullAudio;
 }
 
 process.on("uncaughtException", (err) => {
@@ -175,18 +268,28 @@ async function processRenderJob(job) {
     return;
   }
 
-  let viewport = { width: 1920, height: 1080, deviceScaleFactor: 1 };
+  let viewport = { width: 1920, height: 1080, deviceScaleFactor: 1, isMobile: false };
+  let targetWidth = 1920;
+  let targetHeight = 1080;
+
   if (job.format === "9:16") {
-    viewport = { width: 1080, height: 1920, deviceScaleFactor: 1 };
+    viewport = { width: 540, height: 960, deviceScaleFactor: 2, isMobile: true, hasTouch: true };
+    targetWidth = 1080;
+    targetHeight = 1920;
   } else if (job.format === "1:1") {
-    viewport = { width: 1080, height: 1080, deviceScaleFactor: 1 };
+    viewport = { width: 720, height: 720, deviceScaleFactor: 2, isMobile: true, hasTouch: true };
+    targetWidth = 1080;
+    targetHeight = 1080;
   } else if (job.format === "4:5") {
-    viewport = { width: 1080, height: 1350, deviceScaleFactor: 1 };
+    viewport = { width: 540, height: 675, deviceScaleFactor: 2, isMobile: true, hasTouch: true };
+    targetWidth = 1080;
+    targetHeight = 1350;
   }
 
   let browser = null;
   let ffmpegProc = null;
   let client = null;
+  let frameFeederInterval = null;
 
   try {
     browser = await puppeteer.launch({
@@ -195,6 +298,7 @@ async function processRenderJob(job) {
       defaultViewport: viewport,
       args: [
         "--allow-file-access-from-files",
+        "--allow-running-insecure-content",
         "--autoplay-policy=no-user-gesture-required",
         "--disable-web-security",
         "--disable-features=IsolateOrigins,site-per-process",
@@ -210,12 +314,48 @@ async function processRenderJob(job) {
     job.logs.push(`[${new Date().toLocaleTimeString()}] Membuka halaman target: ${job.url}`);
 
     const page = await browser.newPage();
+    await page.setBypassCSP(true);
+
     const isMobile = job.format === "9:16" || job.format === "4:5" || job.deviceMockup === "mockup-phone";
     await page.setUserAgent(
       isMobile
         ? "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
         : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
     );
+
+    const autoLaunchCfg = {
+      autoStart: true,
+      videoFormat: job.format,
+      showcasePreset: job.preset,
+      launchScope: job.scope,
+      motionMode: job.mode === "motion",
+      theme: job.theme,
+      speed: Number(job.speed) || 1.5,
+      cameraZoom: false,
+      dofEnabled: false,
+      counterRoll: true,
+      autoRecord: false,
+      bgm: job.bgm || "lofi",
+      customHookText: job.customHookText || "",
+      targetDuration: job.targetDuration || "30s",
+      deviceMockup: job.deviceMockup || "flat",
+      tourFeatureCount: job.tourFeatureCount || 5,
+      tourNiche: job.tourNiche || "auto",
+      tourLanguage: job.tourLanguage || "id",
+      tourOverlay: job.tourOverlay || "full",
+      ghostMode: !!job.ghost,
+      terminalVisible: !!job.terminal,
+      watermark: job.watermark || "none",
+      audioBalance: job.audioBalance || "balanced",
+    };
+
+    await page.evaluateOnNewDocument((cfg, serverPort) => {
+      window.__rebuildrServerOrigin = `http://localhost:${serverPort}`;
+      window.__rebuildrAutoLaunch = cfg;
+      document.addEventListener("DOMContentLoaded", () => {
+        if (document.body) document.body.dataset.fullscreenRender = "true";
+      });
+    }, autoLaunchCfg, PORT);
 
     page.on("console", (msg) => {
       const txt = msg.text();
@@ -260,6 +400,21 @@ async function processRenderJob(job) {
       );
     }
 
+    if (isMobile) {
+      await page.evaluate(() => {
+        if (!document.getElementById("rebuildr-mobile-scroll-shield")) {
+          const st = document.createElement("style");
+          st.id = "rebuildr-mobile-scroll-shield";
+          st.textContent = `
+            html, body, * { scrollbar-width: none !important; -ms-overflow-style: none !important; }
+            ::-webkit-scrollbar, *::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
+            html, body { overflow-x: hidden !important; max-width: 100vw !important; }
+          `;
+          (document.head || document.documentElement).appendChild(st);
+        }
+      }).catch(() => {});
+    }
+
     job.status = "analyzing_page";
     job.progress = 40;
     job.logs.push(
@@ -269,7 +424,16 @@ async function processRenderJob(job) {
     // Generate clean slug for dynamic filenames (rebuildr-<domain>-<ratio>-<preset>.mp4/gif)
     let hostSlug = "showcase";
     try {
-      if (job.url.startsWith("/")) {
+      if (job.url.startsWith("/proxy")) {
+        const proxyParsed = new URL(job.url, `http://localhost:${PORT}`);
+        const innerUrl = proxyParsed.searchParams.get("url") || "";
+        if (innerUrl.startsWith("/")) {
+          hostSlug = innerUrl.replace(/^\//, "").replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "-") || "showcase";
+        } else if (innerUrl) {
+          const u = new URL(innerUrl.startsWith("http") ? innerUrl : `https://${innerUrl}`);
+          hostSlug = u.hostname.replace(/^www\./, "").replace(/[^a-zA-Z0-9_-]/g, "-");
+        }
+      } else if (job.url.startsWith("/")) {
         hostSlug = job.url.replace(/^\//, "").replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "-") || "showcase";
       } else {
         const u = new URL(job.url.startsWith("http") ? job.url : `https://${job.url}`);
@@ -289,8 +453,9 @@ async function processRenderJob(job) {
       "-y",
       "-f", "image2pipe",
       "-vcodec", "mjpeg",
-      "-framerate", "60",
+      "-framerate", "30",
       "-i", "-",
+      "-vf", `scale=${targetWidth}:${targetHeight}:flags=lanczos`,
       "-c:v", "libx264",
       "-r", "60",
       "-pix_fmt", "yuv420p",
@@ -311,72 +476,75 @@ async function processRenderJob(job) {
     await client.send("Page.startScreencast", {
       format: "jpeg",
       quality: 90,
-      maxWidth: viewport.width,
-      maxHeight: viewport.height,
+      maxWidth: targetWidth,
+      maxHeight: targetHeight,
       everyNthFrame: 1,
     });
 
     let recordedFrameCount = 0;
+    let latestFrameBuffer = null;
+
     client.on("Page.screencastFrame", async ({ data, sessionId }) => {
       try {
-        if (ffmpegProc && ffmpegProc.stdin && ffmpegProc.stdin.writable) {
-          ffmpegProc.stdin.write(Buffer.from(data, "base64"));
-          recordedFrameCount++;
-        }
+        latestFrameBuffer = Buffer.from(data, "base64");
         await client.send("Page.screencastFrameAck", { sessionId });
       } catch (_) {}
     });
+
+    // Steady 30FPS real-time frame feeder -> duplicated cleanly to 60FPS by FFmpeg so duration matches 1:1
+    frameFeederInterval = setInterval(() => {
+      try {
+        if (latestFrameBuffer && ffmpegProc && ffmpegProc.stdin && ffmpegProc.stdin.writable) {
+          ffmpegProc.stdin.write(latestFrameBuffer);
+          recordedFrameCount += 2;
+        }
+      } catch (_) {}
+    }, Math.round(1000 / 30));
 
     // Read latest swarm.js
     const swarmJsPath = path.join(ROOT_DIR, "swarm.js");
     const swarmCode = fs.readFileSync(swarmJsPath, "utf-8");
 
-    // Configure Auto Launch
-    await page.evaluate((cfg) => {
-      document.body.dataset.fullscreenRender = "true";
+    // Configure Auto Launch & Execute Swarm Engine (Bypassing strict CSP / TrustedTypes)
+    await page.evaluate((cfg, serverPort) => {
+      if (document.body) document.body.dataset.fullscreenRender = "true";
+      window.__rebuildrServerOrigin = `http://localhost:${serverPort}`;
       window.__rebuildrAutoLaunch = cfg;
-    }, {
-      autoStart: true,
-      videoFormat: job.format,
-      showcasePreset: job.preset,
-      launchScope: job.scope,
-      motionMode: job.mode === "motion",
-      theme: job.theme,
-      speed: Number(job.speed) || 1.5,
-      cameraZoom: false,
-      dofEnabled: false,
-      counterRoll: true,
-      autoRecord: false,
-      bgm: job.bgm || "lofi",
-      customHookText: job.customHookText || "",
-      targetDuration: job.targetDuration || "30s",
-      deviceMockup: job.deviceMockup || "flat",
-      tourFeatureCount: job.tourFeatureCount || 5,
-      tourNiche: job.tourNiche || "auto",
-      tourLanguage: job.tourLanguage || "id",
-      tourOverlay: job.tourOverlay || "full",
-      ghostMode: !!job.ghost,
-      terminalVisible: false,
-      watermark: job.watermark || "none",
-      audioBalance: job.audioBalance || "balanced",
-    });
+    }, autoLaunchCfg, PORT);
 
     job.status = "reconstructing";
     job.progress = 55;
     job.logs.push(`[${new Date().toLocaleTimeString()}] 8 Agen AI mulai merakit halaman secara live...`);
 
-    // Inject Swarm script
-    await page.addScriptTag({ content: swarmCode });
+    await page.evaluate((code) => {
+      try {
+        (0, eval)(code);
+      } catch (e) {
+        console.error("[SWARM EVAL ERROR]", e && e.message);
+      }
+    }, swarmCode);
+
+    const swarmInjected = await page.evaluate(() => !!window.__swarmRebuild).catch(() => false);
+    if (!swarmInjected) {
+      await page.addScriptTag({ content: swarmCode }).catch(() => {});
+    }
+
+    await page.evaluate(() => {
+      if (window.__swarmRebuild && !window.__swarmRebuild.running) {
+        window.__swarmRebuild.launchRebuild();
+      }
+    }).catch(() => {});
 
     // Wait for reconstruction completion
-    const maxWaitMs = 120000;
+    const maxWaitMs = 95000;
     const startWait = Date.now();
 
     while (Date.now() - startWait < maxWaitMs) {
       const state = await page.evaluate(() => {
         return {
           done: !!window.__rebuildrReconstructionDone,
-          running: window.__swarmRebuild ? window.__swarmRebuild.running : false,
+          running: window.__swarmRebuild ? !!window.__swarmRebuild.running : false,
+          hasSwarm: !!window.__swarmRebuild,
           hasAudio: !!window.__rebuildrAudioBase64,
         };
       });
@@ -386,15 +554,24 @@ async function processRenderJob(job) {
         break;
       }
 
-      // Progressively update job progress
       const elapsed = Date.now() - startWait;
-      const progressRatio = Math.min(0.92, 0.55 + (elapsed / 45000) * 0.37);
+      if (elapsed > 6000 && state.hasSwarm && !state.running) {
+        job.logs.push(`[${new Date().toLocaleTimeString()}] Animasi selesai, memfinalisasi stream video...`);
+        break;
+      }
+
+      // Progressively update job progress
+      const progressRatio = Math.min(0.92, 0.55 + (elapsed / 40000) * 0.37);
       job.progress = Math.round(progressRatio * 100);
 
-      await new Promise((r) => setTimeout(r, 600));
+      await new Promise((r) => setTimeout(r, 500));
     }
 
-    // Stop screencast and close ffmpeg input
+    // Stop frame feeder and screencast
+    if (frameFeederInterval) {
+      clearInterval(frameFeederInterval);
+      frameFeederInterval = null;
+    }
     try {
       await client.send("Page.stopScreencast");
     } catch (_) {}
@@ -458,6 +635,10 @@ async function processRenderJob(job) {
     job.error = err.message || "Gagal merender video.";
     job.logs.push(`[${new Date().toLocaleTimeString()}] ERROR: ${err.message}`);
   } finally {
+    if (frameFeederInterval) {
+      clearInterval(frameFeederInterval);
+      frameFeederInterval = null;
+    }
     if (browser) {
       try {
         await browser.close();
@@ -643,16 +824,69 @@ const server = http.createServer(async (req, res) => {
           }
           /* Eliminate harsh desktop scrollbar in mobile formats / phone view */
           ${isMobileFormat ? `
-            html, body {
+            html, body, * {
               scrollbar-width: none !important;
               -ms-overflow-style: none !important;
-              overflow-x: hidden !important;
-              -webkit-overflow-scrolling: touch !important;
             }
-            ::-webkit-scrollbar {
+            ::-webkit-scrollbar,
+            *::-webkit-scrollbar,
+            html::-webkit-scrollbar,
+            body::-webkit-scrollbar {
               display: none !important;
               width: 0 !important;
               height: 0 !important;
+              background: transparent !important;
+            }
+            html, body {
+              overflow-x: hidden !important;
+              width: 100% !important;
+              max-width: 100vw !important;
+              box-sizing: border-box !important;
+            }
+            /* Universal Mobile Text & Headline Shield (Zero Horizontal Cutoffs) */
+            h1, [class*="h1" i], [class*="Heading--1" i], [class*="hero" i] h1, .intro-title {
+              max-width: 100% !important;
+              overflow-wrap: break-word !important;
+              word-break: normal !important;
+              white-space: normal !important;
+              font-size: min(28px, 7.5vw) !important;
+              line-height: 1.25 !important;
+              box-sizing: border-box !important;
+            }
+            .line, [class*="line" i] {
+              max-width: 100% !important;
+              overflow-wrap: break-word !important;
+              word-break: normal !important;
+              white-space: normal !important;
+              display: inline !important;
+              box-sizing: border-box !important;
+            }
+            .word, [class*="word" i] {
+              max-width: 100% !important;
+              white-space: normal !important;
+              display: inline !important;
+              box-sizing: border-box !important;
+            }
+            h2, [class*="h2" i] {
+              max-width: 100% !important;
+              white-space: normal !important;
+              overflow-wrap: break-word !important;
+              font-size: min(24px, 6.5vw) !important;
+              box-sizing: border-box !important;
+            }
+            h3, [class*="h3" i] {
+              max-width: 100% !important;
+              white-space: normal !important;
+              overflow-wrap: break-word !important;
+              font-size: min(20px, 5.5vw) !important;
+              box-sizing: border-box !important;
+            }
+            header, nav, section, main, footer, .container, [class*="container" i], [class*="wrapper" i] {
+              max-width: 100% !important;
+              box-sizing: border-box !important;
+            }
+            [class*="hero" i] [class*="flex" i], [class*="hero" i] [class*="row" i] {
+              flex-wrap: wrap !important;
             }
           ` : `
             ::-webkit-scrollbar {
@@ -765,6 +999,22 @@ const server = http.createServer(async (req, res) => {
         html = `${injectHtml}\n${html}`;
       }
 
+      if (isMobileFormat) {
+        const bottomShield = `<style id="rebuildr-bottom-mobile-shield">
+          html, body, * { scrollbar-width: none !important; -ms-overflow-style: none !important; }
+          *::-webkit-scrollbar, html::-webkit-scrollbar, body::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; background: transparent !important; }
+          h1, [class*="h1" i], [class*="Heading--1" i], [class*="hero" i] h1, .intro-title { max-width: 100% !important; overflow-wrap: break-word !important; word-break: normal !important; white-space: normal !important; font-size: min(28px, 7.5vw) !important; line-height: 1.25 !important; }
+          .line, [class*="line" i] { max-width: 100% !important; overflow-wrap: break-word !important; word-break: normal !important; white-space: normal !important; display: inline !important; }
+          .word, [class*="word" i] { max-width: 100% !important; white-space: normal !important; display: inline !important; }
+          body, html { overflow-x: hidden !important; width: 100% !important; max-width: 100vw !important; }
+        </style>`;
+        if (/<\/body>/i.test(html)) {
+          html = html.replace(/<\/body>/i, `${bottomShield}</body>`);
+        } else {
+          html += bottomShield;
+        }
+      }
+
       // Allow framing in iframe without illegal headers
       res.writeHead(200, {
         "Content-Type": "text/html; charset=utf-8",
@@ -781,6 +1031,43 @@ const server = http.createServer(async (req, res) => {
           <p style="color: #94a3b8; font-size: 13px;">Pastikan website dapat diakses publik, atau coba gunakan preset sampel bawaan.</p>
         </div>
       `);
+    }
+    return;
+  }
+
+  // -------------------------------------------------------------------------
+  // Route TTS: GET /api/tts?text=...&lang=id (Neural HD Voiceover)
+  // -------------------------------------------------------------------------
+  if (pathname === "/api/tts" && (req.method === "GET" || req.method === "HEAD")) {
+    const text = parsedQuery.text || "";
+    const lang = (parsedQuery.lang || "id").toLowerCase().startsWith("en") ? "en" : "id";
+
+    if (!text.trim()) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Missing text parameter" }));
+      return;
+    }
+
+    try {
+      const audioBuffer = await getNeuralTtsAudio(text, lang);
+      if (!audioBuffer) {
+        res.writeHead(404, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ error: "No voice generated" }));
+        return;
+      }
+
+      res.writeHead(200, {
+        "Content-Type": "audio/mpeg",
+        "Content-Length": audioBuffer.length,
+        "Cache-Control": "public, max-age=86400, immutable",
+        "Access-Control-Allow-Origin": "*",
+        "Accept-Ranges": "bytes"
+      });
+      res.end(audioBuffer);
+    } catch (err) {
+      console.warn("[TTS] Error generating neural audio:", err.message);
+      res.writeHead(502, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+      res.end(JSON.stringify({ error: "TTS generation failed", message: err.message }));
     }
     return;
   }
